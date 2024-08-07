@@ -26,7 +26,7 @@ const Register = () => {
         data.name,
         data.phoneNumber
       );
-      router.push("/");
+      router.push("/login");
       alert("User Created Successfully");
     } catch (error) {
       console.log(error);
@@ -54,7 +54,6 @@ const Register = () => {
                   message: "Invalid email address",
                 },
               })}
-              error={Boolean(errors.email)}
               onKeyUp={() => {
                 trigger("email");
               }}
@@ -85,14 +84,13 @@ const Register = () => {
                   message: "Password must be more than 8 characters",
                 },
                 maxLength: {
-                  value: 20,
-                  message: "Password must be less than 20 characters",
+                  value: 17,
+                  message: "Password must be less than 17 characters",
                 },
               })}
               onKeyUp={() => {
                 trigger("password");
               }}
-              error={Boolean(errors.password)}
             ></input>
             {errors.password && (
               <small className="text-danger">{errors.password.message}</small>
@@ -114,7 +112,6 @@ const Register = () => {
                 e.preventDefault();
                 return false;
               }}
-              error={Boolean(errors.confirmPassword)}
               className={`form-control ${errors.confirmPassword && "invalid"}`}
               required={true}
               onKeyUp={() => {
@@ -164,7 +161,6 @@ const Register = () => {
                   message: "Phone number must be 11 numbers",
                 },
               })}
-              error={Boolean(errors.phoneNumber)}
               onKeyUp={() => {
                 trigger("phoneNumber");
               }}

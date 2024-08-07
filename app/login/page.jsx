@@ -10,7 +10,7 @@ const Login = () => {
     handleSubmit,
     register,
     trigger,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm();
 
   const router = useRouter();
@@ -84,7 +84,9 @@ const Login = () => {
             <small className="text-danger">{errors.password.message}</small>
           )}
         </div>
-        <button type="submit">Submit</button>
+        <button disabled={!isValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );
