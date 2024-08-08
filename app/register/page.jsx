@@ -5,7 +5,15 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { auth } from "../firebase";
-
+import {MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBBtn,
+  MDBIcon,
+  MDBInput,
+  MDBCheckbox
+}
+from 'mdb-react-ui-kit';
 const Register = () => {
   const {
     handleSubmit,
@@ -35,18 +43,20 @@ const Register = () => {
     }
   }
   return (
-    <div>
-      <form onSubmit={handleSubmit(onhandleSubmit)}>
-        <h5>Create an account</h5>
-        <div>
-          <div>
-            <label>Your email address</label>
-            <input
-              className="form-control"
-              id="email"
-              name="email"
-              type="email"
-              required={true}
+    <div className="container"  >
+    <MDBContainer fluid className="p-3 my-5">
+
+      <MDBRow>
+
+        <MDBCol col='10' md='5'>
+          <img src="/Hotel Booking.png" class="img-fluid" alt="Phone image" />
+        </MDBCol>
+
+        <MDBCol col='4' md='5'>
+        <form onSubmit={handleSubmit(onhandleSubmit)} >
+        <label className="mt-5 mb-2">Email</label>   
+          <MDBInput wrapperClass='mb-4'  id='formControlLg' type='email' size="lg"
+          required={true}
               {...register("email", {
                 required: "Email is Required!!!",
                 pattern: {
@@ -56,128 +66,112 @@ const Register = () => {
               })}
               onKeyUp={() => {
                 trigger("email");
-              }}
-            ></input>
-            {errors.email && (
-              <small className="text-danger">{errors.email.message}</small>
+              }}/>
+              <div>
+         {errors.email && (
+              <small className="text-danger mb-2">{errors.email.message}</small>
             )}
-          </div>
-          <div>
-            <label>Your password</label>
-            <input
-              name="password"
-              id="password"
-              type="password"
-              autoComplete="off"
-              className={`form-control ${errors.password && "invalid"}`}
-              required={true}
-              {...register("password", {
-                required: "You must specify a password",
-                pattern: {
-                  value:
-                    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
-                  message:
-                    "Password should contain at least one number, one special character and one uppercase character",
-                },
-                minLength: {
-                  value: 8,
-                  message: "Password must be more than 8 characters",
-                },
-                maxLength: {
-                  value: 17,
-                  message: "Password must be less than 17 characters",
-                },
-              })}
-              onKeyUp={() => {
-                trigger("password");
-              }}
-            ></input>
+            </div>
+          <label className="mb-2">password</label>
+          <MDBInput wrapperClass='mb-4'  id='formControlLg' type='password' size="lg"
+          autoComplete="off"
+          className={`form-control ${errors.password && "invalid"}`}
+          required={true}
+          {...register("password", {
+            required: "You must specify a password",
+            pattern: {
+              value:
+                /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+              message:
+                "Password should contain at least one number, one special character and one uppercase character",
+            },
+            minLength: {
+              value: 8,
+              message: "Password must be more than 8 characters",
+            },
+            maxLength: {
+              value: 17,
+              message: "Password must be less than 17 characters",
+            },
+          })}
+          onKeyUp={() => {
+            trigger("password");
+          }}/>
             {errors.password && (
-              <small className="text-danger">{errors.password.message}</small>
+              <small className="text-danger mb-4 ">{errors.password.message}</small>
             )}
-          </div>
-          <div>
-            <label>Confirm your password</label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              {...register("confirmPassword", {
-                validate: (value) =>
-                  value === watch("password", "") ||
-                  "The passwords do not match",
-              })}
-              autoComplete="off"
-              onPaste={(e) => {
-                e.preventDefault();
-                return false;
-              }}
-              className={`form-control ${errors.confirmPassword && "invalid"}`}
-              required={true}
-              onKeyUp={() => {
-                trigger("confirmPassowrd");
-              }}
-            />
-            {errors.confirmPassword && (
-              <small className="text-danger">
+     
+     <label>Confirm your password</label>
+          <MDBInput wrapperClass='mb-4'  id='formControlLg' type='password' size="lg"
+        {...register("confirmPassword", {
+          validate: (value) =>
+            value === watch("password", "") ||
+            "The passwords do not match",
+        })}
+        autoComplete="off"
+        onPaste={(e) => {
+          e.preventDefault();
+          return false;
+        }}
+        className={`form-control ${errors.confirmPassword && "invalid"}`}
+        required={true}
+        onKeyUp={() => {
+          trigger("confirmPassowrd");
+        }}/>
+        {errors.confirmPassword && (
+              <small className="text-danger mb-2">
                 {errors.confirmPassword.message}{" "}
               </small>
             )}
-          </div>
-          <div>
-            <label>Your full name</label>
-            <input
-              name="name"
-              type="name"
-              className={`form-control ${errors.name && "invalid"}`}
-              required={true}
-              defaultValue=""
-              {...register("name", { required: "Fullname is Required!!!" })}
-              onKeyUp={() => {
-                trigger("name");
-              }}
-            />
-            {errors.name && (
-              <small className="text-danger">Fullname is Required!!!</small>
+          <label>Your full name</label>
+          <MDBInput wrapperClass='mb-4'  id='formControlLg' type='name' size="lg"
+          className={`form-control ${errors.name && "invalid"}`}
+          required={true}
+          defaultValue=""
+          {...register("name", { required: "Fullname is Required!!!" })}
+          onKeyUp={() => {
+            trigger("name");
+          }}/>
+          {errors.name && (
+              <small className="text-danger mb-2">Fullname is Required!!!</small>
             )}
-          </div>
-          <div>
             <label>Your phone number</label>
-            <input
-              name="phoneNumber"
-              type="text"
-              className={`form-control`}
-              required={true}
-              {...register("phoneNumber", {
-                pattern: {
-                  value: /^01[0-5]\d{1,8}$/,
-                  message:
-                    "Phone number should start with '01' followed by a digit from 0 to 5",
-                },
-                required: "Phone number is Required!!!",
+            <MDBInput wrapperClass='mb-4'  id='formControlLg' type='text' size="lg"
+          className={`form-control`}
+          required={true}
+          {...register("phoneNumber", {
+            pattern: {
+              value: /^01[0-5]\d{1,8}$/,
+              message:
+                "Phone number should start with '01' followed by a digit from 0 to 5",
+            },
+            required: "Phone number is Required!!!",
 
-                maxLength: {
-                  value: 11,
-                  message: "Phone number must be 11 numbers",
-                },
-              })}
-              onKeyUp={() => {
-                trigger("phoneNumber");
-              }}
-            />
-            {errors.phoneNumber && (
-              <small className="text-danger">
+            maxLength: {
+              value: 11,
+              message: "Phone number must be 11 numbers",
+            },
+          })}
+          onKeyUp={() => {
+            trigger("phoneNumber");
+          }}/>
+          {errors.phoneNumber && (
+              <small className="text-danger mb-2">
                 {errors.phoneNumber.message}
-              </small>
+                </small>
             )}
-          </div>
-          <div>
-            <button disabled={!isValid} type="submit">
-              Create an account
-            </button>
-          </div>
-        </div>
-      </form>
+          <MDBBtn className="mb-4 w-100 dark" size="lg" disabled={!isValid} type="submit"
+          style={{backgroundColor:'#354c5c'}}>Sign up</MDBBtn>
+      
+          
+          </form>
+        </MDBCol>
+
+      </MDBRow>
+
+    </MDBContainer>
+
+
     </div>
   );
 };
