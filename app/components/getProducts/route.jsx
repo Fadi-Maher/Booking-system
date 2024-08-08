@@ -1,10 +1,7 @@
 
 import { NextResponse } from 'next/server';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
-import { firebaseApp } from './firebaseConfig'; // Ensure you have the Firebase app initialized in this file
-
-const db = getFirestore(firebaseApp);
-
+import { db } from '@/app/firebase';
 export async function GET(request) {
     try {
         const querySnapshot = await getDocs(collection(db, "hotels"));

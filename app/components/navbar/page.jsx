@@ -1,6 +1,6 @@
 import React from "react";
-  
- 
+import Logout from "@/app/logout/Logout";
+
 const NavbarComponent = () => {
   return (
     <div>
@@ -24,10 +24,13 @@ const NavbarComponent = () => {
         </li>
        
       </ul>
-      <form className="d-flex">
+      <div className="justify-content-around  d-flex flex-row w-50">
+      <form className="d-flex ">
         <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
-      </form>
+        <button className="btn btn-outline-success text-light " type="submit">Search</button>
+        </form>
+         <Logout/>
+    </div>
     </div>
   </div>
 </nav>

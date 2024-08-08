@@ -49,7 +49,7 @@ const Register = () => {
       <MDBRow>
 
         <MDBCol col='10' md='5'>
-          <img src="/Hotel Booking.png" class="img-fluid" alt="Phone image" />
+          <img src="/Hotel Booking.png" className="img-fluid" alt="Phone image" />
         </MDBCol>
 
         <MDBCol col='4' md='5'>
