@@ -13,6 +13,9 @@ import {
   MDBBtn,
   MDBInput,
 } from "mdb-react-ui-kit";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Register = () => {
   const {
     handleSubmit,
@@ -33,11 +36,15 @@ const Register = () => {
         data.name,
         data.phoneNumber
       );
-      router.push("/login");
-      alert("User Created Successfully");
-    } catch (error) {
+       toast.success("User Registered Successfully!");
+         setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+
+       
+     } catch (error) {
       console.log(error);
-      alert(error.message);
+      toast.error(error.message); 
     }
   }
   return (
@@ -227,6 +234,7 @@ const Register = () => {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+         <ToastContainer />
     </div>
   );
 };

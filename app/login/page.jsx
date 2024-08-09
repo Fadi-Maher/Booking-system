@@ -18,6 +18,9 @@ import {
   MDBInput,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Login = () => {
   const {
     handleSubmit,
@@ -30,17 +33,24 @@ const Login = () => {
 
   const [rememberMe, setRememberMe] = useState(false);
 
-  const submitHandler = async ({ email, password }) => {
+   const submitHandler = async ({ email, password }) => {
     try {
       if (rememberMe) {
         await setPersistence(auth, browserSessionPersistence);
-        await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        await signInWithEmailAndPassword(auth, email, password);
       }
-      router.push("/");
+      await signInWithEmailAndPassword(auth, email, password);
+      
+      // Show success toast notification
+      toast.success("Logged in successfully!");
+
+       
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } catch (error) {
-      alert(error.message);
+      console.error(error);
+      
+      toast.error("Login failed. Please check your credentials.");
     }
   };
   return (
@@ -156,6 +166,7 @@ const Login = () => {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
+         <ToastContainer />
     </div>
   );
 };
