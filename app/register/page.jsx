@@ -42,7 +42,7 @@ const Register = () => {
   }
   return (
     <div className="container">
-      <MDBContainer fluid className="p-3 my-5">
+      <MDBContainer fluid className="p-3 my-2">
         <MDBRow>
           <MDBCol col="10" md="7">
             <img
