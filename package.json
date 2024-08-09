@@ -16,7 +16,8 @@
     "react": "^18",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18",
-    "react-hook-form": "^7.52.2"
+    "react-hook-form": "^7.52.2",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "eslint": "^8",

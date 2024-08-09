@@ -44,7 +44,7 @@ const Hotels = () => {
   return (
 
       <div>
-        <h1>Rooms</h1>
+        <h1 className='text-center '>Rooms</h1>
         <ul style={{ listStyleType: 'none', padding: 0 }}>
         <div className='d-flex flex-wrap gap-3 justify-content-around'>
           {hotels.map((hotel) => (
