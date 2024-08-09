@@ -8,7 +8,7 @@ const HotelDetails = ({ hotel, onClose }) => {
 
   return (
     <div className="modal-container">
-      <div className="card" style={{  width: '30%', maxWidth: '400px'  }}>
+      <div className="card" style={{  width: '20%' }}>
         <div className="image-gallery d-flex  gap-3">
           {images.map((img, index) => (
             <img
