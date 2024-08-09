@@ -17,7 +17,7 @@ const NavbarComponent = () => {
         </li>
        
         <li className="nav-item">
-          <a className="nav-link text-white w-50" href="/">Link</a>
+          <a className="nav-link text-white w-50 size-45" href="/">Link</a>
         </li>
         <li className="nav-item">
           <a className="nav-link text-white" href="/products">product</a>
