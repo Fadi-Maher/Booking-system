@@ -1,0 +1,29 @@
+.footer , .footertext {
+	padding: 10px ;
+}
+.footer , .footertext , .ftAabout {
+	margin-bottom: 30px;
+}
+
+.footer .footertext .ftAabout p {
+	color: #aaaab3;
+	margin-bottom: 20px;
+}
+
+.footer , .footertext , .ftcontact {
+	margin-bottom: 30px;
+}
+.ftAabout h4 ,.ftnewslatter h4 ,.ftcontact h4 {
+	font-size: 14px;
+	color: #f7af6c;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: 3px;
+	font-family: "Cabin", sans-serif;
+	margin-bottom: 20px;
+}
+
+.footer , .footertext , .ftnewslatter p {
+	color: #f3f3ff;
+	margin-bottom: 20px;
+}
