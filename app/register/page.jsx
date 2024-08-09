@@ -5,14 +5,13 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { auth } from "../firebase";
+import styles from "../login/page.module.css";
 import {
   MDBContainer,
   MDBCol,
   MDBRow,
   MDBBtn,
-  MDBIcon,
   MDBInput,
-  MDBCheckbox,
 } from "mdb-react-ui-kit";
 const Register = () => {
   const {
@@ -217,15 +216,13 @@ const Register = () => {
                   </small>
                 )}
               </div>
-              <MDBBtn
-                className="mb-4 w-100 dark"
-                size="lg"
+              <button
+                className={`btn mb-4 w-100 mt-4  btn-lg text-light ${styles.btnBg}`}
                 disabled={!isValid}
                 type="submit"
-                style={{ backgroundColor: "#354c5c" }}
               >
                 Sign up
-              </MDBBtn>
+              </button>
             </form>
           </MDBCol>
         </MDBRow>

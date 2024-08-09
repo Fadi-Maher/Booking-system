@@ -9,13 +9,12 @@ import {
   setPersistence,
 } from "firebase/auth";
 import React, { useState } from "react";
-
+import styles from "./page.module.css";
 import {
   MDBContainer,
   MDBCol,
   MDBRow,
   MDBBtn,
-  MDBIcon,
   MDBInput,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
@@ -136,7 +135,7 @@ const Login = () => {
                 {/* <a href="!#">Forgot password?</a> */}
               </div>
 
-              <MDBBtn
+              {/* <MDBBtn
                 className="mb-4 w-100 mt-4"
                 size="lg"
                 disabled={!isValid}
@@ -144,7 +143,15 @@ const Login = () => {
                 style={{ backgroundColor: "#354c5c" }}
               >
                 Sign in
-              </MDBBtn>
+              </MDBBtn> */}
+
+              <button
+                className={`btn mb-4 w-100 mt-4 text-light btn-lg ${styles.btnBg}`}
+                disabled={!isValid}
+                type="submit"
+              >
+                Sign in
+              </button>
             </form>
           </MDBCol>
         </MDBRow>
