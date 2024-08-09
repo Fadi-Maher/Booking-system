@@ -36,17 +36,19 @@ const Register = () => {
         data.name,
         data.phoneNumber
       );
-       toast.success("User Registered Successfully!");
-         setTimeout(() => {
-        router.push("/login");
-      }, 2000);
-
-       
-     } catch (error) {
-      console.log(error);
-      toast.error(error.message); 
+         toast.success("User Registered Successfully!");
+    setTimeout(() => {
+      router.push("/login");
+    }, 2000);
+  } catch (error) {
+     
+    if (error.code === "auth/email-already-in-use") {
+      toast.error("This email is already registered. Please log in instead.");
+    } else {
+      toast.error(`Error: ${error.message}`);
     }
   }
+}
   return (
     <div className="container">
       <MDBContainer fluid className="p-3 my-2">
