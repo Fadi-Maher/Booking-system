@@ -48,8 +48,8 @@ const Hotels = () => {
 
   return (
     <div>
-      <h1 className="text-center">Rooms</h1>
-      <ul style={{ listStyleType: 'none', padding: 0 }}>
+      <h1 className="text-center text-primary">Hotels</h1>
+      <ul style={{ listStyleType: 'none', padding:50  }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
           {hotels.map((hotel) => (
             <li key={hotel.id} style={{ marginBottom: '1rem' }}>
@@ -69,7 +69,7 @@ const Hotels = () => {
                      
                     className="btn btn-primary"
                   >
-                    Book Now
+                    More Details
                   </button>
                 </div>
               </div>

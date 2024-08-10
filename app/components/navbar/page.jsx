@@ -17,10 +17,14 @@ const NavbarComponent = () => {
         </li>
        
         <li className="nav-item">
-          <a className="nav-link text-white w-50 size-45" href="/">Link</a>
+          <a className="nav-link text-white w-50 size-45" href="./components/viewData">Hotels</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" href="/products">product</a>
+          <a className="nav-link text-white" href="./components/AboutUs">About US</a>
+        </li>
+
+        <li className="nav-item">
+          <a className="nav-link text-white" href="/">Contact</a>
         </li>
        
       </ul>
