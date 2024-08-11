@@ -1,7 +1,7 @@
  import Homepage from "./components/homePage/page";
 import NavbarComponent from "./components/navbar/page";
 import React from "react";
-import Hotels from "./components/viewData/page";
+import Hotels from "./components/hotelList/page";
 import Footer from "./components/footer/page";
 import AboutUsSection from "./components/AboutUs/page";
 
