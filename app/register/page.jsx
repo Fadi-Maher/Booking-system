@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { auth } from "../firebase";
 import styles from "../login/page.module.css";
+import Link from "next/link";
 import {
   MDBContainer,
   MDBCol,
@@ -232,6 +233,7 @@ const Register = () => {
               >
                 Sign up
               </button>
+              <Link href="/login" class='text-primary'>you have an account ?</Link>
             </form>
           </MDBCol>
         </MDBRow>
