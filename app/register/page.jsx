@@ -53,7 +53,7 @@ const Register = () => {
     <div className="container">
       <MDBContainer fluid className="p-3 my-2">
         <MDBRow>
-          <MDBCol col="10" md="7">
+          <MDBCol col="10" md="5">
             <img
               src="/Hotel Booking.png"
               className="img-fluid"
