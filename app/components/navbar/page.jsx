@@ -14,18 +14,18 @@ const NavbarComponent = () => {
     <div className="collapse navbar-collapse text-white" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-light">
         <li className="nav-item ">
-          <a className="nav-link active text-white font-3" aria-current="page" href="/">Home</a>
+          <Link className="nav-link active text-white font-3" aria-current="page" href="/">Home</Link>
         </li>
        
         <li className="nav-item">
-          <a className="nav-link text-white w-50 size-45" href="./components/viewData">Hotels</a>
+          <Link className="nav-link text-white w-50 size-45" href="./components/viewData">Hotels</Link>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" href="./components/AboutUs">About Us</a>
+          <Link className="nav-link text-white" href="./components/AboutUs">About Us</Link>
         </li>
 
         <li className="nav-item">
-          <a className="nav-link text-white" href="/">Contact Us</a>
+          <Link className="nav-link text-white" href="/">Contact Us</Link>
         </li>
        
       </ul>

@@ -1,10 +1,12 @@
 import Image from 'next/image';
 import styles from "./page.module.css"
 import Link from 'next/link';
+import NavbarComponent from '../navbar/page';
 
 const AboutUsSection = () => {
   return (
 <>
+    <NavbarComponent/>
     <section className={styles.aboutsectio}>
         <div className={styles.spad}>
       <div className="container ">
@@ -58,6 +60,7 @@ const AboutUsSection = () => {
           </div>
       </div>
     </section>
+    
     </>
   );
 };

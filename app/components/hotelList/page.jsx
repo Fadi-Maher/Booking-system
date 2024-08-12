@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import HotelDetails from '../hotelDetails/page';
-import Link from 'next/link';
+// import Link from 'next/link';
 
 const Hotels = () => {
   const [hotels, setHotels] = useState([]);
