@@ -1,3 +1,27 @@
+
+  /* page.module.css */
+
+ /* Define the fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply the fade-in animation with a 2-second delay */
+.fade-in-delay {
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out 0.5s forwards; /* 1s animation, 2s delay */
+}
+
+
+
+
+
+
 .sectionTitle {
 	text-align: center;
 	margin-bottom: 22px;

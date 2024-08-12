@@ -4,8 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import styles from "./page.module.css"
-
+ 
 const HotelExtension = () => {
   useEffect(() => {
     // Ensure the carousel is initialized

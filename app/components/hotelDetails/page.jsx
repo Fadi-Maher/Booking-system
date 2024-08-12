@@ -3,13 +3,12 @@
 import React from "react";
 
 const HotelDetails = ({ hotel, onClose }) => {
-  // Ensure images is an array; default to an empty array if not
-  const images = Array.isArray(hotel.images) ? hotel.images : [];
+   const images = Array.isArray(hotel.images) ? hotel.images : [];
 
   return (
     <div className="modal-container">
       <div className="card" style={{  width: '20%' }}>
-        <div className="image-gallery d-flex  gap-3">
+        <div className="  d-flex  gap-3">
           {images.map((img, index) => (
             <img
               

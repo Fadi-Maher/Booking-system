@@ -12,20 +12,20 @@ const NavbarComponent = () => {
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse text-white" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-light">
+      <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-light ">
         <li className="nav-item ">
-          <Link className="nav-link active text-white font-3" aria-current="page" href="/">Home</Link>
+          <Link className="nav-link active text-white font-3 border shadow  me-2 " aria-current="page" href="/">Home</Link>
         </li>
        
         <li className="nav-item">
-          <Link className="nav-link text-white w-50 size-45" href="/components/hotelPage">Hotels</Link>
+          <Link className="nav-link text-white me-2  shadow border" href="/components/hotelPage">Hotels</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" href="./components/AboutUsPage">About Us</Link>
+          <Link className="nav-link text-white border shadow  me-2 " href="./components/AboutUsPage">About Us</Link>
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link text-white" href="/">Contact Us</Link>
+          <Link className="nav-link text-white border  shadow me-2 " href="/">Contact Us</Link>
         </li>
        
       </ul>
