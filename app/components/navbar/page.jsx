@@ -1,5 +1,6 @@
 import React from "react";
 import Logout from "@/app/logout/Logout";
+import Link from "next/link";
 
 const NavbarComponent = () => {
   return (
@@ -20,11 +21,11 @@ const NavbarComponent = () => {
           <a className="nav-link text-white w-50 size-45" href="./components/viewData">Hotels</a>
         </li>
         <li className="nav-item">
-          <a className="nav-link text-white" href="./components/AboutUs">About Us</a>
+          <a className="nav-link text-white" href="./components/AboutUs">About US</a>
         </li>
 
         <li className="nav-item">
-          <a className="nav-link text-white" href="/">Contact Us</a>
+          <a className="nav-link text-white" href="/">Contact</a>
         </li>
        
       </ul>
