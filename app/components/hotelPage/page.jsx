@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import HotelDetails from '../hotelDetails/page';
-import NavbarComponent from '../navbar/page';
+import React, { useEffect, useState } from "react";
+import HotelDetails from "../hotelDetails/page";
+import NavbarComponent from "../navbar/page";
 // import Link from 'next/link';
-import Footer from '../footer/page';
+import Footer from "../footer/page";
+import Link from "next/link";
 
 const HotelsPage = () => {
   const [hotels, setHotels] = useState([]);
@@ -15,11 +16,11 @@ const HotelsPage = () => {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await fetch('/api/getHotels', {
-          method: 'GET',
+        const response = await fetch("/api/getHotels", {
+          method: "GET",
         });
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setHotels(data);
@@ -50,33 +51,35 @@ const HotelsPage = () => {
   }
 
   return (
-   
-   <div>
-    <NavbarComponent/>
+    <div>
+      <NavbarComponent />
       <h1 className="text-center text-primary">Hotels</h1>
-      <ul style={{ listStyleType: 'none', padding:50  }}>
+      <ul style={{ listStyleType: "none", padding: 50 }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
           {hotels.map((hotel) => (
-            <li key={hotel.id} style={{ marginBottom: '1rem' }}>
-              <div className="card" style={{ width: '18rem' }}>
-                <img  
+            <li key={hotel.id} style={{ marginBottom: "1rem" }}>
+              <div className="card" style={{ width: "18rem" }}>
+                <img
                   src={hotel.image} // Assuming image is an array, use the first one
                   className="img-thumbnail"
                   alt={hotel.name}
-                  style={{ objectFit: 'cover', height: '200px' }}
+                  style={{ objectFit: "cover", height: "200px" }}
                 />
                 <div className="card-body">
                   <h5 className="card-title">{hotel.name}</h5>
                   <p className="card-text">{hotel.description}</p>
                   <p className="card-text">Price: ${hotel.price}</p>
-                  <button
-                    onClick={() => showDetailsOfHotel(hotel)}
-                     
-                    className="btn btn-primary"
-                  >
-                    More Details
-                  </button>
-                
+                  <div className="d-flex justify-content-between">
+                    <button
+                      onClick={() => showDetailsOfHotel(hotel)}
+                      className="btn btn-primary"
+                    >
+                      More Details
+                    </button>
+                    <Link href={`/components/hotelPage/${hotel.id}`}>
+                      <button className="btn btn-primary">Reviews</button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </li>
@@ -87,9 +90,8 @@ const HotelsPage = () => {
       {selectedHotel && (
         <HotelDetails hotel={selectedHotel} onClose={closeDetails} />
       )}
-         <Footer/>
+      <Footer />
     </div>
-
   );
 };
 
