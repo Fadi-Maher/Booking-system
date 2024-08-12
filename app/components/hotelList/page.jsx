@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import HotelDetails from '../hotelDetails/page';
+import Link from 'next/link';
 
 const Hotels = () => {
   const [hotels, setHotels] = useState([]);
@@ -12,7 +13,7 @@ const Hotels = () => {
   useEffect(() => {
     const fetchHotels = async () => {
       try {
-        const response = await fetch('/components/getProducts', {
+        const response = await fetch('/api/getHotels', {
           method: 'GET',
         });
         if (!response.ok) {
@@ -71,6 +72,7 @@ const Hotels = () => {
                   >
                     More Details
                   </button>
+                
                 </div>
               </div>
             </li>
