@@ -18,10 +18,10 @@ const NavbarComponent = () => {
         </li>
        
         <li className="nav-item">
-          <Link className="nav-link text-white w-50 size-45" href="./components/viewData">Hotels</Link>
+          <Link className="nav-link text-white w-50 size-45" href="/components/hotelPage">Hotels</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link text-white" href="./components/AboutUs">About Us</Link>
+          <Link className="nav-link text-white" href="./components/AboutUsPage">About Us</Link>
         </li>
 
         <li className="nav-item">

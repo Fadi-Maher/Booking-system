@@ -1,90 +1,58 @@
 "use client";
+import React, { useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import styles from "./page.module.css"
 
-import React, { useEffect, useState } from 'react';
-import HotelDetails from '../hotelDetails/page';
-// import Link from 'next/link';
-
-const Hotels = () => {
-  const [hotels, setHotels] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [selectedHotel, setSelectedHotel] = useState(null);
-
+const HotelExtension = () => {
   useEffect(() => {
-    const fetchHotels = async () => {
-      try {
-        const response = await fetch('/api/getHotels', {
-          method: 'GET',
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setHotels(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHotels();
+    // Ensure the carousel is initialized
+    if (typeof window !== "undefined" && window.bootstrap) {
+      const carouselElement = document.getElementById('carouselExampleIndicators');
+      new window.bootstrap.Carousel(carouselElement);
+    }
   }, []);
 
-  const showDetailsOfHotel = (hotel) => {
-    setSelectedHotel(hotel);
-  };
-
-  const closeDetails = () => {
-    setSelectedHotel(null);
-  };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div>
-      <h1 className="text-center text-primary">Hotels</h1>
-      <ul style={{ listStyleType: 'none', padding:50  }}>
-        <div className="d-flex flex-wrap gap-3 justify-content-around">
-          {hotels.map((hotel) => (
-            <li key={hotel.id} style={{ marginBottom: '1rem' }}>
-              <div className="card" style={{ width: '18rem' }}>
-                <img  
-                  src={hotel.image} // Assuming image is an array, use the first one
-                  className="img-thumbnail"
-                  alt={hotel.name}
-                  style={{ objectFit: 'cover', height: '200px' }}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{hotel.name}</h5>
-                  <p className="card-text">{hotel.description}</p>
-                  <p className="card-text">Price: ${hotel.price}</p>
-                  <button
-                    onClick={() => showDetailsOfHotel(hotel)}
-                     
-                    className="btn btn-primary"
-                  >
-                    More Details
-                  </button>
-                
-                </div>
-              </div>
-            </li>
-          ))}
+    <div className='container mb-5 d-flex flex-column '>
+    <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
+      <ol className="carousel-indicators">
+        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active"></li>
+        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"  className="active"></li>
+        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"  className="active"></li>
+      </ol>
+      <div className="carousel-inner">
+        <div className="carousel-item active">
+          <Image className="d-block w-100" src="/assets/images/jade-mountain-700x467.jpg" alt="First slide" width={800} height={400} />
         </div>
-      </ul>
-
-      {selectedHotel && (
-        <HotelDetails hotel={selectedHotel} onClose={closeDetails} />
-      )}
+        <div className="carousel-item">
+          <Image className="d-block w-100" src="/assets/images/pexels-jess-vide-5007455.jpg" alt="Second slide" width={800} height={400} />
+        </div>
+        <div className="carousel-item">
+          <Image className="d-block w-100" src="/assets/images/1657133145668.jpeg" alt="Third slide" width={800} height={400} />
+        </div>
+      </div>
+      <Link href="#carouselExampleIndicators" role="button" data-bs-slide="prev" className="carousel-control-prev">
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Previous</span>
+      </Link>
+      <Link href="#carouselExampleIndicators" role="button" data-bs-slide="next" className="carousel-control-next">
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Next</span>
+      </Link>
+    </div>
+         <div className='justify-content-center d-flex'>
+    <button
+     type="button" className="btn btn-primary p-2 mt-3  w-25 " > 
+     <Link className='text-light text-decoration-none' href="/components/hotelPage">
+      Show Hotels 
+      </Link>
+      </button>
+    </div>
     </div>
   );
 };
 
-export default Hotels;
+export default HotelExtension;
