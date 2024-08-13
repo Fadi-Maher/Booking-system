@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { auth } from "../firebase";
-import styles from "../login/page.module.css";
+import styles from "../page.module.css";
 import Link from "next/link";
 import {
   MDBContainer,
