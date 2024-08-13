@@ -9,7 +9,7 @@ import {
   setPersistence,
 } from "firebase/auth";
 import React, { useState } from "react";
-import styles from "./page.module.css";
+import styles from "../page.module.css";
 import {
   MDBContainer,
   MDBCol,
