@@ -5,6 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import NavbarComponent from "../../navbar/page";
 import { AuthContext } from "@/app/AuthContext";
+import ReviewModal from "../../modal/ReviewModal";
 
 const Reviews = ({ params }) => {
   const [hotel, setHotel] = useState({});
@@ -63,13 +64,9 @@ const Reviews = ({ params }) => {
             className="d-flex flex-column mb-3 mt-3 mx-auto"
             style={{ maxWidth: "40rem" }}
           >
-            {userDetails && <h4>{userDetails.username}</h4>}
-            {userDetails && <h4>{userDetails.phoneNum}</h4>}
-            {userDetails && <h4>{userDetails.email}</h4>}
-
             {reviews.map((client) => (
               <div
-                key={client.name}
+                key={client.comment}
                 className="border-bottom border-dark-subtle mt-3"
               >
                 <h5>{client.name}</h5>
@@ -80,6 +77,9 @@ const Reviews = ({ params }) => {
                 </div>
               </div>
             ))}
+            <div className=" mt-3">
+              <ReviewModal hotelId={params.hotelId} userDetails={userDetails} />
+            </div>
           </div>
         </>
       )}
