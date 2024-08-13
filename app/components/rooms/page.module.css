@@ -1,0 +1,80 @@
+.setBg {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: top center;
+}
+.roomItems {
+	margin-left: -15px;
+	margin-right: -15px;
+	overflow: hidden;
+}
+.roomitem {
+	height: 500px;
+	margin-right: -15px;
+	position: relative;
+	overflow: hidden;
+}
+.roomItems .roomitem:hover .hrText {
+	bottom: 80px;
+}
+.roomItems .roomitem:hover .hrText h2 {
+	margin-bottom: 30px;
+}
+.roomItems .roomitem .hrText {
+	position: absolute;
+	left: 45px;
+	right: 25px;
+	bottom: -250px;
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+}
+.hrText h3 {
+	color: #ffffff;
+	margin-bottom: 15px;
+}
+.roomItems .roomitem .hrText h2 {
+	color: #dfa974;
+	font-weight: 700;
+	margin-bottom: 50px;
+	-webkit-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+}
+.roomItems .roomitem .hrText h2 span {
+	font-family: "Cabin", sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	color: #ffffff;
+}
+.roomItems .roomitem .hrText table {
+	margin-bottom: 30px;
+}
+.hrText table tbody tr td {
+	font-size: 16px;
+	color: #ffffff;
+	line-height: 36px;
+}
+ .ro {
+	width: 120px;
+}
+
+
+.primarybtn {
+	display: inline-block;
+	font-size: 13px;
+	color: #ffffff;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: 700;
+	position: relative;
+}
+.primarybtn:after {
+	position: absolute;
+	left: 0;
+	bottom: -5px;
+	width: 100%;
+	height: 2px;
+	background: #ffffff;
+	content: "";
+}
