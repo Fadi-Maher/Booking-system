@@ -1,15 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import NavbarComponent from "../../navbar/page";
+import { AuthContext } from "@/app/AuthContext";
 
 const Reviews = ({ params }) => {
   const [hotel, setHotel] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const currentUser = useContext(AuthContext);
 
   useEffect(() => {
     const fetchHotelData = () => {
@@ -34,18 +36,18 @@ const Reviews = ({ params }) => {
   return (
     <div>
       <NavbarComponent />
-      <h1 className="text-center">Reviews</h1>
-      <div className="d-flex justify-content-center">
+
+      <div className="d-flex justify-content-center mt-2">
         {error && <p className="text-danger">{error.message}</p>}
       </div>
       {isLoading ? (
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center mt-2">
           <div className="spinner-border"></div>
         </div>
       ) : (
         <>
           {" "}
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center mt-3">
             <div className="card" style={{ width: "25rem" }}>
               <img
                 src={hotel.image}
@@ -66,6 +68,9 @@ const Reviews = ({ params }) => {
             className="d-flex flex-column mb-3 mt-3 mx-auto"
             style={{ maxWidth: "40rem" }}
           >
+            {currentUser && <h4>Reviews</h4>}
+            {currentUser && <h4>{currentUser.displayName}</h4>}
+
             {reviews.map((client) => (
               <div
                 key={client.name}
