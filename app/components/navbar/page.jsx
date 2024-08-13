@@ -1,6 +1,8 @@
+"use client"
 import React from "react";
 import Logout from "@/app/logout/Logout";
 import Link from "next/link";
+import Search from "../search/page";
 
 const NavbarComponent = () => {
   return (
@@ -12,7 +14,7 @@ const NavbarComponent = () => {
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse text-white" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0 text-light ">
+      <ul className="navbar-nav me-auto   item-center  text-light ">
         <li className="nav-item ">
           <Link className="nav-link active text-white font-3 border shadow  me-2 " aria-current="page" href="/">Home</Link>
         </li>
@@ -31,8 +33,8 @@ const NavbarComponent = () => {
       </ul>
       <div className="justify-content-around  d-flex flex-row w-50">
       <form className="d-flex ">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success text-light " type="submit">Search</button>
+        
+       <Search   />
         </form>
          <Logout/>
     </div>
