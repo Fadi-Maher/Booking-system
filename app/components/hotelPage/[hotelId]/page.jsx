@@ -11,7 +11,7 @@ const Reviews = ({ params }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
-  const currentUser = useContext(AuthContext);
+  const { userDetails } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchHotelData = () => {
@@ -56,11 +56,6 @@ const Reviews = ({ params }) => {
               />
               <div className="card-body">
                 <h4 className="card-title">{hotel.name}</h4>
-                {/* <p className="card-text">
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p> */}
               </div>
             </div>
           </div>
@@ -68,8 +63,9 @@ const Reviews = ({ params }) => {
             className="d-flex flex-column mb-3 mt-3 mx-auto"
             style={{ maxWidth: "40rem" }}
           >
-            {currentUser && <h4>Reviews</h4>}
-            {currentUser && <h4>{currentUser.displayName}</h4>}
+            {userDetails && <h4>{userDetails.username}</h4>}
+            {userDetails && <h4>{userDetails.phoneNum}</h4>}
+            {userDetails && <h4>{userDetails.email}</h4>}
 
             {reviews.map((client) => (
               <div
@@ -78,7 +74,6 @@ const Reviews = ({ params }) => {
               >
                 <h5>{client.name}</h5>
                 <div className="card-body">
-                  {/* <h5 className="card-title">Secondary card title</h5> */}
                   <blockquote>
                     <q className="text-secondary">{client.comment}</q>
                   </blockquote>

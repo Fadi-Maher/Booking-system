@@ -4,18 +4,14 @@ import React from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import styles from "../page.module.css";
 import Link from "next/link";
-import {
-  MDBContainer,
-  MDBCol,
-  MDBRow,
-  MDBBtn,
-  MDBInput,
-} from "mdb-react-ui-kit";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { MDBContainer, MDBCol, MDBRow, MDBInput } from "mdb-react-ui-kit";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { doc, setDoc } from "firebase/firestore";
 
 const Register = () => {
   const {
@@ -30,26 +26,27 @@ const Register = () => {
 
   async function onhandleSubmit(data) {
     try {
-      await createUserWithEmailAndPassword(
-        auth,
-        data.email,
-        data.password,
-        data.name,
-        data.phoneNumber
-      );
-         toast.success("User Registered Successfully!");
-    setTimeout(() => {
-      router.push("/login");
-    }, 2000);
-  } catch (error) {
-     
-    if (error.code === "auth/email-already-in-use") {
-      toast.error("This email is already registered. Please log in instead.");
-    } else {
-      toast.error(`Error: ${error.message}`);
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(db, "users", user.uid), {
+          username: data.name,
+          phoneNum: data.phoneNumber,
+          userEmail: data.email,
+        });
+      }
+      toast.success("User Registered Successfully!");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("This email is already registered. Please log in instead.");
+      } else {
+        toast.error(`Error: ${error.message}`);
+      }
     }
   }
-}
   return (
     <div className="container">
       <MDBContainer fluid className="p-3 my-2">
@@ -233,12 +230,14 @@ const Register = () => {
               >
                 Sign up
               </button>
-              <Link href="/login" class='text-primary'>you have an account ?</Link>
+              <Link href="/login" class="text-primary">
+                Already have an account ?
+              </Link>
             </form>
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-         <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };
