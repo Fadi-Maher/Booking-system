@@ -42,8 +42,11 @@ const Reviews = ({ params }) => {
         {error && <p className="text-danger">{error.message}</p>}
       </div>
       {isLoading ? (
-        <div className="d-flex justify-content-center mt-2">
-          <div className="spinner-border"></div>
+        <div className="d-flex justify-content-center align-items-center mt-2 vh-100">
+          <div
+            className="spinner-border text-primary "
+            style={{ width: "4rem", height: "4rem" }}
+          ></div>
         </div>
       ) : (
         <>
