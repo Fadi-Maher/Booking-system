@@ -42,7 +42,6 @@ const Login = () => {
       }
       await signInWithEmailAndPassword(auth, email, password);
 
-      // Show success toast notification
       toast.success("Logged in successfully!");
 
       setTimeout(() => {
@@ -79,10 +78,10 @@ const Login = () => {
                   size="lg"
                   required={true}
                   {...register("email", {
-                    required: "Email is Required!!!",
+                    required: "Email is required!",
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
+                      message: "Invalid email address!",
                     },
                   })}
                   onKeyUp={() => {
@@ -107,20 +106,20 @@ const Login = () => {
                   size="lg"
                   required={true}
                   {...register("password", {
-                    required: "You must specify a password",
+                    required: "You must specify a password!",
                     pattern: {
                       value:
                         /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
                       message:
-                        "Password should contain at least one number, one special character and one uppercase character",
+                        "Password must contain at least one number, one special character and one uppercase character!",
                     },
                     minLength: {
                       value: 8,
-                      message: "Password must be more than 8 characters",
+                      message: "Password must be more than 8 characters!",
                     },
                     maxLength: {
                       value: 17,
-                      message: "Password must be less than 17 characters",
+                      message: "Password must be less than 17 characters!",
                     },
                   })}
                   onKeyUp={() => {

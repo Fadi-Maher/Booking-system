@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import NavbarComponent from "../../navbar/page";
 import { AuthContext } from "@/app/AuthContext";
@@ -31,6 +31,23 @@ const Reviews = ({ params }) => {
       });
   };
 
+  const handleDeleteReview = async (reviewName) => {
+    try {
+      const docRef = doc(db, "hotels", params.hotelId);
+      const hotelDoc = await getDoc(docRef);
+      const hotelData = hotelDoc.data();
+      const updatedReviews = hotelData.reviews.filter(
+        (review) => review.name !== reviewName
+      );
+
+      await updateDoc(docRef, { reviews: updatedReviews });
+      fetchHotelData();
+    } catch (err) {
+      console.error("Failed to delete review:", err);
+      setError("Failed to delete review.");
+    }
+  };
+
   useEffect(() => {
     fetchHotelData();
   }, []);
@@ -50,7 +67,7 @@ const Reviews = ({ params }) => {
         <div className="d-flex justify-content-center align-items-center mt-2 vh-100">
           <div
             className="spinner-border text-primary "
-            style={{ width: "4rem", height: "4rem" }}
+            style={{ width: "3rem", height: "3rem" }}
           ></div>
         </div>
       ) : (
@@ -72,7 +89,6 @@ const Reviews = ({ params }) => {
             className="d-flex flex-column mb-3 mt-3 mx-auto"
             style={{ maxWidth: "40rem" }}
           >
-            {/* {console.log(reviews.length)} */}
             {reviews.length > 0 ? (
               <div>
                 <p
@@ -84,8 +100,26 @@ const Reviews = ({ params }) => {
                 {reviews.map((client) => (
                   <div
                     key={client.name}
-                    className="border-bottom border-dark-subtle mt-3"
+                    className="border-bottom border-dark-subtle mt-3 "
                   >
+                    <svg
+                      className="float-end"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                      onClick={() => handleDeleteReview(client.name)}
+                      style={{
+                        display:
+                          userDetails.username === client.name
+                            ? "block"
+                            : "none",
+                        cursor: "pointer",
+                        fill: "red",
+                      }}
+                      width="1.1rem"
+                    >
+                      <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
+                    </svg>
+
                     <h5 className="mb-0">{client.name}</h5>
                     <div>
                       {[1, 2, 3, 4, 5].map((star, index) => {

@@ -94,10 +94,10 @@ const Register = () => {
                   size="lg"
                   required={true}
                   {...register("email", {
-                    required: "Email is Required!!!",
+                    required: "Email is required!",
                     pattern: {
                       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address",
+                      message: "Invalid email address!",
                     },
                   })}
                   onKeyUp={() => {
@@ -130,15 +130,15 @@ const Register = () => {
                       value:
                         /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
                       message:
-                        "Password should contain at least one number, one special character and one uppercase character",
+                        "Password must contain at least one number, one special character and one uppercase character!",
                     },
                     minLength: {
                       value: 8,
-                      message: "Password must be more than 8 characters",
+                      message: "Password must be more than 8 characters!",
                     },
                     maxLength: {
                       value: 17,
-                      message: "Password must be less than 17 characters",
+                      message: "Password must be less than 17 characters!",
                     },
                   })}
                   onKeyUp={() => {
@@ -164,7 +164,7 @@ const Register = () => {
                   {...register("confirmPassword", {
                     validate: (value) =>
                       value === watch("password", "") ||
-                      "The passwords do not match",
+                      "The passwords do not match!",
                   })}
                   autoComplete="off"
                   onPaste={(e) => {
@@ -197,14 +197,14 @@ const Register = () => {
                   className={`form-control ${errors.name && "invalid"}`}
                   required={true}
                   defaultValue=""
-                  {...register("name", { required: "Fullname is Required!!!" })}
+                  {...register("name", { required: "Name is required!" })}
                   onKeyUp={() => {
                     trigger("name");
                   }}
                 />
                 {errors.name && (
                   <small className="text-danger mb-2 mt-n2">
-                    Fullname is Required!!!
+                    {errors.name.message}
                   </small>
                 )}
               </div>
@@ -223,16 +223,16 @@ const Register = () => {
                     pattern: {
                       value: /^01[0-5]\d{1,8}$/,
                       message:
-                        "Phone number should start with '01' followed by a digit from 0 to 5",
+                        "Phone number must start with '01' followed by a digit from 0 to 5!",
                     },
-                    required: "Phone number is Required!!!",
+                    required: "Phone number is required!",
                     maxLength: {
                       value: 11,
-                      message: "Phone number must be 11 numbers",
+                      message: "Phone number must be 11 numbers!",
                     },
                     minLength: {
                       value: 11,
-                      message: "Phone number must be 11 numbers",
+                      message: "Phone number must be 11 numbers!",
                     },
                   })}
                   onKeyUp={() => {

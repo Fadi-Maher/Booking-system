@@ -1,7 +1,9 @@
 import { Inter } from "next/font/google";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./globals.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import { AuthProvider } from "./AuthContext";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

@@ -1,5 +1,5 @@
 import { db } from "@/app/firebase";
-import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
