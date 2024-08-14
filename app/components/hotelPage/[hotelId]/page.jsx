@@ -74,7 +74,7 @@ const Reviews = ({ params }) => {
           >
             {reviews.map((client) => (
               <div
-                key={client.comment}
+                key={client.name}
                 className="border-bottom border-dark-subtle mt-3"
               >
                 <h5 className="mb-0">{client.name}</h5>

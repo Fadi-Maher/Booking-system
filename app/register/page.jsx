@@ -10,8 +10,14 @@ import Link from "next/link";
 import { MDBContainer, MDBCol, MDBRow, MDBInput } from "mdb-react-ui-kit";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import { doc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 const Register = () => {
   const {
@@ -24,8 +30,23 @@ const Register = () => {
 
   const router = useRouter();
 
-  async function onhandleSubmit(data) {
+  const checkUsernameExists = async (username) => {
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("username", "==", username));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  };
+
+  async function onHandleSubmit(data) {
     try {
+      const usernameExists = await checkUsernameExists(data.name);
+      if (usernameExists) {
+        toast.error(
+          "Username is already taken. Please choose a different one."
+        );
+        return;
+      }
+
       await createUserWithEmailAndPassword(auth, data.email, data.password);
       const user = auth.currentUser;
       if (user) {
@@ -47,6 +68,7 @@ const Register = () => {
       }
     }
   }
+
   return (
     <div className="container">
       <MDBContainer fluid className="p-3 my-2">
@@ -60,7 +82,7 @@ const Register = () => {
           </MDBCol>
 
           <MDBCol col="4" md="5">
-            <form onSubmit={handleSubmit(onhandleSubmit)}>
+            <form onSubmit={handleSubmit(onHandleSubmit)}>
               <div>
                 <label className="mt-5 mb-2" htmlFor="email">
                   Email
