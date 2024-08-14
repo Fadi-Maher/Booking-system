@@ -1,5 +1,5 @@
 import { db } from "@/app/firebase";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, getDoc, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
@@ -25,13 +25,31 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
   const addReview = async (data) => {
     try {
       const docRef = doc(db, "hotels", hotelId);
-      await updateDoc(docRef, {
-        reviews: arrayUnion({
+      const hotelSnapshot = await getDoc(docRef);
+      const existingReviews = hotelSnapshot.data().reviews;
+
+      const existingReviewIndex = existingReviews.findIndex(
+        (review) => review.name === userDetails.username
+      );
+
+      if (existingReviewIndex !== -1) {
+        existingReviews[existingReviewIndex] = {
+          ...existingReviews[existingReviewIndex],
+          comment: data.userReview,
+          rating: rating,
+        };
+      } else {
+        existingReviews.push({
           name: userDetails.username,
           comment: data.userReview,
           rating: rating,
-        }),
+        });
+      }
+
+      await updateDoc(docRef, {
+        reviews: existingReviews,
       });
+
       handleReviewAdded();
       handleClose();
       toast.success("Review Submitted Successfully!");
