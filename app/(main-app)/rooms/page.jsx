@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from "./page.module.css"
+import styles from "./RoomsPage.module.css"
 import Link from 'next/link';
 
-const Rooms = () => {
+const RoomsPage = () => {
     return (
         <section className="container mt-3">
             <div className="container-fluid">
@@ -157,4 +157,4 @@ const Rooms = () => {
     );
 };
 
-export default Rooms;
+export default RoomsPage;

@@ -3,11 +3,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
-import NavbarComponent from "../../navbar/page";
 import { AuthContext } from "@/app/AuthContext";
-import ReviewModal from "../../modal/ReviewModal";
+import ReviewModal from "@/app/components/main-app/ui/modals/ReviewModal";
 
-const Reviews = ({ params }) => {
+const ReviewDetailsPage = ({ params }) => {
   const [hotel, setHotel] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -58,8 +57,6 @@ const Reviews = ({ params }) => {
 
   return (
     <div>
-      <NavbarComponent />
-      <span></span>
       <div className="d-flex justify-content-center mt-2">
         {error && <p className="text-danger">{error.message}</p>}
       </div>
@@ -77,7 +74,7 @@ const Reviews = ({ params }) => {
             <div className="card" style={{ width: "25rem" }}>
               <img
                 src={hotel.image}
-                className="card-img-top "
+                className="card-img-top"
                 alt="beautiful hotel"
               />
               <div className="card-body">
@@ -165,4 +162,4 @@ const Reviews = ({ params }) => {
   );
 };
 
-export default Reviews;
+export default ReviewDetailsPage;

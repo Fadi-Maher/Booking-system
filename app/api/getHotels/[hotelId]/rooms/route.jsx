@@ -1,7 +1,7 @@
 // app/api/hotels/[hotelId]/rooms/route.js
 import { NextResponse } from "next/server";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { db } from "@/app/firebase"; // Adjust the path as necessary
+import { db } from "@/app/firebase";
 
 export async function GET(request, { params }) {
   try {

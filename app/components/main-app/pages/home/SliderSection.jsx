@@ -4,8 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import { useRouter } from 'next/navigation';
  
-const HotelExtension = () => {
+const SliderSection = () => {
+  const router = useRouter();
+
   useEffect(() => {
     // Ensure the carousel is initialized
     if (typeof window !== "undefined" && window.bootstrap) {
@@ -13,6 +16,8 @@ const HotelExtension = () => {
       new window.bootstrap.Carousel(carouselElement);
     }
   }, []);
+
+  const showHotelsClickHandler = () => router.push("/hotels")
 
   return (
     <div className='container mb-5 d-flex flex-column '>
@@ -44,14 +49,12 @@ const HotelExtension = () => {
     </div>
          <div className='justify-content-center d-flex'>
     <button
-     type="button" className="btn btn-primary p-2 mt-3  w-25 " > 
-     <Link className='text-light text-decoration-none' href="/components/hotelPage">
-      Show Hotels 
-      </Link>
-      </button>
+     type="button" className="btn btn-primary p-2 mt-3  w-25 " onClick={showHotelsClickHandler}>
+      Show Hotels
+    </button>
     </div>
     </div>
   );
 };
 
-export default HotelExtension;
+export default SliderSection;

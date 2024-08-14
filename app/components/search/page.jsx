@@ -1,13 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import HotelDetails from "../hotelDetails/page"; // Import the HotelDetails component
 
 const Search = () => {
   const [hotels, setHotels] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
-  const [selectedHotel, setSelectedHotel] = useState(null);
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -38,14 +36,6 @@ const Search = () => {
     hotel.name.toLowerCase().includes(query.toLowerCase())
   );
 
-  const showDetailsOfHotel = (hotel) => {
-    setSelectedHotel(hotel);
-  };
-
-  const closeDetails = () => {
-    setSelectedHotel(null);
-  };
-
   if (loading) return <p>Loading...</p>;
 
   if (error) return <p>Error: {error}</p>;
@@ -57,7 +47,7 @@ const Search = () => {
         placeholder="Search hotels..."
         value={query}
         onChange={handleInputChange}
-        className="form-control "
+        className="form-control"
       />
 
       {query && filteredHotels.length > 0 && (
@@ -66,7 +56,7 @@ const Search = () => {
             <li
               key={hotel.id}
               className="list-group-item"
-              onClick={() => showDetailsOfHotel(hotel)}
+              // onClick={() => showDetailsOfHotel(hotel)}
               style={{ cursor: 'pointer' }}
             >
               {hotel.name}
@@ -74,12 +64,7 @@ const Search = () => {
           ))}
         </ul>
       )}
-
-      {selectedHotel && (
-        <HotelDetails hotel={selectedHotel} onClose={closeDetails} />
-      )}
     </div>
-    
   );
 };
 
