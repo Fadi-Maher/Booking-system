@@ -42,7 +42,7 @@ const Reviews = ({ params }) => {
   return (
     <div>
       <NavbarComponent />
-
+      <span></span>
       <div className="d-flex justify-content-center mt-2">
         {error && <p className="text-danger">{error.message}</p>}
       </div>
@@ -72,37 +72,51 @@ const Reviews = ({ params }) => {
             className="d-flex flex-column mb-3 mt-3 mx-auto"
             style={{ maxWidth: "40rem" }}
           >
-            {reviews.map((client) => (
-              <div
-                key={client.name}
-                className="border-bottom border-dark-subtle mt-3"
-              >
-                <h5 className="mb-0">{client.name}</h5>
-                <div>
-                  {[1, 2, 3, 4, 5].map((star, index) => {
-                    return (
-                      <span
-                        key={index}
-                        className="start"
-                        style={{
-                          cursor: "default",
-                          color: `${client.rating}` >= star ? "gold" : "gray",
-                          fontSize: `1.3rem`,
-                        }}
-                      >
-                        {" "}
-                        ★{" "}
-                      </span>
-                    );
-                  })}
-                </div>
-                <div className="card-body">
-                  <blockquote>
-                    <q className="text-secondary">{client.comment}</q>
-                  </blockquote>
-                </div>
+            {/* {console.log(reviews.length)} */}
+            {reviews.length > 0 ? (
+              <div>
+                <p
+                  className="border-bottom border-dark-subtle mt-3"
+                  style={{ color: "#FFB22C" }}
+                >
+                  {reviews.length} Review(s) Available
+                </p>
+                {reviews.map((client) => (
+                  <div
+                    key={client.name}
+                    className="border-bottom border-dark-subtle mt-3"
+                  >
+                    <h5 className="mb-0">{client.name}</h5>
+                    <div>
+                      {[1, 2, 3, 4, 5].map((star, index) => {
+                        return (
+                          <span
+                            key={index}
+                            className="start"
+                            style={{
+                              cursor: "default",
+                              color:
+                                `${client.rating}` >= star ? "gold" : "gray",
+                              fontSize: `1.3rem`,
+                            }}
+                          >
+                            {" "}
+                            ★{" "}
+                          </span>
+                        );
+                      })}
+                    </div>
+                    <div className="card-body">
+                      <blockquote>
+                        <q className="text-secondary">{client.comment}</q>
+                      </blockquote>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              <p style={{ color: "#FFB22C" }}>No Available Reviews!</p>
+            )}
             <div className=" mt-3">
               <ReviewModal
                 hotelId={params.hotelId}
