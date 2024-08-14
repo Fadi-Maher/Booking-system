@@ -9,7 +9,7 @@ import ReviewModal from "../../modal/ReviewModal";
 
 const Reviews = ({ params }) => {
   const [hotel, setHotel] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [reviews, setReviews] = useState([]);
   const { userDetails } = useContext(AuthContext);
@@ -85,7 +85,7 @@ const Reviews = ({ params }) => {
                         key={index}
                         className="start"
                         style={{
-                          cursor: "pointer",
+                          cursor: "default",
                           color: `${client.rating}` >= star ? "gold" : "gray",
                           fontSize: `1.3rem`,
                         }}
