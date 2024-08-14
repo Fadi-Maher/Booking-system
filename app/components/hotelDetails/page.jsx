@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 const HotelDetails = ({ hotel, onClose }) => {
    const images = Array.isArray(hotel.images) ? hotel.images : [];
@@ -26,6 +27,10 @@ const HotelDetails = ({ hotel, onClose }) => {
       <button onClick={onClose} className="close-btn btn btn-primary p-3 m-3  justify-content-center d-flex ">
           Close
         </button>
+         {/*  Link to the Rooms Page */}
+      <Link href={`/components/hotelPage/${hotel.id}/rooms`}>
+        <button className="btn btn-primary">View Rooms</button>
+      </Link>
     </div>
   );
 };
