@@ -9,7 +9,7 @@ import StarRating from "../star rating/StarRating";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function ReviewModal({ hotelId, userDetails }) {
+function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
   const [show, setShow] = useState(false);
   const [rating, setRating] = useState(0);
 
@@ -32,6 +32,7 @@ function ReviewModal({ hotelId, userDetails }) {
           rating: rating,
         }),
       });
+      handleReviewAdded();
       handleClose();
       toast.success("Review Submitted Successfully!");
     } catch (error) {
@@ -51,6 +52,7 @@ function ReviewModal({ hotelId, userDetails }) {
       </Button>
       {!userDetails && (
         <small className="text-danger mb-4 mt-n2">
+          {" "}
           You must be{" "}
           <Link href="/login" className="text-primary">
             Signed in

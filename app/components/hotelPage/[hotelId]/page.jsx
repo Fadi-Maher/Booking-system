@@ -14,25 +14,30 @@ const Reviews = ({ params }) => {
   const [reviews, setReviews] = useState([]);
   const { userDetails } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchHotelData = () => {
-      setIsLoading(true);
-      const docRef = doc(db, "hotels", params.hotelId);
-      getDoc(docRef)
-        .then((docSnap) => {
-          setHotel(docSnap.data());
-          setReviews(docSnap.data().reviews);
+  const fetchHotelData = () => {
+    setIsLoading(true);
+    const docRef = doc(db, "hotels", params.hotelId);
+    getDoc(docRef)
+      .then((docSnap) => {
+        setHotel(docSnap.data());
+        setReviews(docSnap.data().reviews);
 
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setError(err.message);
-          setIsLoading(false);
-        });
-    };
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
     fetchHotelData();
   }, []);
+
+  const handleReviewAdded = () => {
+    fetchHotelData();
+  };
 
   return (
     <div>
@@ -73,11 +78,24 @@ const Reviews = ({ params }) => {
                 className="border-bottom border-dark-subtle mt-3"
               >
                 <h5 className="mb-0">{client.name}</h5>
-                {client.rating && (
-                  <small style={{ color: "#FFB200" }}>
-                    {`${client.rating} Star(s) Rating.`}{" "}
-                  </small>
-                )}
+                <div>
+                  {[1, 2, 3, 4, 5].map((star, index) => {
+                    return (
+                      <span
+                        key={index}
+                        className="start"
+                        style={{
+                          cursor: "pointer",
+                          color: `${client.rating}` >= star ? "gold" : "gray",
+                          fontSize: `1.3rem`,
+                        }}
+                      >
+                        {" "}
+                        ★{" "}
+                      </span>
+                    );
+                  })}
+                </div>
                 <div className="card-body">
                   <blockquote>
                     <q className="text-secondary">{client.comment}</q>
@@ -86,7 +104,11 @@ const Reviews = ({ params }) => {
               </div>
             ))}
             <div className=" mt-3">
-              <ReviewModal hotelId={params.hotelId} userDetails={userDetails} />
+              <ReviewModal
+                hotelId={params.hotelId}
+                userDetails={userDetails}
+                handleReviewAdded={handleReviewAdded}
+              />
             </div>
           </div>
         </>
