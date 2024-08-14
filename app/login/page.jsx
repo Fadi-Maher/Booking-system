@@ -143,18 +143,7 @@ const Login = () => {
                   checked={rememberMe}
                   onChange={() => setRememberMe(!rememberMe)}
                 />
-                {/* <a href="!#">Forgot password?</a> */}
               </div>
-
-              {/* <MDBBtn
-                className="mb-4 w-100 mt-4"
-                size="lg"
-                disabled={!isValid}
-                type="submit"
-                style={{ backgroundColor: "#354c5c" }}
-              >
-                Sign in
-              </MDBBtn> */}
 
               <button
                 className={`btn mb-4 w-100 mt-4 text-light btn-lg ${styles.btnBg}`}

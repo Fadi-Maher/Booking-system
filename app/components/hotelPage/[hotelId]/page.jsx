@@ -72,7 +72,12 @@ const Reviews = ({ params }) => {
                 key={client.comment}
                 className="border-bottom border-dark-subtle mt-3"
               >
-                <h5>{client.name}</h5>
+                <h5 className="mb-0">{client.name}</h5>
+                {client.rating && (
+                  <small style={{ color: "#FFB200" }}>
+                    {`${client.rating} Star(s) Rating.`}{" "}
+                  </small>
+                )}
                 <div className="card-body">
                   <blockquote>
                     <q className="text-secondary">{client.comment}</q>

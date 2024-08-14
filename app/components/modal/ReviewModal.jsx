@@ -5,9 +5,13 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
+import StarRating from "../star rating/StarRating";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ReviewModal({ hotelId, userDetails }) {
   const [show, setShow] = useState(false);
+  const [rating, setRating] = useState(0);
 
   const {
     register,
@@ -25,12 +29,14 @@ function ReviewModal({ hotelId, userDetails }) {
         reviews: arrayUnion({
           name: userDetails.username,
           comment: data.userReview,
+          rating: rating,
         }),
       });
-
       handleClose();
+      toast.success("Review Submitted Successfully!");
     } catch (error) {
       console.log(error.message);
+      toast.error("Something Went Wrong While Submitting Your Review");
     }
   };
 
@@ -55,7 +61,15 @@ function ReviewModal({ hotelId, userDetails }) {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Review:</Modal.Title>
+          <div>
+            <span>Your Rating:</span>
+            <StarRating rating={rating} setRating={setRating} />
+            {rating === 0 && (
+              <small className="text-danger mb-4 mt-n2">
+                Rating us is required!
+              </small>
+            )}
+          </div>
         </Modal.Header>
         <form onSubmit={handleSubmit(addReview)}>
           <Modal.Body>
@@ -64,7 +78,7 @@ function ReviewModal({ hotelId, userDetails }) {
                 htmlFor="exampleFormControlTextarea1"
                 className="form-label"
               >
-                Your thoughts:
+                Your Thoughts:
               </label>
               <textarea
                 {...register("userReview", {
@@ -97,12 +111,17 @@ function ReviewModal({ hotelId, userDetails }) {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button type="submit" variant="primary">
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={rating === 0 ? true : false}
+            >
               Send Review
             </Button>
           </Modal.Footer>
         </form>
       </Modal>
+      <ToastContainer />
     </>
   );
 }
