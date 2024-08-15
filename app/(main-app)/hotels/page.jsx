@@ -62,7 +62,7 @@ const HotelsPage = () => {
       <ul style={{ listStyleType: "none", padding: 50 }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
           {hotels.map((hotel) => {
-            const truncatedText = truncateText(hotel.description, 20); // Changed from 3 to 20 words
+            const truncatedText = truncateText(hotel.description, 20); 
             const isTruncated = hotel.description.split(' ').length > 20;
             console.log(`Hotel: ${hotel.name}`);
             console.log(`Description length: ${hotel.description.split(' ').length}`);
@@ -90,7 +90,7 @@ const HotelsPage = () => {
                     </div>
                     {isTruncated && (
                       <button onClick={() => toggleReadMore(hotel.id)} className="btn btn-link p-0">
-                        {expanded[hotel.id] ? "Read less" : "Read more"}
+                        {expanded[hotel.id] ? "See less" : "Read more"}
                       </button>
                     )}
                     <div className="d-flex justify-content-between mt-2">
