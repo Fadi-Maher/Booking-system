@@ -1,9 +1,9 @@
-
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { useParams } from "next/navigation"; 
+//import Link from "next/link";
+import { useParams } from "next/navigation";
+import styles from "./page.module.css" 
 
 const RoomsPage = () => {
   const { hotelId } = useParams(); 
@@ -32,7 +32,6 @@ const RoomsPage = () => {
       
         setRooms(data);
 
-       
       } catch (error) {
         setError(error.message);
       } finally {
@@ -61,43 +60,57 @@ const RoomsPage = () => {
 
   return (
     <div>
-      <h1 className="text-center text-primary">Rooms</h1>
-      <ul style={{ listStyleType: "none", padding: 50 }}>
-        <div className="d-flex flex-wrap gap-3 justify-content-around">
-          {rooms.map((room) => (
-            <li key={room.id} style={{ marginBottom: "1rem" }}>
-              <div className="card" style={{ width: "18rem" }}>
-                <img
-                  src={room.image} // Assuming image is a string for room
-                  className="img-thumbnail"
-                  alt={room.name}
-                  style={{ objectFit: "cover", height: "200px" }}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{room.name}</h5>
-                  <p className="card-text">{room.description}</p>
-                  <p className="card-text">Price: ${room.price}</p>
-                  <div className="d-flex justify-content-between">
-                    <button
+      <h1 className="text-center  pt-5">Our Rooms</h1>
+      <section className={styles.spad}>
+      <div className={styles.roomsSection}>
+        <div className="container">
+          <div className="row">
+            {rooms.map((room) => (
+              <div className="col-lg-4 col-md-6" key={room.id}>
+                <div className={styles.roomitem}>
+                  <img src={room.image} alt={room.Title} />
+                  <div className={styles.ritext}>
+                    <h4>{room.Title}</h4>
+                    <h3>{room.Price}$<span>/Pernight</span></h3>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className={styles.ro}>Size:</td>
+                          <td>{room.Size}</td>
+                        </tr>
+                        <tr>
+                          <td className={styles.ro}>Capacity:</td>
+                          <td>{room.Capacity}</td>
+                        </tr>
+                        <tr>
+                          <td className={styles.ro}>Bed:</td>
+                          <td>{room.Bed}</td>
+                        </tr>
+                        <tr>
+                          <td className={styles.ro}>Services:</td>
+                          <td>{room.Services}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <a
+                      href="#"
+                      className={styles.primarybtn}
                       onClick={() => showDetailsOfRoom(room)}
-                      className="btn btn-primary"
                     >
                       More Details
-                    </button>
-                    <Link href={`/components/roomPage/${room.id}`}>
-                      <button className="btn btn-primary">Reviews</button>
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
-            </li>
-          ))}
+            ))}
+          </div>
+          </div>
         </div>
-      </ul>
+      </section>
 
       {selectedRoom && (
         <div>
-          <h2>{selectedRoom.name}</h2>
+          <h2>{selectedRoom.Title}</h2>
           <p>{selectedRoom.description}</p>
           {/* Add more details or a detailed component */}
           <button onClick={closeDetails} className="btn btn-secondary">
