@@ -83,15 +83,12 @@ const ReviewDetailsPage = ({ params }) => {
             </div>
           </div>
           <div
-            className="d-flex flex-column mb-3 mt-3 mx-auto"
-            style={{ maxWidth: "40rem" }}
+            className="d-flex flex-column mb-3 mt-3 mx-auto p-2 rounded"
+            style={{ maxWidth: "40rem", backgroundColor: "#E3F4F4" }}
           >
-            {reviews.length > 0 ? (
+            {reviews?.length > 0 ? (
               <div>
-                <p
-                  className="border-bottom border-dark-subtle mt-3"
-                  style={{ color: "#FFB22C" }}
-                >
+                <p className="border-bottom border-dark-subtle mt-3 text-warning">
                   {reviews.length} Review(s) Available
                 </p>
                 {reviews.map((client) => (
@@ -106,13 +103,12 @@ const ReviewDetailsPage = ({ params }) => {
                       onClick={() => handleDeleteReview(client.name)}
                       style={{
                         display:
-                          userDetails.username === client.name
+                          userDetails?.username === client.name
                             ? "block"
                             : "none",
                         cursor: "pointer",
-                        fill: "red",
                       }}
-                      width="1.1rem"
+                      width="0.8rem"
                     >
                       <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z" />
                     </svg>
