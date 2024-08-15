@@ -1,0 +1,68 @@
+.roomitem img {
+	max-width: 100%;
+}
+.spad {
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+.roomsSection {
+	padding-top: 0;
+	padding-bottom: 80px;
+}
+.roomitem {
+	margin-bottom: 30px;
+}
+.roomitem img {
+	min-width: 100%;
+}
+.ritext {
+	border: 1px solid #ebebeb;
+	border-top: none;
+	padding: 24px 24px 30px 28px;
+}
+.ritext h4 {
+	color: #19191a;
+	margin-bottom: 17px;
+}
+.ritext h3 {
+	color: #dfa974;
+	font-weight: 700;
+	margin-bottom: 14px;
+}
+.ritext h3 span {
+	font-family: "Cabin", sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+	color: #19191a;
+}
+ .ritext table {
+	margin-bottom: 18px;
+}
+ .ritext table tbody tr td {
+	font-size: 16px;
+	color: #707079;
+	line-height: 36px;
+}
+ .ritext table tbody tr td.ro {
+	width: 125px;
+}
+.primarybtn {
+	color: #19191a;
+    display: inline-block;
+	font-size: 13px;
+	/* color: #ffffff; */
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-weight: 700;
+	position: relative;
+    text-decoration: none;
+}
+.primarybtn:after {
+	position: absolute;
+	left: 0;
+	bottom: -5px;
+	width: 100%;
+	height: 2px;
+	background: #dfa974;
+	content: "";
+}
