@@ -15,18 +15,18 @@ const MainHeader = () => {
         <div className="collapse navbar-collapse text-white" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto   item-center  text-light ">
             <li className="nav-item ">
-              <Link className="nav-link active text-white font-3 border shadow  me-2 " aria-current="page" href="/">Home</Link>
+              <Link className="nav-link active text-white font-3  shadow  me-2 " aria-current="page" href="/">Home</Link>
             </li>
            
             <li className="nav-item">
-              <Link className="nav-link text-white me-2  shadow border" href="/hotels">Hotels</Link>
+              <Link className="nav-link text-white me-2  shadow " href="/hotels">Hotels</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white border shadow  me-2 " href="/about-us">About Us</Link>
+              <Link className="nav-link text-white  shadow  me-2 " href="/about-us">About Us</Link>
             </li>
     
             <li className="nav-item">
-              <Link className="nav-link text-white border  shadow me-2 " href="/">Contact Us</Link>
+              <Link className="nav-link text-white   shadow me-2 " href="/">Contact Us</Link>
             </li>
            
           </ul>

@@ -12,7 +12,7 @@ const AboutUsSection = () => {
                   <div className={styles.aboutText}>
                     <div className={styles.sectionTitle}>
                       <span>About Us</span>
-                      <h2>Intercontinental <br /> Westlake Hotel</h2>
+                      <h2> Reserve-Mate</h2>
                     </div>
                     <p className="fpara">
                       Our site is a leading online accommodation site. We’re passionate about travel. Every day, we inspire and
@@ -22,9 +22,10 @@ const AboutUsSection = () => {
                       So when it comes to booking the perfect hotel,
                       vacation rental, resort, apartment, we’ve got you covered.
                     </p>
-                    <Link href="#" className={styles.aboutBtn}>
+                    <Link  href="./about-us" className={styles.aboutBtn}>
                       Read More
                     </Link>
+                  
                   </div>
                 </div>
     

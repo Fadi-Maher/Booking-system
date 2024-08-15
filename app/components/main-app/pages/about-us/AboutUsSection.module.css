@@ -81,6 +81,8 @@
       letter-spacing: 2px;
       font-weight: 700;
       position: relative;
+      text-decoration: none;
+      
   }
   .aboutBtn:after {
       position: absolute;
