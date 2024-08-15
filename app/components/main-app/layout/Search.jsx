@@ -3,7 +3,7 @@
 import { Form, Spinner } from "react-bootstrap";
 import styles from "./Search.module.css";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   collection,
   getDocs,
@@ -15,15 +15,6 @@ import {
 } from "firebase/firestore";
 import { db } from "@/app/firebase";
 
-const dummyHotels = [
-    {id: 1, name: "hotel 1"},
-    {id: 2, name: "hotel 2"},
-    {id: 3, name: "hotel 3"},
-    {id: 4, name: "hotel 4"},
-    {id: 5, name: "hotel 5"},
-    {id: 6, name: "hotel 6"},
-    {id: 7, name: "hotel 7"},
-]
 
 const DropDownComponent = ({ hotels, loading }) => {
 	const renderHotelsList = () => {
@@ -53,6 +44,21 @@ const Search = () => {
 	const [filteredHotels, setFilteredHotels] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [dropdownOpen, setDropdownOpen] = useState(false);
+	const searchRef = useRef(null);
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (searchRef.current && !searchRef.current.contains(event.target)) {
+				setDropdownOpen(false);
+			}
+		}
+
+		document.addEventListener("mousedown", handleClickOutside);
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		}
+	}, [searchRef]);
 
 	useEffect(() => {
 		// cleanup function
@@ -91,11 +97,11 @@ const Search = () => {
   };
 
   return (
-    <div className={styles["input-container"]}>
+    <div className={styles["input-container"]} ref={searchRef}>
         <Form.Control type="text" placeholder="Search hotels..." className={styles.input} onChange={(e) => setSearchKeyword(e.target.value)} />
 				{dropdownOpen && <DropDownComponent hotels={filteredHotels} loading={loading} />}
     </div>
   )
 }
 
-export default Search
+export default Search;
