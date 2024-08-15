@@ -5,6 +5,8 @@ import { useParams, useRouter } from "next/navigation";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import { Container, Spinner } from "react-bootstrap";
+import Link from "next/link";
+import styles from "../../../page.module.css";
 
 const HotelDetails = () => {
 	const { hotelId } = useParams();
@@ -15,13 +17,15 @@ const HotelDetails = () => {
 	const [isLoading, setIsLoading] = useState(true);
 
   	const images = Array.isArray(hotel?.images) ? hotel.images : [];
-
+    // const highlights=Array.isArray(hotel?.Highlights) ? hotel.Highlights : [];
 	const fetchHotelData = () => {
 		setIsLoading(true);
 		const docRef = doc(db, "hotels", hotelId);
 		getDoc(docRef)
 		.then((docSnap) => {
 			setHotel(docSnap.data());
+			
+			
 		})
 		.catch((err) => {
 			console.log(err);
@@ -31,30 +35,105 @@ const HotelDetails = () => {
 	useEffect(() => {
 		fetchHotelData();
 	}, [])
-
+	console.log(hotel?.Amenities);
   return (
     isLoading ? <div className="d-flex justify-content-center align-items-center py-5"><Spinner animation="border" variant="dark" /></div> : 
-		<Container className="py-5">
-			<div className="modal-container">
-				<div className="card" style={{  width: '20%' }}>
-					<div className="d-flex gap-3">
+		         <div ><div className="card">
+					<div className="card-body">
+					<h3>{hotel?.name}</h3>
+				 <div className="m-2">{hotel?.location}</div>  
+				 <div className="d-flex flex-row flex-wrap h-50 justify-content-evenly">
 						{images.map((img, index) => (
-							<img
+							<img 
+							   
 								key={index}
 								src={img}
-								className="img-thumbnail"
+								className="img-thumbnail w-25 "
 								alt={`Room ${index + 1}`}
 							/>
 						))}
-					</div>
-				</div>
-				<h2 className="card-text text-center">{hotel?.details ? hotel?.details : "N/A"}</h2>
-				{/*  Link to the Rooms Page */}
-				<div className="d-flex justify-content-center">
-					<button className="btn btn-primary" onClick={() => router.push(`/hotels/${hotelId}/rooms`)}>View Rooms</button>
-				</div>
-			</div>
-		</Container>
+							</div>
+							<div>
+						
+						
+						<div className="d-flex flex-row flex-wrap justify-content-between  mb-4  mt-4 " >
+							<div>
+							<span className="m-2 ">{hotel.reviews==undefined?0:hotel.reviews.length}</span><span className="text-muted ">reviews</span>
+							</div>
+						
+						<button
+                className={`btn text-light btn-lg ${styles.btnBg}`}
+                type="submit"
+				onClick={()=>{
+					router.push(`/hotels/${hotelId}/rooms`);
+				}}
+              >
+             Rooms
+              </button>
+						</div>
+						</div>
+						</div>
+						 <div className="card container shadow p-3 mb-5 bg-white  border-0" >
+						
+						<h4 className="mt-4 mb-2"> ✨ Facilities</h4>
+						<div className="d-flex flex-column flex-wrap justify-content-evenly">
+						<h6>Highlights</h6>
+							{hotel.Highlights.map((highlight, index) => (
+							<div className="card-body" key={index}>
+                            🔸{highlight}
+							</div>
+							
+						))}
+						<h6>Cleaning Services</h6>
+							<div className="card-body" >
+                            
+							🔸 {hotel.Amenities["Cleaning Services"]}
+							</div>
+							<h6>Food & Drink</h6>
+							<div className="card-body" >
+                            
+							🔸 {hotel.Amenities["Food & Drink"]}
+							</div>
+							
+						<h6>Transportation</h6>
+							{hotel.Amenities["Transportation"].map((amen, index) => (
+							<div className="card-body" key={index}>
+                            🔸{amen}
+							</div>
+							
+						))}
+						
+						</div>
+						 </div>
+						 <div className="card container border-0">
+							<div className="card-body">
+							<h4 className="mt-4 mb-2">Popular Amenities</h4>
+						<div className="d-flex flex-row flex-wrap justify-content-evenly">
+						{
+							hotel.Amenities["Popular Amenities"].map((highlight,index)=>(
+								<div className="card shadow p-3 mb-5 bg-white  border-0" key={index}>
+								<div className="card-body">
+								  {highlight}
+								</div>
+							  </div>
+							))
+						}
+						</div>
+						<div className="mt-4 ">
+							{hotel?.description}
+						</div>
+							</div>
+						 </div>
+						
+						
+						
+						
+						</div>
+						
+						</div> 
+				
+		
+		
   );
 };
 
