@@ -11,8 +11,16 @@ const HotelsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expanded, setExpanded] = useState({});
+  const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
+ 
+    const isAuthenticated = !!localStorage.getItem('authToken');  
+    if (!isAuthenticated) {
+      router.push('/login');  
+      return;
+    }
+
     const fetchHotels = async () => {
       try {
         const response = await fetch("/api/getHotels", {
@@ -23,6 +31,7 @@ const HotelsPage = () => {
         }
         const data = await response.json();
         setHotels(data);
+        setFadeIn(true);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -31,7 +40,7 @@ const HotelsPage = () => {
     };
 
     fetchHotels();
-  }, []);
+  }, [router]);
 
   const toggleReadMore = (id) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -62,15 +71,19 @@ const HotelsPage = () => {
       <ul style={{ listStyleType: "none", padding: 50 }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
           {hotels.map((hotel) => {
+<<<<<<< HEAD
             const truncatedText = truncateText(hotel.description, 20); 
+=======
+            const truncatedText = truncateText(hotel.description, 20);
+>>>>>>> d55ff9f (handle auth of login & create Drawer & EditNavbAr & addHotels)
             const isTruncated = hotel.description.split(' ').length > 20;
-            console.log(`Hotel: ${hotel.name}`);
-            console.log(`Description length: ${hotel.description.split(' ').length}`);
-            console.log(`Is truncated: ${isTruncated}`);
 
             return (
               <li key={hotel.id} style={{ marginBottom: "1rem" }}>
-                <div className="card" style={{ width: "18rem", border: "1px solid #ccc", borderRadius: "8px" }}>
+                <div 
+                  className={`card fade-in`}  
+                  style={{ width: "18rem", border: "1px solid #ccc", borderRadius: "8px" }}
+                >
                   <img
                     src={hotel.image}
                     className="card-img-top"
