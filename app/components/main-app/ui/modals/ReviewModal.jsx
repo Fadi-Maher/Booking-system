@@ -22,6 +22,12 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // Date format
+  const date = new Date();
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+  const formattedDate = formatter.format(date);
+
   const addReview = async (data) => {
     try {
       const docRef = doc(db, "hotels", hotelId);
@@ -37,12 +43,14 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
           ...existingReviews[existingReviewIndex],
           comment: data.userReview,
           rating: rating,
+          date: formattedDate,
         };
       } else {
         existingReviews.push({
           name: userDetails.username,
           comment: data.userReview,
           rating: rating,
+          date: formattedDate,
         });
       }
 
@@ -109,7 +117,7 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
                       "You must provide a review of 10 characters at least.",
                   },
                   maxLength: {
-                    value: 100,
+                    value: 200,
                     message: "Maximum number of characters is reached.",
                   },
                 })}
