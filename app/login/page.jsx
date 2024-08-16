@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation.js";
 import { useForm } from "react-hook-form";
-import { auth } from "../firebase"; // Adjust based on your setup
+import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
   browserSessionPersistence,
   setPersistence,
 } from "firebase/auth";
+import React, { useState } from "react";
+import styles from "../page.module.css";
 import {
   MDBContainer,
   MDBCol,
@@ -17,42 +18,41 @@ import {
   MDBInput,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 
 const Login = () => {
-  const { handleSubmit, register, trigger, formState: { errors, isValid } } = useForm();
+  const {
+    handleSubmit,
+    register,
+    trigger,
+    formState: { errors, isValid },
+  } = useForm();
+
   const router = useRouter();
+
   const [rememberMe, setRememberMe] = useState(false);
 
   const submitHandler = async ({ email, password }) => {
     try {
-      
       if (rememberMe) {
         await setPersistence(auth, browserSessionPersistence);
       }
+      await signInWithEmailAndPassword(auth, email, password);
 
-      
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-
-    
-      const authToken = await userCredential.user.getIdToken();
-
-       
-      localStorage.setItem('authToken', authToken);
-
-       
       toast.success("Logged in successfully!");
+
       setTimeout(() => {
-        router.push("/");  
+        router.push("/");
       }, 2000);
     } catch (error) {
       console.error(error);
+
       toast.error("Login failed. Please check your credentials.");
     }
   };
-
   return (
     <div className="container">
       <MDBContainer fluid className="p-3 my-2">
@@ -88,6 +88,7 @@ const Login = () => {
                     trigger("email");
                   }}
                 />
+
                 {errors.email && (
                   <small className="text-danger mt-n2">
                     {errors.email.message}
@@ -131,6 +132,7 @@ const Login = () => {
                   </small>
                 )}
               </div>
+
               <div className="mt-4 mb-4">
                 <MDBCheckbox
                   name="flexCheck"
@@ -141,14 +143,15 @@ const Login = () => {
                   onChange={() => setRememberMe(!rememberMe)}
                 />
               </div>
+
               <button
-                className={`btn mb-4 w-100 mt-4 text-light btn-lg  bg-primary`}
+                className={`btn mb-4 w-100 mt-4 text-light btn-lg ${styles.btnBg}`}
                 disabled={!isValid}
                 type="submit"
               >
                 Sign in
               </button>
-              <Link href="/register" className="text-primary">
+              <Link href="/register" class="text-primary">
                 Register
               </Link>
             </form>
@@ -159,5 +162,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
