@@ -35,14 +35,13 @@ const HotelDetails = () => {
 	useEffect(() => {
 		fetchHotelData();
 	}, [])
-	console.log(hotel?.Amenities);
   return (
     isLoading ? <div className="d-flex justify-content-center align-items-center py-5"><Spinner animation="border" variant="dark" /></div> : 
-		         <div ><div className="card">
+		         <div className="mt-4"><div className="card">
 					<div className="card-body">
 					<h3>{hotel?.name}</h3>
 				 <div className="m-2">{hotel?.location}</div>  
-				 <div className="d-flex flex-row flex-wrap h-50 justify-content-evenly">
+				 <div className="d-flex flex-row flex-wrap h-50 ">
 						{images.map((img, index) => (
 							<img 
 							   
@@ -58,7 +57,7 @@ const HotelDetails = () => {
 						
 						<div className="d-flex flex-row flex-wrap justify-content-between  mb-4  mt-4 " >
 							<div>
-							<span className="m-2 ">{hotel.reviews==undefined?0:hotel.reviews.length}</span><span className="text-muted ">reviews</span>
+							<span className="m-2 ">{hotel?.reviews?0:hotel.reviews.length}</span><span className="text-muted ">reviews</span>
 							</div>
 						
 						<button
