@@ -26,7 +26,7 @@ const MainHeader = () => {
             </li>
     
             <li className="nav-item">
-              <Link className="nav-link text-white   shadow me-2 " href="/">Contact Us</Link>
+              <Link className="nav-link text-white   shadow me-2 " href="/contact-us">Contact Us</Link>
             </li>
            
           </ul>
