@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-//import Link from "next/link";
 import { useParams } from "next/navigation";
 import styles from "./page.module.css" 
+import Link from "next/link";
 
 const RoomsPage = () => {
   const { hotelId } = useParams(); 
@@ -11,7 +11,7 @@ const RoomsPage = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -42,13 +42,7 @@ const RoomsPage = () => {
     fetchRooms();
   }, [hotelId]); 
 
-  const showDetailsOfRoom = (room) => {
-    setSelectedRoom(room);
-  };
 
-  const closeDetails = () => {
-    setSelectedRoom(null);
-  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -92,13 +86,7 @@ const RoomsPage = () => {
                         </tr>
                       </tbody>
                     </table>
-                    <a
-                      href="#"
-                      className={styles.primarybtn}
-                      onClick={() => showDetailsOfRoom(room)}
-                    >
-                      More Details
-                    </a>
+                    <Link  href="#"  className={styles.primarybtn}> Booking Now </Link>
                   </div>
                 </div>
               </div>
@@ -108,16 +96,7 @@ const RoomsPage = () => {
         </div>
       </section>
 
-      {selectedRoom && (
-        <div>
-          <h2>{selectedRoom.Title}</h2>
-          <p>{selectedRoom.description}</p>
-          {/* Add more details or a detailed component */}
-          <button onClick={closeDetails} className="btn btn-secondary">
-            Close
-          </button>
-        </div>
-      )}
+      
     </div>
   );
 };
