@@ -36,8 +36,8 @@ const HotelDetails = () => {
 		fetchHotelData();
 	}, [])
   return (
-    isLoading ? <div className="d-flex justify-content-center align-items-center py-5"><Spinner animation="border" variant="dark" /></div> : 
-		         <div className="mt-4"><div className="card">
+    isLoading ? <div style={{paddingTop:"85px",paddingBottom:"12px"}} className="d-flex justify-content-center align-items-center "><Spinner animation="border" variant="dark" /></div> : 
+		         <div style={{paddingTop:"70px"}}><div className="card">
 					<div className="card-body">
 					<h3>{hotel?.name}</h3>
 				 <div className="m-2">{hotel?.location}</div>  
