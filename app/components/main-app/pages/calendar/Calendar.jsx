@@ -104,10 +104,10 @@ const ReservationForm = () => {
               />
             </Form.Group>
             <div className="d-flex justify-content-center mt-4">
-              <Button
-                variant="primary"
+                  <Button
+               type="button" className="btn btn-primary p-2 mt-3  w-25 "
                 onClick={handleSubmit}
-                style={{ backgroundColor: 'skyblue', borderColor: 'skyblue' }}
+                style={{ backgroundColor: '', borderColor: 'skyblue' }}
               >
                 Find Now
               </Button>
