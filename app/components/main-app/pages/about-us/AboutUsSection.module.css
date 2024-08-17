@@ -28,7 +28,7 @@
   }
   .sectionTitle span {
       font-size: 14px;
-      color: #38a2d3;
+      color:  #dfa974;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -90,6 +90,6 @@
       bottom: -5px;
       width: 100%;
       height: 2px;
-      background: #38a2d3;
+      background:  #dfa974;
       content: "";
   }
