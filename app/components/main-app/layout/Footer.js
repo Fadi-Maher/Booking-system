@@ -18,6 +18,7 @@ const Footer = () => {
 								<h4>New latest</h4>
 								<p>Get the latest updates and offers.</p>
 						</div>
+						<div class="text-center p-3" >© 2024 Reserve-Mate</div>
 						</div>
 						</div>
 					</div>

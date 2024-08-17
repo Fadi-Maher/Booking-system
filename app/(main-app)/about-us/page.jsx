@@ -5,7 +5,7 @@ const AboutUsPage = () => {
   <AboutUsSection/>
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>About Us</h1>
+      
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Welcome to Reserve-Mate</h2>
@@ -47,21 +47,16 @@ const AboutUsPage = () => {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Meet Our Team</h2>
+        <h2 className={styles.sectionTitle}>Our Team</h2>
         <p className={styles.sectionText}>
           Our team is composed of passionate professionals who are committed to making Reserve-Mate the best booking platform available. We bring together expertise in technology, customer service, and industry knowledge to deliver a superior experience for our users.
-        </p>
-        <ul className={styles.list}>
-          <li className={styles.listItem}><strong className={styles.highlight}>Founder & CEO</strong>: [Name] - With a background in [industry/technology], [Name] founded Reserve-Mate to address the challenges faced by both businesses and customers in the booking process.</li>
-          <li className={styles.listItem}><strong className={styles.highlight}>CTO</strong>: [Name] - An expert in software development and system architecture, [Name] leads our technical team to ensure a robust and scalable platform.</li>
-          <li className={styles.listItem}><strong className={styles.highlight}>Customer Support Manager</strong>: [Name] - Dedicated to providing exceptional service, [Name] oversees our support team to ensure every customer has a positive experience.</li>
-        </ul>
+        </p>     
       </section>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Our Story</h2>
         <p className={styles.sectionText}>
-          Reserve-Mate was born out of the need for a more efficient booking solution. [Briefly describe the inspiration behind starting the company and any key milestones or achievements.]
+          Reserve-Mate was born out of the need for a more efficient booking solution. 
         </p>
       </section>
 
