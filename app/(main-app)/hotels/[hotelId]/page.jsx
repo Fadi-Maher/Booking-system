@@ -7,6 +7,7 @@ import { db } from "@/app/firebase";
 import { Container, Spinner } from "react-bootstrap";
 import Link from "next/link";
 import styles from "../../../page.module.css";
+import { Grid } from "react-loader-spinner";
 
 const HotelDetails = () => {
 	const { hotelId } = useParams();
@@ -36,7 +37,19 @@ const HotelDetails = () => {
 		fetchHotelData();
 	}, [])
   return (
-    isLoading ? <div style={{paddingTop:"85px",paddingBottom:"12px"}} className="d-flex justify-content-center align-items-center "><Spinner animation="border" variant="dark" /></div> : 
+    isLoading ?  <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+     <Grid
+ 
+  visible={true}
+  height="180"
+  width="180"
+  color="#0d6efd"
+  ariaLabel="grid-loading"
+  radius="12.5"
+  wrapperStyle={{}}
+  wrapperClass="grid-wrapper"
+  /> 
+  </div>: 
 		         <div style={{paddingTop:"70px"}}><div className="card">
 					<div className="card-body">
 					<h3>{hotel?.name}</h3>

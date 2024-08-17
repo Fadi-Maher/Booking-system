@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import styles from "./page.module.css" 
 import Link from "next/link";
-
-const RoomsPage = () => {
+import { Grid } from "react-loader-spinner";
+ const RoomsPage = () => {
   const { hotelId } = useParams(); 
 
   const [rooms, setRooms] = useState([]);
@@ -65,7 +65,7 @@ const RoomsPage = () => {
   }
 
   return (
-    <div>
+    <div className="p-5">
       <h1 className="text-center  pt-5">Our Rooms</h1>
       <section className={styles.spad}>
       <div className={styles.roomsSection}>
