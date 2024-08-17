@@ -5,6 +5,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import { AuthContext } from "@/app/AuthContext";
 import ReviewModal from "@/app/components/main-app/ui/modals/ReviewModal";
+import { Audio } from "react-loader-spinner";
 
 const ReviewDetailsPage = ({ params }) => {
   const [hotel, setHotel] = useState({});
@@ -61,12 +62,19 @@ const ReviewDetailsPage = ({ params }) => {
         {error && <p className="text-danger">{error.message}</p>}
       </div>
       {isLoading ? (
-        <div className="d-flex justify-content-center align-items-center mt-2 vh-100">
-          <div
-            className="spinner-border text-primary "
-            style={{ width: "3rem", height: "3rem" }}
-          ></div>
-        </div>
+       <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+     <Grid
+ 
+  visible={true}
+  height="180"
+  width="180"
+  color="#0d6efd"
+  ariaLabel="grid-loading"
+  radius="12.5"
+  wrapperStyle={{}}
+  wrapperClass="grid-wrapper"
+  /> 
+  </div>
       ) : (
         <>
           {" "}

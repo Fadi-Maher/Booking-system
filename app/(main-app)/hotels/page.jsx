@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { Grid } from "react-loader-spinner";
 const HotelsPage = () => {
   const router = useRouter();
 
@@ -58,7 +58,21 @@ const HotelsPage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+     return(
+       <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+     <Grid
+ 
+  visible={true}
+  height="180"
+  width="180"
+  color="#0d6efd"
+  ariaLabel="grid-loading"
+  radius="12.5"
+  wrapperStyle={{}}
+  wrapperClass="grid-wrapper"
+  /> 
+  </div>
+  )
   }
 
   if (error) {
@@ -71,11 +85,11 @@ const HotelsPage = () => {
       <ul style={{ listStyleType: "none", padding: 50 }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
           {hotels.map((hotel) => {
-<<<<<<< HEAD
+
             const truncatedText = truncateText(hotel.description, 20); 
-=======
-            const truncatedText = truncateText(hotel.description, 20);
->>>>>>> d55ff9f (handle auth of login & create Drawer & EditNavbAr & addHotels)
+
+            
+//  (handle auth of login & create Drawer & EditNavbAr & addHotels);
             const isTruncated = hotel.description.split(' ').length > 20;
 
             return (

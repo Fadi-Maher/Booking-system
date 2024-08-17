@@ -6,11 +6,20 @@ import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/app/firebase";
+import { Audio } from 'react-loader-spinner'
 
 const DropDownComponent = ({ hotels, loading }) => {
   const renderHotelsList = () => {
     if (loading) {
-      return <Spinner animation="border" variant="dark" />;
+      <Audio
+  height="80"
+  width="80"
+  radius="9"
+  color="green"
+  ariaLabel="loading"
+  wrapperStyle
+  wrapperClass
+/>;
     }
 
     if (hotels.length === 0) {

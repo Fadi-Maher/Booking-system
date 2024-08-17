@@ -45,7 +45,19 @@ const RoomsPage = () => {
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return  <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+     <Grid
+ 
+  visible={true}
+  height="180"
+  width="180"
+  color="#0d6efd"
+  ariaLabel="grid-loading"
+  radius="12.5"
+  wrapperStyle={{}}
+  wrapperClass="grid-wrapper"
+  /> 
+  </div>;
   }
 
   if (error) {
