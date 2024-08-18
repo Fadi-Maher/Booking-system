@@ -21,6 +21,7 @@
     "react-datepicker": "^7.3.0",
     "react-dom": "^18",
     "react-hook-form": "^7.52.2",
+    "react-loader-spinner": "^6.1.6",
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {

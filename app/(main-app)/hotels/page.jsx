@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { Grid } from "react-loader-spinner";
 const HotelsPage = () => {
   const router = useRouter();
 
@@ -11,8 +11,16 @@ const HotelsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expanded, setExpanded] = useState({});
+  const [fadeIn, setFadeIn] = useState(false);
 
   useEffect(() => {
+ 
+    const isAuthenticated = !!localStorage.getItem('authToken');  
+    if (!isAuthenticated) {
+      router.push('/login');  
+      return;
+    }
+
     const fetchHotels = async () => {
       try {
         const response = await fetch("/api/getHotels", {
@@ -23,6 +31,7 @@ const HotelsPage = () => {
         }
         const data = await response.json();
         setHotels(data);
+        setFadeIn(true);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -31,7 +40,7 @@ const HotelsPage = () => {
     };
 
     fetchHotels();
-  }, []);
+  }, [router]);
 
   const toggleReadMore = (id) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -49,7 +58,21 @@ const HotelsPage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+     return(
+       <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+     <Grid
+ 
+  visible={true}
+  height="180"
+  width="180"
+  color="#d6a472"
+  ariaLabel="grid-loading"
+  radius="12.5"
+  wrapperStyle={{}}
+  wrapperClass="grid-wrapper"
+  /> 
+  </div>
+  )
   }
 
   if (error) {
@@ -58,19 +81,23 @@ const HotelsPage = () => {
 
   return (
     <div>
-      <h1 className="text-center text-primary">Hotels</h1>
+      <h1 className="text-center pt-5" >Hotels</h1>
       <ul style={{ listStyleType: "none", padding: 50 }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
           {hotels.map((hotel) => {
+
             const truncatedText = truncateText(hotel.description, 20); 
+
+            
+//  (handle auth of login & create Drawer & EditNavbAr & addHotels);
             const isTruncated = hotel.description.split(' ').length > 20;
-            console.log(`Hotel: ${hotel.name}`);
-            console.log(`Description length: ${hotel.description.split(' ').length}`);
-            console.log(`Is truncated: ${isTruncated}`);
 
             return (
               <li key={hotel.id} style={{ marginBottom: "1rem" }}>
-                <div className="card" style={{ width: "18rem", border: "1px solid #ccc", borderRadius: "8px" }}>
+                <div 
+                  className={`card fade-in`}  
+                  style={{ width: "18rem", border: "1px solid #ccc", borderRadius: "8px" }}
+                >
                   <img
                     src={hotel.image}
                     className="card-img-top"
@@ -89,18 +116,18 @@ const HotelsPage = () => {
                       </p>
                     </div>
                     {isTruncated && (
-                      <button onClick={() => toggleReadMore(hotel.id)} className="btn btn-link p-0">
+                      <button onClick={() => toggleReadMore(hotel.id)} className="btn btn-link p-0" style={{color:"#dfa974" , fontSize:"18px"}}>
                         {expanded[hotel.id] ? "See less" : "Read more"}
                       </button>
                     )}
                     <div className="d-flex justify-content-between mt-2">
                       <button
                         onClick={() => router.push(`/hotels/${hotel.id}`)}
-                        className="btn btn-primary"
+                        className="primary-btn "  style={{ width : "50%"}}
                       >
                         More Details
                       </button>
-                      <button className="btn btn-primary" onClick={() => router.push(`/hotels/${hotel.id}/reviews`)}>Reviews</button>
+                      <button className="primary-btn" style={{ width : "40%"}} onClick={() => router.push(`/hotels/${hotel.id}/reviews`)}>Reviews</button>
                     </div>
                   </div>
                 </div>

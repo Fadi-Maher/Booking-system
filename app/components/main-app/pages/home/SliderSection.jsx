@@ -47,12 +47,17 @@ const SliderSection = () => {
         <span className="visually-hidden">Next</span>
       </Link>
     </div>
-         <div className='justify-content-center d-flex'>
-    <button
-     type="button" className="btn btn-primary p-2 mt-3  w-25 " onClick={showHotelsClickHandler}>
-      Show Hotels
-    </button>
-    </div>
+         <div className='d-flex align-items-center flex-column '>
+    
+          <p className='w-75 mt-5 text-center' style={{color:"#555"}}>We provide you with a variety of luxurious hotels in different places and with various and 
+            different services. We provide you with the room reservations you need in any hotel you choose to make it
+             easy for you to spend  comfortable and enjoyable vacations.</p>
+            
+             
+               <button type="button" className="primary-btn mt-1 w-25" onClick={showHotelsClickHandler}>
+                   Show Hotels </button>
+             
+            </div>
     </div>
   );
 };

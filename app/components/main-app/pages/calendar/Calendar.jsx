@@ -80,7 +80,7 @@ const ReservationForm = () => {
                 value={numberOfPersons}
                 onChange={handleNumberOfPersonsChange}
                 min="1"
-                style={{ backgroundColor: 'skyblue', color: 'white' }}
+                style={{ backgroundColor: '#e4ba90', color: 'white' }}
               />
             </Form.Group>
             <Form.Group controlId="numberOfAdults" className="mt-3">
@@ -90,7 +90,7 @@ const ReservationForm = () => {
                 value={numberOfAdults}
                 onChange={handleAdultsChange}
                 min="1"
-                style={{ backgroundColor: 'skyblue', color: 'white' }}
+                style={{ backgroundColor: '#e4ba90', color: 'white' }}
               />
             </Form.Group>
             <Form.Group controlId="numberOfChildren" className="mt-3">
@@ -100,14 +100,14 @@ const ReservationForm = () => {
                 value={numberOfChildren}
                 onChange={handleChildrenChange}
                 min="0"
-                style={{ backgroundColor: 'skyblue', color: 'white' }}
+                style={{ backgroundColor: '#e4ba90', color: 'white' }}
               />
             </Form.Group>
             <div className="d-flex justify-content-center mt-4">
                   <Button
                type="button" className="btn btn-primary p-2 mt-3  w-25 "
                 onClick={handleSubmit}
-                style={{ backgroundColor: '', borderColor: 'skyblue' }}
+                style={{ backgroundColor: 'skyblue', borderColor: 'skyblue' }}
               >
                 Find Now
               </Button>

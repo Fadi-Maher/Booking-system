@@ -1,0 +1,51 @@
+.drawer {
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: rgba(236, 167, 99, 0.8);
+  padding: 40px;
+  transition: right 0.3s ease;
+  z-index: 1000;
+}
+
+.drawer.open {
+  right: 0;
+}
+
+.toggleButton {
+  position: fixed;
+  top: 5px;
+  right: 20px;
+  background-color: transparent;
+  /* color: white; */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1001;
+  color: #d6a472;
+  font-size: 20px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.link {
+  display: block;
+  margin: 20px 0;
+  color: white;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
