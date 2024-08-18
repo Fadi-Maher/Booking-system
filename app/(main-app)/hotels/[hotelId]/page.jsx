@@ -74,7 +74,8 @@ const HotelDetails = () => {
 							</div>
 						
 						<button
-                className={`btn text-light btn-lg ${styles.btnBg}`}
+                className={`btn text-light btn-lg `}
+				style={{backgroundColor:"#d6a472"}}
                 type="submit"
 				onClick={()=>{
 					router.push(`/hotels/${hotelId}/rooms`);
