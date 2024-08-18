@@ -22,7 +22,7 @@ const SliderSection = () => {
   return (
     <div className='container mb-5 d-flex flex-column'>
       <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-inner">
+        <div className="carousel-inner">  
           <div className="carousel-item active position-relative">
             <div style={{ height: '800px', overflow: 'hidden' }}>
               <Image 
@@ -30,7 +30,7 @@ const SliderSection = () => {
                 src="/assets/images/Santorini-Greece.jpg" 
                 alt="First slide" 
                 layout="fill"
-                objectFit="none"
+                 objectFit="cover"
               />
             </div>
             <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
@@ -45,7 +45,7 @@ const SliderSection = () => {
                 src="/assets/images/pexels-pixabay-531602.jpg" 
                 alt="Second slide" 
                 layout="fill"
-                objectFit="none"
+                objectFit="cover"
               />
             </div>
             <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
@@ -80,7 +80,7 @@ const SliderSection = () => {
           <span className="visually-hidden">Previous</span>
         </button>
         <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="carousel-control-next-icon" aria-hidden="true"></span> 
           <span className="visually-hidden">Next</span>
         </button>
       </div>
