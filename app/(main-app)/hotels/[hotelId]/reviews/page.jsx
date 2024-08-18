@@ -5,7 +5,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import { AuthContext } from "@/app/AuthContext";
 import ReviewModal from "@/app/components/main-app/ui/modals/ReviewModal";
-import { Audio } from "react-loader-spinner";
+import { Grid } from "react-loader-spinner";
 
 const ReviewDetailsPage = ({ params }) => {
   const [hotel, setHotel] = useState({});
@@ -62,19 +62,18 @@ const ReviewDetailsPage = ({ params }) => {
         {error && <p className="text-danger">{error.message}</p>}
       </div>
       {isLoading ? (
-       <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
-     <Grid
- 
-  visible={true}
-  height="180"
-  width="180"
-  color="#0d6efd"
-  ariaLabel="grid-loading"
-  radius="12.5"
-  wrapperStyle={{}}
-  wrapperClass="grid-wrapper"
-  /> 
-  </div>
+        <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+          <Grid
+            visible={true}
+            height="180"
+            width="180"
+            color="#d6a472"
+            ariaLabel="grid-loading"
+            radius="12.5"
+            wrapperStyle={{}}
+            wrapperClass="grid-wrapper"
+          />
+        </div>
       ) : (
         <>
           {" "}
@@ -92,7 +91,11 @@ const ReviewDetailsPage = ({ params }) => {
           </div>
           <div
             className="d-flex flex-column mb-3 mt-3 mx-auto p-2 rounded"
-            style={{ maxWidth: "40rem", backgroundColor: "#E3F4F4" }}
+            style={{
+              maxWidth: "40rem",
+              backgroundColor: "#222736",
+              color: "white",
+            }}
           >
             {reviews?.length > 0 ? (
               <div>
@@ -145,7 +148,7 @@ const ReviewDetailsPage = ({ params }) => {
                     </div>
                     <div className="card-body">
                       <blockquote>
-                        <q className="text-secondary">{client.comment}</q>
+                        <q>{client.comment}</q>
                       </blockquote>
                     </div>
                   </div>

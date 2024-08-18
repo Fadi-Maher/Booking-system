@@ -22,30 +22,34 @@ import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 
 const Login = () => {
-  const { handleSubmit, register, trigger, formState: { errors, isValid } } = useForm();
+  const {
+    handleSubmit,
+    register,
+    trigger,
+    formState: { errors, isValid },
+  } = useForm();
   const router = useRouter();
   const [rememberMe, setRememberMe] = useState(false);
 
   const submitHandler = async ({ email, password }) => {
     try {
-      
       if (rememberMe) {
         await setPersistence(auth, browserSessionPersistence);
       }
 
-      
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
 
-    
       const authToken = await userCredential.user.getIdToken();
 
-       
-      localStorage.setItem('authToken', authToken);
+      localStorage.setItem("authToken", authToken);
 
-       
       toast.success("Logged in successfully!");
       setTimeout(() => {
-        router.push("/");  
+        router.push("/");
       }, 2000);
     } catch (error) {
       console.error(error);
@@ -72,6 +76,7 @@ const Login = () => {
                   Email
                 </label>
                 <MDBInput
+                  className="input-shadow"
                   wrapperClass="mb-1"
                   id="email"
                   type="email"
@@ -99,6 +104,7 @@ const Login = () => {
                   Password
                 </label>
                 <MDBInput
+                  className="input-shadow"
                   wrapperClass="mb-1"
                   id="password"
                   type="password"
@@ -133,6 +139,7 @@ const Login = () => {
               </div>
               <div className="mt-4 mb-4">
                 <MDBCheckbox
+                  className="input-shadow form-check-input"
                   name="flexCheck"
                   value=""
                   id="flexCheckDefault"
@@ -142,13 +149,14 @@ const Login = () => {
                 />
               </div>
               <button
-                className={`btn mb-4 w-100 mt-4 text-light btn-lg  bg-primary`}
+                // className={`btn mb-4 w-100 mt-4 text-light btn-lg  bg-primary`}
+                className="primary-btn mb-3"
                 disabled={!isValid}
                 type="submit"
               >
                 Sign in
               </button>
-              <Link href="/register" className="text-primary">
+              <Link href="/register" className="primary-color">
                 Register
               </Link>
             </form>

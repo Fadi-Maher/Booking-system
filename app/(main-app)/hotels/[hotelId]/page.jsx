@@ -54,8 +54,11 @@ const HotelDetails = () => {
 					<div className="card-body">
 					<h3>{hotel?.name}</h3>
 				 <div className="m-2">{hotel?.location}</div>  
-				 <div className="d-flex flex-row flex-wrap h-50 ">
-						{images.map((img, index) => (
+				 <div className="d-flex flex-row flex-wrap  ">
+						{hotel.images==null?<div className=" rounded mx-auto w-50"><img 
+							   src={hotel.image}
+							   className="img-thumbnail "
+						   /></div>:images.map((img, index) => (
 							<img 
 							   
 								key={index}
@@ -70,11 +73,12 @@ const HotelDetails = () => {
 						
 						<div className="d-flex flex-row flex-wrap justify-content-between  mb-4  mt-4 " >
 							<div>
-							<span className="m-2 ">{hotel?.reviews?0:hotel.reviews}</span><span className="text-muted ">reviews</span>
+							<span className="m-2 ">{hotel?.reviews==null?0:hotel.reviews.length}</span><span className="text-muted ">reviews</span>
 							</div>
 						
 						<button
-                className={`btn text-light btn-lg ${styles.btnBg}`}
+                className={`btn text-light btn-lg `}
+				style={{backgroundColor:"#d6a472"}}
                 type="submit"
 				onClick={()=>{
 					router.push(`/hotels/${hotelId}/rooms`);

@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
+import Logout from "@/app/logout/Logout";
+import { AuthContext } from "@/app/AuthContext";
 
 const Drawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { userDetails } = useContext(AuthContext);
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
@@ -26,9 +28,10 @@ const Drawer = () => {
         <Link href="/register" className={styles.link}>
           Sign Up
         </Link>
-        <Link href="/login" className={styles.link}>
+        {/* <Link href="/login" className={styles.link}>
           Sign Out
-        </Link>
+        </Link> */}
+        <Logout />
       </div>
     </>
   );

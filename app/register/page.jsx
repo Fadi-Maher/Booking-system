@@ -88,6 +88,7 @@ const Register = () => {
                   Email
                 </label>
                 <MDBInput
+                  className="input-shadow"
                   wrapperClass="mb-1"
                   id="email"
                   type="email"
@@ -122,7 +123,9 @@ const Register = () => {
                   type="password"
                   size="lg"
                   autoComplete="off"
-                  className={`form-control ${errors.password && "invalid"}`}
+                  className={`form-control ${
+                    errors.password && "invalid"
+                  } input-shadow`}
                   required={true}
                   {...register("password", {
                     required: "You must specify a password",
@@ -173,7 +176,7 @@ const Register = () => {
                   }}
                   className={`form-control ${
                     errors.confirmPassword && "invalid"
-                  }`}
+                  } input-shadow`}
                   required={true}
                   onKeyUp={() => {
                     trigger("confirmPassword");
@@ -194,7 +197,9 @@ const Register = () => {
                   id="name"
                   type="name"
                   size="lg"
-                  className={`form-control ${errors.name && "invalid"}`}
+                  className={`form-control ${
+                    errors.name && "invalid"
+                  } input-shadow`}
                   required={true}
                   defaultValue=""
                   {...register("name", { required: "Name is required!" })}
@@ -217,7 +222,7 @@ const Register = () => {
                   id="phoneNumber"
                   type="text"
                   size="lg"
-                  className={`form-control`}
+                  className={`form-control input-shadow`}
                   required={true}
                   {...register("phoneNumber", {
                     pattern: {
@@ -246,13 +251,13 @@ const Register = () => {
                 )}
               </div>
               <button
-                className={`btn mb-4 w-100 mt-4  btn-lg text-light ${styles.btnBg}`}
+                className={`primary-btn mb-3`}
                 disabled={!isValid}
                 type="submit"
               >
                 Sign up
               </button>
-              <Link href="/login" class="text-primary">
+              <Link href="/login" className="primary-color">
                 Already have an account ?
               </Link>
             </form>
