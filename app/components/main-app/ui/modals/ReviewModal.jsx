@@ -69,23 +69,27 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={handleShow}
-        disabled={userDetails ? false : true}
-      >
-        Leave a Review
-      </Button>
-      {!userDetails && (
-        <small className="text-danger mb-4 mt-n2">
-          {" "}
-          You must be{" "}
-          <Link href="/login" className="text-primary">
-            Signed in
-          </Link>{" "}
-          to be able to leave a review.
-        </small>
-      )}
+      <div className="d-flex gap-3">
+        <button
+          // variant="primary"
+          className="primary-btn"
+          style={{ width: "30%" }}
+          onClick={handleShow}
+          disabled={userDetails ? false : true}
+        >
+          Leave a Review
+        </button>
+        {!userDetails && (
+          <small className="text-danger align-self-end">
+            {" "}
+            You must be{" "}
+            <Link href="/login" className="primary-color">
+              Signed in
+            </Link>{" "}
+            to be able to leave a review.
+          </small>
+        )}
+      </div>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -124,7 +128,7 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
                 onKeyUp={() => {
                   trigger("userReview");
                 }}
-                className="form-control"
+                className="form-control input-shadow"
                 id="exampleFormControlTextarea1"
                 rows="3"
               ></textarea>
@@ -136,16 +140,24 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+            <button
+              // variant="secondary"
+              // variant="primary"
+              className="secondary-btn"
+              style={{ width: "25%" }}
+              onClick={handleClose}
+            >
               Close
-            </Button>
-            <Button
+            </button>
+            <button
               type="submit"
-              variant="primary"
+              // variant="primary"
+              className="primary-btn"
+              style={{ width: "25%" }}
               disabled={rating === 0 ? true : false}
             >
               Send Review
-            </Button>
+            </button>
           </Modal.Footer>
         </form>
       </Modal>

@@ -1,4 +1,3 @@
-
 a {
   color: inherit;
   text-decoration: none;
@@ -11,12 +10,13 @@ a {
 }
 
 
- 
+
 
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -31,23 +31,61 @@ a {
 
 
 /* buttons style */
-.primary-btn{
+.primary-btn {
   display: block;
-	font-size: 14px;
-	/* text-transform: uppercase; */
-	/* border: 1px solid #dfa974; */
-  background-color:#dfa974 ;
-	border-radius: 5px;
-	color: white;
-	font-weight: 500;
-	width: 100%;
-	height: 46px;
-	margin-top: 20px;
+  font-size: 14px;
+  /* text-transform: uppercase; */
+  /* border: 1px solid #dfa974; */
+  background-color: #dfa974;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+  width: 100%;
+  height: 46px;
+  margin-top: 20px;
 }
 
-.primary-btn:hover {
-  background-color:#e09f5d ;
+.primary-btn:hover:enabled {
+  background-color: #e09f5d;
+}
+
+.primary-btn:disabled {
+  opacity: 0.8
+}
+
+.primary-btn:disabled:hover {
+  cursor: not-allowed
+}
+
+.secondary-btn {
+  background-color: #3e424d;
+  display: block;
+  font-size: 14px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+  width: 100%;
+  height: 46px;
+  margin-top: 20px;
+}
+
+.secondary-btn:hover {
+  background-color: #252a38;
 }
 
 
+/* Custome form style */
+.input-shadow:focus {
+  box-shadow: 0 0 8px 4px #dfa974 !important;
+  outline: none;
+  border: 1px solid #dfa974 !important;
+}
 
+.form-check-input:checked {
+  background-color: #dfa974 !important;
+  border-color: #dfa974 !important;
+}
+
+.primary-color {
+  color: #dfa974
+}
