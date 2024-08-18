@@ -39,10 +39,10 @@ const SliderSection = () => {
             </div>
           </div>
           <div className="carousel-item position-relative">
-            <div style={{ height: '400px', overflow: 'hidden' }}>
+            <div style={{ height: '800px', overflow: 'hidden' }}>
               <Image 
                 className="d-block w-100" 
-                src="/assets/images/italy1.jpg" 
+                src="/assets/images/pexels-pixabay-531602.jpg" 
                 alt="Second slide" 
                 layout="fill"
                 objectFit="none"
@@ -50,7 +50,7 @@ const SliderSection = () => {
             </div>
             <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
                <h3 className='text-white'>Italy</h3>
-              <h4 className='text-dark bg-gradient-warning'>"Discover the romance of Venice, the grandeur of Rome, and the beauty of Tuscany."</h4>
+              <h4 className='text-white bg-gradient-warning'>"Discover the romance of Venice, the grandeur of Rome, and the beauty of Tuscany."</h4>
             
             </div>
           </div>
@@ -58,15 +58,15 @@ const SliderSection = () => {
             <div style={{ height: '800px', overflow: 'hidden' }}>
               <Image 
                 className="d-block w-100" 
-                src="/assets/images/temple.jpg" 
+                src="/assets/images/31 Top Landmarks in Egypt - Luxor Temple.jpeg" 
                 alt="Third slide" 
                 layout="fill"
-                objectFit="none"
+                objectFit="cover"
               />
             </div>
             <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
-              <h5>City Lights</h5>
-              <p>Explore the vibrant city life</p>
+              <h3>Egypt</h3>
+              <h4>"Unveil the mysteries of Egypt with its majestic pyramids, ancient temples, and the Nile River."</h4>
             </div>
           </div>
         </div>
@@ -75,14 +75,14 @@ const SliderSection = () => {
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-        {/* <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Previous</span>
-        </button> */}
-        {/* <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        </button>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
-        </button> */}
+        </button>
       </div>
       <div className='d-flex align-items-center flex-column'>
         <p className='w-75 mt-5 text-center' style={{color:"#555"}}>
