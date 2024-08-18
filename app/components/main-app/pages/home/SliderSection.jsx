@@ -90,7 +90,7 @@ const SliderSection = () => {
           different services. We provide you with the room reservations you need in any hotel you choose to make it
           easy for you to spend  comfortable and enjoyable vacations.
         </p>
-        <button type="button" className="primary-btn mt-1 w-25" onClick={showHotelsClickHandler}>
+        <button className="primary-btn mt-1 w-25" onClick={showHotelsClickHandler}>
           Show Hotels
         </button>
       </div>

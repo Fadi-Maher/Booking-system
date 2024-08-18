@@ -51,7 +51,7 @@ const ReservationForm = () => {
     <Container className="mt-5">
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={6}>
-          <h4 className="text-center mb-4">Find Your Next Stay</h4>
+          <h4 className="text-center mb-4">Reserve Your Next Stay</h4>
           <Form>
             <Form.Group controlId="arrivalDate">
               <Form.Label>Arrival Date</Form.Label>
@@ -109,7 +109,7 @@ const ReservationForm = () => {
                 onClick={handleSubmit}
                 style={{ backgroundColor: 'skyblue', borderColor: 'skyblue' }}
               >
-                Find Now
+                Reserve Now
               </Button>
             </div>
           </Form>
