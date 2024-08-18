@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Ensure this import is correct
+import 'react-datepicker/dist/react-datepicker.css'; 
 
 const ReservationForm = () => {
   const [arrivalDate, setArrivalDate] = useState(null);
@@ -30,13 +30,13 @@ const ReservationForm = () => {
     const value = Math.max(1, Number(event.target.value));
     setNumberOfAdults(value);
     setNumberOfChildren(Math.max(0, numberOfPersons - value));
-    setNumberOfPersons(value + numberOfChildren); // Update total number of persons
+    setNumberOfPersons(value + numberOfChildren); 
   };
 
   const handleChildrenChange = (event) => {
     const value = Math.max(0, Number(event.target.value));
     setNumberOfChildren(value);
-    setNumberOfPersons(value + numberOfAdults); // Update total number of persons
+    setNumberOfPersons(value + numberOfAdults); 
   };
 
   const handleSubmit = () => {
@@ -60,7 +60,7 @@ const ReservationForm = () => {
                 onChange={handleArrivalDateChange}
                 className="form-control"
                 placeholderText="Select Arrival Date"
-                dateFormat="yyyy/MM/dd"
+                dateFormat="dd/MM/yyyy"
               />
             </Form.Group>
             <Form.Group controlId="departureDate" className="mt-3">
@@ -70,7 +70,7 @@ const ReservationForm = () => {
                 onChange={handleDepartureDateChange}
                 className="form-control"
                 placeholderText="Select Departure Date"
-                dateFormat="yyyy/MM/dd"
+                dateFormat="dd/MM/yyyy"
               />
             </Form.Group>
             <Form.Group controlId="numberOfPersons" className="mt-3">

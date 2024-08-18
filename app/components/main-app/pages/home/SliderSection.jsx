@@ -5,7 +5,7 @@ import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { useRouter } from 'next/navigation';
- 
+
 const SliderSection = () => {
   const router = useRouter();
 
@@ -17,47 +17,83 @@ const SliderSection = () => {
     }
   }, []);
 
-  const showHotelsClickHandler = () => router.push("/hotels")
+  const showHotelsClickHandler = () => router.push("/hotels");
 
   return (
-    <div className='container mb-5 d-flex flex-column '>
-    <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
-      <ol className="carousel-indicators">
-        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active"></li>
-        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"  className="active"></li>
-        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"  className="active"></li>
-      </ol>
-      <div className="carousel-inner">
-        <div className="carousel-item active">
-          <Image className="d-block w-100" src="/assets/images/jade-mountain-700x467.jpg" alt="First slide" width={800} height={400} />
-        </div>
-        <div className="carousel-item">
-          <Image className="d-block w-100" src="/assets/images/pexels-jess-vide-5007455.jpg" alt="Second slide" width={800} height={400} />
-        </div>
-        <div className="carousel-item">
-          <Image className="d-block w-100" src="/assets/images/1657133145668.jpeg" alt="Third slide" width={800} height={400} />
-        </div>
-      </div>
-      <Link href="#carouselExampleIndicators" role="button" data-bs-slide="prev" className="carousel-control-prev">
-        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Previous</span>
-      </Link>
-      <Link href="#carouselExampleIndicators" role="button" data-bs-slide="next" className="carousel-control-next">
-        <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="visually-hidden">Next</span>
-      </Link>
-    </div>
-         <div className='d-flex align-items-center flex-column '>
-    
-          <p className='w-75 mt-5 text-center' style={{color:"#555"}}>We provide you with a variety of luxurious hotels in different places and with various and 
-            different services. We provide you with the room reservations you need in any hotel you choose to make it
-             easy for you to spend  comfortable and enjoyable vacations.</p>
-            
-             
-               <button type="button" className="primary-btn mt-1 w-25" onClick={showHotelsClickHandler}>
-                   Show Hotels </button>
-             
+    <div className='container mb-5 d-flex flex-column'>
+      <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
+        <div className="carousel-inner">
+          <div className="carousel-item active position-relative">
+            <div style={{ height: '800px', overflow: 'hidden' }}>
+              <Image 
+                className="d-block w-100" 
+                src="/assets/images/Santorini-Greece.jpg" 
+                alt="First slide" 
+                layout="fill"
+                objectFit="none"
+              />
             </div>
+            <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
+               <h3 className='text-dark'>Greece</h3>
+              <h4 className='text-dark bg-transparent'>"Experience the ancient wonders from the Acropolis to the beautiful islands of Santorini and Mykonos."</h4>    
+            </div>
+          </div>
+          <div className="carousel-item position-relative">
+            <div style={{ height: '400px', overflow: 'hidden' }}>
+              <Image 
+                className="d-block w-100" 
+                src="/assets/images/italy1.jpg" 
+                alt="Second slide" 
+                layout="fill"
+                objectFit="none"
+              />
+            </div>
+            <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
+               <h3 className='text-white'>Italy</h3>
+              <h4 className='text-dark bg-gradient-warning'>"Discover the romance of Venice, the grandeur of Rome, and the beauty of Tuscany."</h4>
+            
+            </div>
+          </div>
+          <div className="carousel-item position-relative">
+            <div style={{ height: '800px', overflow: 'hidden' }}>
+              <Image 
+                className="d-block w-100" 
+                src="/assets/images/temple.jpg" 
+                alt="Third slide" 
+                layout="fill"
+                objectFit="none"
+              />
+            </div>
+            <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
+              <h5>City Lights</h5>
+              <p>Explore the vibrant city life</p>
+            </div>
+          </div>
+        </div>
+        <div className="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        {/* <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Previous</span>
+        </button> */}
+        {/* <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Next</span>
+        </button> */}
+      </div>
+      <div className='d-flex align-items-center flex-column'>
+        <p className='w-75 mt-5 text-center' style={{color:"#555"}}>
+          We provide you with a variety of luxurious hotels in different places and with various and 
+          different services. We provide you with the room reservations you need in any hotel you choose to make it
+          easy for you to spend  comfortable and enjoyable vacations.
+        </p>
+        <button type="button" className="primary-btn mt-1 w-25" onClick={showHotelsClickHandler}>
+          Show Hotels
+        </button>
+      </div>
     </div>
   );
 };
