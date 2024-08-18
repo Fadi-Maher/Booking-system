@@ -25,3 +25,29 @@ a {
 .fade-in {
   animation: fadeIn 1s ease-in-out;
 }
+
+
+
+
+
+/* buttons style */
+.primary-btn{
+  display: block;
+	font-size: 14px;
+	/* text-transform: uppercase; */
+	/* border: 1px solid #dfa974; */
+  background-color:#dfa974 ;
+	border-radius: 5px;
+	color: white;
+	font-weight: 500;
+	width: 100%;
+	height: 46px;
+	margin-top: 20px;
+}
+
+.primary-btn:hover {
+  background-color:#e09f5d ;
+}
+
+
+

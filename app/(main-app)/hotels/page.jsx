@@ -65,7 +65,7 @@ const HotelsPage = () => {
   visible={true}
   height="180"
   width="180"
-  color="#0d6efd"
+  color="#d6a472"
   ariaLabel="grid-loading"
   radius="12.5"
   wrapperStyle={{}}
@@ -81,7 +81,7 @@ const HotelsPage = () => {
 
   return (
     <div>
-      <h1 className="text-center text-primary">Hotels</h1>
+      <h1 className="text-center pt-5" >Hotels</h1>
       <ul style={{ listStyleType: "none", padding: 50 }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
           {hotels.map((hotel) => {
@@ -116,18 +116,18 @@ const HotelsPage = () => {
                       </p>
                     </div>
                     {isTruncated && (
-                      <button onClick={() => toggleReadMore(hotel.id)} className="btn btn-link p-0">
+                      <button onClick={() => toggleReadMore(hotel.id)} className="btn btn-link p-0" style={{color:"#dfa974" , fontSize:"18px"}}>
                         {expanded[hotel.id] ? "See less" : "Read more"}
                       </button>
                     )}
                     <div className="d-flex justify-content-between mt-2">
                       <button
                         onClick={() => router.push(`/hotels/${hotel.id}`)}
-                        className="btn btn-primary"
+                        className="primary-btn "  style={{ width : "50%"}}
                       >
                         More Details
                       </button>
-                      <button className="btn btn-primary" onClick={() => router.push(`/hotels/${hotel.id}/reviews`)}>Reviews</button>
+                      <button className="primary-btn" style={{ width : "40%"}} onClick={() => router.push(`/hotels/${hotel.id}/reviews`)}>Reviews</button>
                     </div>
                   </div>
                 </div>
