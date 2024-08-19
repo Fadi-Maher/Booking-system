@@ -108,7 +108,6 @@ const MainHeader = () => {
           </button>
         </div>
       </div>
-      <ToastContainer />
     </nav>
   );
 };
