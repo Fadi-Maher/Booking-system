@@ -13,12 +13,16 @@ const MainHeader = () => {
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary p-3">
-      <div className="d-flex w-100 align-items-center">
+      <div className="container-fluid ">
         <Link className="navbar-brand " href="/">
           <h3 className={styles.brandName}>Reserve Mate</h3>
         </Link>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="d-flex" style={{ listStyle: "none" }}>
+
+        <div
+          className="collapse navbar-collapse mb-3"
+          id="navbarSupportedContent"
+        >
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link className={styles.link} aria-current="page" href="/">
                 Home
@@ -50,7 +54,7 @@ const MainHeader = () => {
           </ul>
         </div>
 
-        <div className="d-flex w-100 justify-content-end gap-3 align-items-center">
+        <div className="d-flex w-100 justify-content-end gap-3">
           {/* search */}
           <Search />
           <div className="btn-group dropstart border border-secondary-subtle">
@@ -90,7 +94,6 @@ const MainHeader = () => {
               </li>
             </ul>
           </div>
-
           {/* burger icon */}
           <button
             className="navbar-toggler"
