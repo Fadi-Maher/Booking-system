@@ -1,135 +1,112 @@
 "use client";
 
-// import React from "react";
-// import Logout from "@/app/logout/Logout";
-// import Link from "next/link";
-// import Search from "./Search";
-// import Drawer from "../ui/drawer/darwer";
-
-// const MainHeader = () => {
-//   return (
-//     <div>
-//       <nav className="navbar navbar-expand-lg navbar-light bg-primary text-light p-3 fixed-top">
-//         <div className="container-fluid">
-
-//           <button
-//             className="navbar-toggler"
-//             type="button"
-//             data-bs-toggle="collapse"
-//             data-bs-target="#navbarSupportedContent"
-//             aria-controls="navbarSupportedContent"
-//             aria-expanded="false"
-//             aria-label="Toggle navigation">
-//             <span className="navbar-toggler-icon"></span>
-//           </button>
-//           <div className="collapse navbar-collapse text-white" id="navbarSupportedContent">
-//             <ul className="navbar-nav me-auto item-center text-light">
-//               <li className="nav-item">
-//                 <Link className="nav-link active text-white font-3 shadow me-2" aria-current="page" href="/">Home</Link>
-//               </li>
-//               <li className="nav-item">
-//                 <Link className="nav-link text-white me-2 shadow" href="/hotels">Hotels</Link>
-//               </li>
-//               <li className="nav-item">
-//                 <Link className="nav-link text-white shadow me-2" href="/about-us">About Us</Link>
-//               </li>
-//               <li className="nav-item">
-//                 <Link className="nav-link text-white shadow me-2" href="/">Contact Us</Link>
-//               </li>
-//             </ul>
-//             <div className="justify-content-around d-flex flex-row w-50">
-//               <form className="d-flex">
-//                 <Search />
-//               </form>
-
-//             </div>
-//           </div>
-
-//         </div>
-//         <Drawer />
-//       </nav>
-//     </div>
-//   );
-// }
-
-// export default MainHeader;
-
 import React, { useContext } from "react";
 import Logout from "@/app/logout/Logout";
 import Link from "next/link";
 import Search from "./Search";
 import styles from "./MainHeader.module.css";
-import Drawer from "../ui/drawer/darwer";
 import { AuthContext } from "@/app/AuthContext";
+import { ToastContainer } from "react-toastify";
 
 const MainHeader = () => {
-  const { userDetails } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
+
   return (
-    <>
-      <header className={styles.header}>
-        <div className={styles.topNav}>
-          <div className="container ">
-            <div className="row">
-              <div className="col-lg-6 d-flex flex-column">
-                <Link href="/" style={{ textDecoration: "none" }}>
-                  <h3 className={styles.brandName}>Reserve Mate</h3>
+    <nav className="navbar navbar-expand-lg bg-body-tertiary p-3">
+      <div className="d-flex w-100 align-items-center">
+        <Link className="navbar-brand " href="/">
+          <h3 className={styles.brandName}>Reserve Mate</h3>
+        </Link>
+        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul className="d-flex" style={{ listStyle: "none" }}>
+            <li className="nav-item">
+              <Link className={styles.link} aria-current="page" href="/">
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className={styles.link} aria-current="page" href="/hotels">
+                Hotels
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={styles.link}
+                aria-current="page"
+                href="/about-us"
+              >
+                About Us
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={styles.link}
+                aria-current="page"
+                href="/contact-us"
+              >
+                Contact Us
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div className="d-flex w-100 justify-content-end gap-3 align-items-center">
+          {/* search */}
+          <Search />
+          <div className="btn-group dropstart border border-secondary-subtle">
+            <button
+              type="button"
+              className="btn"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 320 512"
+                width="0.7rem"
+              >
+                <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
+              </svg>
+            </button>
+
+            <ul
+              className={`dropdown-menu p-2 ${styles.customDropdown}`}
+              style={{ backgroundColor: "#222736" }}
+            >
+              {currentUser ? (
+                <Logout />
+              ) : (
+                <li>
+                  <Link className="custom-dropDown-link " href="/login">
+                    Log In
+                  </Link>
+                </li>
+              )}
+
+              <li className="mt-2">
+                <Link className="custom-dropDown-link" href="/register">
+                  Sign Up
                 </Link>
-                {userDetails && (
-                  <h6>
-                    Welcome:{" "}
-                    <span className="primary-color">
-                      {userDetails.username}
-                    </span>
-                  </h6>
-                )}
-              </div>
-
-              <div className="col-lg-6 d-flex justify-content-end ">
-                <div className="px-3">
-                  <Search />
-                </div>
-                <Drawer />
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
-        </div>
 
-        <div className={styles.menuItem}>
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className={styles.navMenu}>
-                  <nav className={styles.mainmenu}>
-                    <ul>
-                      <li className={styles.active}>
-                        <Link className={styles.link} href="/">
-                          Home
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className={styles.link} href="/hotels">
-                          Hotels
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className={styles.link} href="/about-us">
-                          About Us
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className={styles.link} href="/contact-us">
-                          Contact Us
-                        </Link>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* burger icon */}
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
         </div>
-      </header>
-    </>
+      </div>
+      <ToastContainer />
+    </nav>
   );
 };
 

@@ -8,10 +8,12 @@ export const AuthContext = React.createContext();
 
 export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
+        setCurrentUser(user);
         const docRef = doc(db, "users", user.uid);
         const docSnap = await getDoc(docRef);
 
@@ -30,6 +32,6 @@ export const AuthProvider = ({ children }) => {
     fetchUserData();
   }, []);
 
-  const value = { userDetails };
+  const value = { userDetails, currentUser };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

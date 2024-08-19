@@ -19,8 +19,8 @@
 
 .input-container .dropdown-container::-webkit-scrollbar {
     width: 1;
-    background-color: rgb(236, 167, 99,1);
-    scrollbar-color:rgb(236, 167, 99,1);
+    background-color: rgb(236, 167, 99, 1);
+    scrollbar-color: rgb(236, 167, 99, 1);
 }
 
 .input-container .dropdown-container ul {

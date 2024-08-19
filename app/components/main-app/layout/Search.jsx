@@ -6,20 +6,20 @@ import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/app/firebase";
-import { Audio } from 'react-loader-spinner'
+import { Audio } from "react-loader-spinner";
 
 const DropDownComponent = ({ hotels, loading }) => {
   const renderHotelsList = () => {
     if (loading) {
       <Audio
-  height="80"
-  width="80"
-  radius="9"
-  color="green"
-  ariaLabel="loading"
-  wrapperStyle
-  wrapperClass
-/>;
+        height="80"
+        width="80"
+        radius="9"
+        color="green"
+        ariaLabel="loading"
+        wrapperStyle
+        wrapperClass
+      />;
     }
 
     if (hotels.length === 0) {
@@ -38,7 +38,9 @@ const DropDownComponent = ({ hotels, loading }) => {
   };
 
   return (
-    <div className={`${styles["dropdown-container"]} ${loading || hotels.length === 0 ? "d-flex justify-content-center align-items-center" : ""}`}>
+    <div
+      className={`${styles["dropdown-container"]} ${loading || hotels.length === 0 ? "d-flex justify-content-center align-items-center" : ""}`}
+    >
       {renderHotelsList()}
     </div>
   );
@@ -59,11 +61,14 @@ const Search = () => {
         const hotelsRef = collection(db, "hotels");
         const q = query(hotelsRef, orderBy("name"));
         const querySnapshot = await getDocs(q);
-        const allHotels = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+        const allHotels = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
 
         if (searchKeyword.length > 0) {
           const keywordLower = searchKeyword.toLowerCase();
-          const filtered = allHotels.filter(hotel => 
+          const filtered = allHotels.filter((hotel) =>
             hotel.name.toLowerCase().includes(keywordLower)
           );
           setFilteredHotels(filtered);
@@ -106,12 +111,14 @@ const Search = () => {
       <Form.Control
         type="text"
         placeholder="Search hotels..."
-        className={styles.input}
+        className={`${styles.input} input-shadow`}
         value={searchKeyword}
         onChange={(e) => setSearchKeyword(e.target.value)}
         onFocus={() => setDropdownOpen(true)}
       />
-      {dropdownOpen && <DropDownComponent hotels={filteredHotels} loading={loading} />}
+      {dropdownOpen && (
+        <DropDownComponent hotels={filteredHotels} loading={loading} />
+      )}
     </div>
   );
 };

@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import Logout from "@/app/logout/Logout";
-import { AuthContext } from "@/app/AuthContext";
 
 const Drawer = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { userDetails } = useContext(AuthContext);
   const toggleDrawer = () => {
     setIsOpen(!isOpen);
   };
