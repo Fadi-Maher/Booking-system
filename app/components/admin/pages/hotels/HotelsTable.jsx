@@ -3,18 +3,24 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Form, Table } from "react-bootstrap";
 import { MdEditSquare } from "react-icons/md";
 import { IoTrashBin } from "react-icons/io5";
-import PaginationStyle1 from "../../ui/paginators/PaginationStyle1";// Adjust this path if needed
-import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import PaginationStyle1 from "../../ui/paginators/PaginationStyle1";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { initializeApp } from "firebase/app";
- 
-import { db } from "@/app/firebase";
 
- 
- 
+import { db } from "@/app/firebase";
+import ModalForm from "../../ui/paginators/modals/ModalForm";
 
 const HotelsTable = () => {
   const [hotels, setHotels] = useState([]);
   const [loading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -37,22 +43,30 @@ const HotelsTable = () => {
     fetchHotels();
   }, []);
 
+  const addNewHotel = () => {
+    setShowModal(true);
+  };
+
   const handleEdit = async (id, updatedData) => {
     try {
       const hotelDoc = doc(db, "hotels", id);
       await updateDoc(hotelDoc, updatedData);
       console.log("Hotel updated successfully!");
-      setHotels(hotels.map(hotel => hotel.id === id ? { ...hotel, ...updatedData } : hotel));
+      setHotels(
+        hotels.map(hotel =>
+          hotel.id === id ? { ...hotel, ...updatedData } : hotel
+        )
+      );
     } catch (error) {
       console.error("Error updating hotel:", error);
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async id => {
     try {
       const hotelDoc = doc(db, "hotels", id);
       await deleteDoc(hotelDoc);
-      setHotels(hotels.filter((hotel) => hotel.id !== id));
+      setHotels(hotels.filter(hotel => hotel.id !== id));
       console.log("Hotel deleted successfully!");
     } catch (error) {
       console.error("Error deleting hotel:", error);
@@ -61,13 +75,17 @@ const HotelsTable = () => {
 
   return (
     <Fragment>
+      <ModalForm show={showModal} close={() => setShowModal(false)} />{" "}
+      {/* Pass props */}
       <div className="d-flex justify-content-between mb-3">
         <Form.Control
           type="text"
           className="w-75"
           placeholder="Search for hotels..."
         />
-        <Button variant="success">Add new hotel</Button>
+        <Button variant="success" onClick={() => addNewHotel()}>
+          Add new hotel
+        </Button>
       </div>
       <Table responsive hover>
         <thead>
@@ -80,16 +98,31 @@ const HotelsTable = () => {
         </thead>
 
         <tbody>
-          {hotels.map((hotel) => (
+          {hotels.map(hotel => (
             <tr key={hotel.id}>
               <td>{hotel.name}</td>
-              <td><img src={hotel.image} alt={hotel.title} style={{ width: '100px' }} /></td>
+              <td>
+                <img
+                  src={hotel.image}
+                  alt={hotel.title}
+                  style={{ width: "100px" }}
+                />
+              </td>
               <td>{hotel.price}</td>
               <td>
-                <Button onClick={() => handleEdit(hotel.id, { name: "Updated Hotel Name" })} size="sm" variant="primary" className="me-2">
+                <Button
+                  onClick={() => handleEdit(hotel.id, { name: "" })}
+                  size="sm"
+                  variant="primary"
+                  className="me-2"
+                >
                   <MdEditSquare size={16} />
                 </Button>
-                <Button onClick={() => handleDelete(hotel.id)} size="sm" variant="danger">
+                <Button
+                  onClick={() => handleDelete(hotel.id)}
+                  size="sm"
+                  variant="danger"
+                >
                   <IoTrashBin size={16} />
                 </Button>
               </td>
