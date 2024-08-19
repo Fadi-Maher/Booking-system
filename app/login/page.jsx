@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { auth } from "../firebase"; // Adjust based on your setup
+import { auth } from "../firebase";
 import {
   signInWithEmailAndPassword,
   browserSessionPersistence,
@@ -13,7 +13,6 @@ import {
   MDBContainer,
   MDBCol,
   MDBRow,
-  MDBBtn,
   MDBInput,
   MDBCheckbox,
 } from "mdb-react-ui-kit";
@@ -149,15 +148,14 @@ const Login = () => {
                 />
               </div>
               <button
-                // className={`btn mb-4 w-100 mt-4 text-light btn-lg  bg-primary`}
                 className="primary-btn mb-3"
                 disabled={!isValid}
                 type="submit"
               >
-                Sign in
+                Log In
               </button>
               <Link href="/register" className="primary-color">
-                Register
+                Sign Up
               </Link>
             </form>
           </MDBCol>

@@ -108,7 +108,7 @@ const ReviewDetailsPage = ({ params }) => {
                     className="border-bottom border-dark-subtle mt-3 "
                   >
                     <div className="float-end d-flex gap-2">
-                      <small className="text-secondary ">{client.date}</small>
+                      <small className="text-secondary">{client.date}</small>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512"

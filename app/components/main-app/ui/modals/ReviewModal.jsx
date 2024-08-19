@@ -81,10 +81,9 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
         </button>
         {!userDetails && (
           <small className="text-danger align-self-end">
-            {" "}
             You must be{" "}
             <Link href="/login" className="primary-color">
-              Signed in
+              Logged in
             </Link>{" "}
             to be able to leave a review.
           </small>
