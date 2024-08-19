@@ -86,7 +86,9 @@ const HotelsPage = () => {
             const truncatedText = truncateText(hotel.description, 20);
 
             //  (handle auth of login & create Drawer & EditNavbAr & addHotels);
-            const isTruncated = hotel.description.split(" ").length > 20;
+            const isTruncated = hotel.description && typeof hotel.description === 'string' 
+              ? hotel.description.split(" ").length > 20 
+              : false;
 
             return (
               <li key={hotel.id} style={{ marginBottom: "1rem" }}>
