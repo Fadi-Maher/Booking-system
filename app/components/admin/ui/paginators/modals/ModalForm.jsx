@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Style from "./Modal.module.css";
@@ -7,13 +8,13 @@ import { db } from "@/app/firebase"; // Ensure correct import path
 
 const ModalForm = ({ show, close }) => {
   const [name, setName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
 
   if (!show) return null;
 
   const addHotels = async () => {
-    if (!name || !imageUrl || !price) {
+    if (!name || !image || !price) {
       alert("Please fill in all fields.");
       return;
     }
@@ -23,13 +24,13 @@ const ModalForm = ({ show, close }) => {
       await addDoc(collection(db, "hotels"), {
         name,
         price: parseFloat(price), // Ensure price is stored as a number
-        imageUrl, // Use the image URL directly
+        image, // Use the image URL directly
       });
 
       // Reset form state
       setName("");
       setPrice("");
-      setImageUrl("");
+      setImage("");
 
       // Close the modal after submission
       close();
@@ -54,8 +55,8 @@ const ModalForm = ({ show, close }) => {
           size="md"
           type="text"
           placeholder="Image URL"
-          value={imageUrl}
-          onChange={e => setImageUrl(e.target.value)}
+          value={image}
+          onChange={e => setImage(e.target.value)}
         />
         <br />
         <Form.Control
