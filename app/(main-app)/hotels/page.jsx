@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Grid } from "react-loader-spinner";
+import { AuthContext } from "@/app/AuthContext";
+import AuthGuard from "@/app/components/main-app/ui/auth-guard/AuthGuard";
 const HotelsPage = () => {
   const router = useRouter();
 
@@ -12,6 +14,7 @@ const HotelsPage = () => {
   const [error, setError] = useState(null);
   const [expanded, setExpanded] = useState({});
   const [fadeIn, setFadeIn] = useState(false);
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     const isAuthenticated = !!localStorage.getItem("authToken");
@@ -41,8 +44,10 @@ const HotelsPage = () => {
     fetchHotels();
   }, [router]);
 
-  const toggleReadMore = id => {
-    setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
+  if (!currentUser && !loading) return <AuthGuard />;
+
+  const toggleReadMore = (id) => {
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   const truncateText = (text, lines = 3) => {
@@ -82,13 +87,14 @@ const HotelsPage = () => {
       <h1 className="text-center pt-5">Hotels</h1>
       <ul style={{ listStyleType: "none", padding: 50 }}>
         <div className="d-flex flex-wrap gap-3 justify-content-around">
-          {hotels.map(hotel => {
+          {hotels.map((hotel) => {
             const truncatedText = truncateText(hotel.description, 20);
 
             //  (handle auth of login & create Drawer & EditNavbAr & addHotels);
-            const isTruncated = hotel.description && typeof hotel.description === 'string' 
-              ? hotel.description.split(" ").length > 20 
-              : false;
+            const isTruncated =
+              hotel.description && typeof hotel.description === "string"
+                ? hotel.description.split(" ").length > 20
+                : false;
 
             return (
               <li key={hotel.id} style={{ marginBottom: "1rem" }}>

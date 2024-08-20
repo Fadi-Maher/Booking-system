@@ -1,5 +1,14 @@
 .input-container {
     position: relative;
+    width: 20rem;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 501px) {
+    .input-container {
+        margin-top: 3rem;
+    }
 }
 
 .input-container .dropdown-container {
@@ -10,7 +19,7 @@
     max-height: 300px;
     position: absolute;
     top: calc(100% + 10px);
-    width: 120%;
+    width: 100%;
     left: 50%;
     transform: translateX(-50%);
     overflow-y: auto;
