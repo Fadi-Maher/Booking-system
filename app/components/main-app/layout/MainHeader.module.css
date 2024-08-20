@@ -73,3 +73,22 @@
   text-shadow: 0 0 white;
   border-bottom: 2px solid #dfa974;
 }
+
+.dropDownPosition {
+  top: 1rem;
+  right: 6rem
+}
+
+@media (min-width: 992px) {
+  .dropDownContainer {
+    top: 2rem;
+    right: 1rem
+  }
+}
+
+@media (max-width: 501px) {
+  .dropDownContainer {
+    top: 4rem;
+    right: 1.8rem
+  }
+}
