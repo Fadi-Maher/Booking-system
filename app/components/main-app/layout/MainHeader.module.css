@@ -82,13 +82,13 @@
 @media (min-width: 992px) {
   .dropDownContainer {
     top: 2rem;
-    right: 1rem
+    right: 2rem;
   }
 }
 
 @media (max-width: 501px) {
   .dropDownContainer {
     top: 4rem;
-    right: 1.8rem
+    right: 1.8rem;
   }
 }

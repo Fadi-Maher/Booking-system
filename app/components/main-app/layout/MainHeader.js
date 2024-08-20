@@ -73,11 +73,11 @@ const MainHeader = () => {
       </nav>
       {/* dropdown */}
       <div
-        className={`btn-group dropdown-menu border border-secondary-subtle position-absolute p-1 ${styles.dropDownPosition} ${styles.dropDownContainer}`}
+        className={`btn-group dropdown border border-secondary-subtle position-absolute p-1 ${styles.dropDownPosition} ${styles.dropDownContainer}`}
       >
         <button
           type="button"
-          className="btn btn-sm border-0"
+          className="btn btn-sm border-0 "
           data-bs-toggle="dropdown"
           aria-expanded="false"
         >
