@@ -202,7 +202,13 @@ const Register = () => {
                   } input-shadow`}
                   required={true}
                   defaultValue=""
-                  {...register("name", { required: "Name is required!" })}
+                  {...register("name", {
+                    required: "Name is required!",
+                    minLength: {
+                      value: 3,
+                      message: "Name must contain 3 or more characters!",
+                    },
+                  })}
                   onKeyUp={() => {
                     trigger("name");
                   }}
