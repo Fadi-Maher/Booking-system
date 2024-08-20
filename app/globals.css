@@ -89,3 +89,44 @@ a {
 .primary-color {
   color: #dfa974
 }
+
+
+
+
+
+/* Global styles or within BookingModal component */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* background:white; */
+}
+
+.modal-content {
+  /* position: fixed; */
+  width: 50%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* z-index: 1000; */
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  z-index: 1001;
+  border: 1px solid white;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  color: white;
+}

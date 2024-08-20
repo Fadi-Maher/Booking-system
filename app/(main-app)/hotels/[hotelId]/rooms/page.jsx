@@ -1,16 +1,25 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import styles from "./page.module.css";
-import Link from "next/link";
 import { Grid } from "react-loader-spinner";
+import styles from "./page.module.css";
+import BookingModal from "@/app/components/BookingForm/BookingModal";
+import Link from "next/link";
+
 const RoomsPage = () => {
   const { hotelId } = useParams();
 
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [bookingDetails, setBookingDetails] = useState({
+    startDate: "",
+    endDate: "",
+    guests: 1,
+  });
+  const [availabilityError, setAvailabilityError] = useState("");
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -21,14 +30,11 @@ const RoomsPage = () => {
           method: "GET",
         });
 
-        console.log(response);
-
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
 
         const data = await response.json();
-
         setRooms(data);
       } catch (error) {
         setError(error.message);
@@ -40,6 +46,34 @@ const RoomsPage = () => {
     fetchRooms();
   }, [hotelId]);
 
+  const handleBookingSubmit = async () => {
+    setAvailabilityError("");
+    try {
+      const response = await fetch(`/api/getHotels/${hotelId}/rooms/${selectedRoom}/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingDetails),
+      });
+
+      if (response.status === 409) {
+        const data = await response.json();
+        setAvailabilityError(data.message);
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error("Failed to book the room");
+      }
+
+      alert("Room booked successfully!");
+      setSelectedRoom(null);
+    } catch (error) {
+      alert("Error booking room: " + error.message);
+    }
+  };
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
@@ -47,7 +81,7 @@ const RoomsPage = () => {
           visible={true}
           height="180"
           width="180"
-          color="#0d6efd"
+          color="#dfa974"
           ariaLabel="grid-loading"
           radius="12.5"
           wrapperStyle={{}}
@@ -63,12 +97,12 @@ const RoomsPage = () => {
 
   return (
     <div className="p-5">
-      <h1 className="text-center  pt-5">Our Rooms</h1>
+      <h1 className="text-center pt-5">Our Rooms</h1>
       <section className={styles.spad}>
         <div className={styles.roomsSection}>
           <div className="container">
             <div className="row">
-              {rooms.map(room => (
+              {rooms.map((room) => (
                 <div className="col-lg-4 col-md-6" key={room.id}>
                   <div className={styles.roomitem}>
                     <img src={room.image} alt={room.Title} />
@@ -97,9 +131,10 @@ const RoomsPage = () => {
                           </tr>
                         </tbody>
                       </table>
-                      <Link href="#" className={styles.primarybtn}>
-                        {" "}
-                        Booking Now{" "}
+                      <Link href='#'
+                        onClick={() => setSelectedRoom(room.id)}
+                        className={styles.primarybtn}>
+                        Booking Now
                       </Link>
                     </div>
                   </div>
@@ -109,6 +144,21 @@ const RoomsPage = () => {
           </div>
         </div>
       </section>
+
+      {selectedRoom && (
+        <BookingModal
+          bookingDetails={bookingDetails}
+          setBookingDetails={setBookingDetails}
+          onSubmit={handleBookingSubmit}
+          onCancel={() => setSelectedRoom(null)}
+        />
+      )}
+
+      {availabilityError && (
+        <div className="alert alert-danger mt-3">
+          {availabilityError}
+        </div>
+      )}
     </div>
   );
 };
