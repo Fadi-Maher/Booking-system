@@ -10,146 +10,135 @@ import styles from "../../../page.module.css";
 import { Grid } from "react-loader-spinner";
 
 const HotelDetails = () => {
-	const { hotelId } = useParams();
-	const router = useRouter();
+  const { hotelId } = useParams();
+  const router = useRouter();
 
-	// states
-	const [hotel, setHotel] = useState();
-	const [isLoading, setIsLoading] = useState(true);
+  // states
+  const [hotel, setHotel] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
-  	const images = Array.isArray(hotel?.images) ? hotel.images : [];
-    // const highlights=Array.isArray(hotel?.Highlights) ? hotel.Highlights : [];
-	const fetchHotelData = () => {
-		setIsLoading(true);
-		const docRef = doc(db, "hotels", hotelId);
-		getDoc(docRef)
-		.then((docSnap) => {
-			setHotel(docSnap.data());
-			
-			
-		})
-		.catch((err) => {
-			console.log(err);
-		}).finally(() => setIsLoading(false));
-  	};
+  const images = Array.isArray(hotel?.images) ? hotel.images : [];
+  // const highlights=Array.isArray(hotel?.Highlights) ? hotel.Highlights : [];
+  const fetchHotelData = () => {
+    setIsLoading(true);
+    const docRef = doc(db, "hotels", hotelId);
+    getDoc(docRef)
+      .then(docSnap => {
+        setHotel(docSnap.data());
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => setIsLoading(false));
+  };
 
-	useEffect(() => {
-		fetchHotelData();
-	}, [])
-  return (
-    isLoading ?  <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
-     <Grid
- 
-  visible={true}
-  height="180"
-  width="180"
-  color="#0d6efd"
-  ariaLabel="grid-loading"
-  radius="12.5"
-  wrapperStyle={{}}
-  wrapperClass="grid-wrapper"
-  /> 
-  </div>: 
-		         <div style={{paddingTop:"70px"}}><div className="card">
-					<div className="card-body">
-					<h3>{hotel?.name}</h3>
-				 <div className="m-2">{hotel?.location}</div>  
-				 <div className="d-flex flex-row flex-wrap  ">
-						{hotel.images==null?<div className=" rounded mx-auto w-50"><img 
-							   src={hotel.image}
-							   className="img-thumbnail "
-						   /></div>:images.map((img, index) => (
-							<img 
-							   
-								key={index}
-								src={img}
-								className="img-thumbnail w-25 "
-								alt={`Room ${index + 1}`}
-							/>
-						))}
-							</div>
-							<div>
-						
-						
-						<div className="d-flex flex-row flex-wrap justify-content-between  mb-4  mt-4 " >
-							<div>
-							<span className="m-2 ">{hotel?.reviews==null?0:hotel.reviews.length}</span><span className="text-muted ">reviews</span>
-							</div>
-						
-						<button
+  useEffect(() => {
+    fetchHotelData();
+  }, []);
+  return isLoading ? (
+    <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+      <Grid
+        visible={true}
+        height="180"
+        width="180"
+        color="#0d6efd"
+        ariaLabel="grid-loading"
+        radius="12.5"
+        wrapperStyle={{}}
+        wrapperClass="grid-wrapper"
+      />
+    </div>
+  ) : (
+    <div style={{ paddingTop: "70px" }}>
+      <div className="card">
+        <div className="card-body">
+          <h3>{hotel?.name}</h3>
+          <div className="m-2">{hotel?.location}</div>
+          <div className="d-flex flex-row flex-wrap  ">
+            {hotel.images == null ? (
+              <div className=" rounded mx-auto w-50">
+                <img src={hotel.image} className="img-thumbnail " />
+              </div>
+            ) : (
+              images.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  className="img-thumbnail w-25 "
+                  alt={`Room ${index + 1}`}
+                />
+              ))
+            )}
+          </div>
+          <div>
+            <div className="d-flex flex-row flex-wrap justify-content-between  mb-4  mt-4 ">
+              <div>
+                <span className="m-2 ">
+                  {hotel?.reviews == null ? 0 : hotel.reviews.length}
+                </span>
+                <span className="text-muted ">reviews</span>
+              </div>
+
+              <button
                 className={`btn text-light btn-lg `}
-				style={{backgroundColor:"#d6a472"}}
+                style={{ backgroundColor: "#d6a472" }}
                 type="submit"
-				onClick={()=>{
-					router.push(`/hotels/${hotelId}/rooms`);
-				}}
+                onClick={() => {
+                  router.push(`/hotels/${hotelId}/rooms`);
+                }}
               >
-             Rooms
+                Rooms
               </button>
-						</div>
-						</div>
-						</div>
-						 <div className="card container shadow p-3 mb-5 bg-white  border-0" >
-						
-						<h4 className="mt-4 mb-2"> ✨ Facilities</h4>
-						<div className="d-flex flex-column flex-wrap justify-content-evenly">
-						<h6>Highlights</h6>
-							{hotel.Highlights.map((highlight, index) => (
-							<div className="card-body" key={index}>
-                            🔸{highlight}
-							</div>
-							
-						))}
-						<h6>Cleaning Services</h6>
-							<div className="card-body" >
-                            
-							🔸 {hotel.Amenities["Cleaning Services"]}
-							</div>
-							<h6>Food & Drink</h6>
-							<div className="card-body" >
-                            
-							🔸 {hotel.Amenities["Food & Drink"]}
-							</div>
-							
-						<h6>Transportation</h6>
-							{hotel.Amenities["Transportation"].map((amen, index) => (
-							<div className="card-body" key={index}>
-                            🔸{amen}
-							</div>
-							
-						))}
-						
-						</div>
-						 </div>
-						 <div className="card container border-0">
-							<div className="card-body">
-							<h4 className="mt-4 mb-2">Popular Amenities</h4>
-						<div className="d-flex flex-row flex-wrap justify-content-evenly">
-						{
-							hotel.Amenities["Popular Amenities"].map((highlight,index)=>(
-								<div className="card shadow p-3 mb-5 bg-white  border-0" key={index}>
-								<div className="card-body">
-								  {highlight}
-								</div>
-							  </div>
-							))
-						}
-						</div>
-						<div className="mt-4 ">
-							{hotel?.description}
-						</div>
-							</div>
-						 </div>
-						
-						
-						
-						
-						</div>
-						
-						</div> 
-				
-		
-		
+            </div>
+          </div>
+        </div>
+        <div className="card container shadow p-3 mb-5 bg-white  border-0">
+          <h4 className="mt-4 mb-2"> ✨ Facilities</h4>
+          <div className="d-flex flex-column flex-wrap justify-content-evenly">
+            <h6>Highlights</h6>
+            {hotel?.Highlights?.map((highlight, index) => (
+              <div className="card-body" key={index}>
+                🔸{highlight}
+              </div>
+            )) ?? []}
+            <h6>Cleaning Services</h6>
+            <div className="card-body">
+              🔸 {hotel?.Amenities ? hotel.Amenities["Cleaning Services"] : ""}
+            </div>
+            <h6>Food & Drink</h6>
+            <div className="card-body">
+              {hotel?.Amenities?.["Food & Drink"] ?? ""}
+              🔸
+            </div>
+
+            <h6>Transportation</h6>
+            {hotel?.Amenities?.["Transportation"].map((amen, index) => (
+              <div className="card-body" key={index}>
+                🔸{amen}
+              </div>
+            )) ?? []}
+          </div>
+        </div>
+        <div className="card container border-0">
+          <div className="card-body">
+            <h4 className="mt-4 mb-2">Popular Amenities</h4>
+            <div className="d-flex flex-row flex-wrap justify-content-evenly">
+              {hotel?.Amenities?.["Popular Amenities"].map(
+                (highlight, index) => (
+                  <div
+                    className="card shadow p-3 mb-5 bg-white  border-0"
+                    key={index}
+                  >
+                    <div className="card-body">{highlight}</div>
+                  </div>
+                )
+              ) ?? []}
+            </div>
+            <div className="mt-4 ">{hotel?.description}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -20,7 +20,7 @@ import ModalForm from "../../ui/paginators/modals/ModalForm";
 const HotelsTable = () => {
   const [hotels, setHotels] = useState([]);
   const [loading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false); // State to manage modal visibility
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -75,17 +75,27 @@ const HotelsTable = () => {
 
   return (
     <Fragment>
-      <ModalForm show={showModal} close={() => setShowModal(false)} />{" "}
-      {/* Pass props */}
-      <div className="d-flex justify-content-between mb-3">
-        <Form.Control
-          type="text"
-          className="w-75"
-          placeholder="Search for hotels..."
-        />
-        <Button variant="success" onClick={() => addNewHotel()}>
-          Add new hotel
-        </Button>
+      <div className="d-flex justify-content-between">
+        <ModalForm show={showModal} close={() => setShowModal(false)} />{" "}
+        {/* Pass props */}
+        <div className="">
+          <Form.Control
+            type="text"
+            className="w-100"
+            placeholder="Search for hotels..."
+          />
+        </div>
+        <div className="">
+          <Button
+            variant="success"
+            onClick={() => {
+              setShowModal(true);
+            }}
+            className=""
+          >
+            Add New Hotels
+          </Button>
+        </div>
       </div>
       <Table responsive hover>
         <thead>
