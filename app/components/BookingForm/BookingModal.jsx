@@ -6,7 +6,7 @@ const BookingModal = ({ bookingDetails, setBookingDetails, onSubmit, onCancel })
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h4 className="text-light">Book Room</h4>
+        <h2 className="text-light mb-4 ">Book Room</h2>
         <div className="form-group input-shadow">
           <label>Start Date:</label>
           <input

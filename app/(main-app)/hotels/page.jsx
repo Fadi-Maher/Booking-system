@@ -68,7 +68,7 @@ const HotelsPage = () => {
           visible={true}
           height="180"
           width="180"
-          color="#d6a472"
+          color="#dfa974"
           ariaLabel="grid-loading"
           radius="12.5"
           wrapperStyle={{}}

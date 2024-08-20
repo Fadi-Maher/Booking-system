@@ -10,14 +10,14 @@ export async function POST(request, { params }) {
 
     const bookingsCollection = collection(db, `hotels/${hotelId}/rooms/${roomId}/bookings`);
 
-    // Fetch all bookings for this room
+ 
     const existingBookingsSnapshot = await getDocs(bookingsCollection);
 
-    // Convert startDate and endDate from the request to Date objects
+
     const newStartDate = new Date(startDate);
     const newEndDate = new Date(endDate);
 
-    // Check for overlap manually
+   
     const isRoomAvailable = !existingBookingsSnapshot.docs.some(doc => {
       const booking = doc.data();
       const existingStartDate = new Date(booking.startDate);
@@ -43,7 +43,7 @@ export async function POST(request, { params }) {
       return NextResponse.json({ message: "Room is not available for the selected dates" }, { status: 500 });
     }
 
-    // If no overlapping bookings, create the booking
+
     await addDoc(bookingsCollection, bookingData);
 
     return NextResponse.json({ message: "Booking successful" });
