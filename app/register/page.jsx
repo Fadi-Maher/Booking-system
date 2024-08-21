@@ -83,111 +83,6 @@ const Register = () => {
 
           <MDBCol col="4" md="5">
             <form onSubmit={handleSubmit(onHandleSubmit)}>
-              <div>
-                <label className="mt-5 mb-2" htmlFor="email">
-                  Email
-                </label>
-                <MDBInput
-                  className="input-shadow"
-                  wrapperClass="mb-1"
-                  id="email"
-                  type="email"
-                  size="lg"
-                  required={true}
-                  {...register("email", {
-                    required: "Email is required!",
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "Invalid email address!",
-                    },
-                  })}
-                  onKeyUp={() => {
-                    trigger("email");
-                  }}
-                />
-              </div>
-
-              {errors.email && (
-                <small className="text-danger mb-2 mt-n2">
-                  {errors.email.message}
-                </small>
-              )}
-
-              <div className="mt-4">
-                <label className="mb-2" htmlFor="password">
-                  Password
-                </label>
-                <MDBInput
-                  wrapperClass="mb-1"
-                  id="password"
-                  type="password"
-                  size="lg"
-                  autoComplete="off"
-                  className={`form-control ${
-                    errors.password && "invalid"
-                  } input-shadow`}
-                  required={true}
-                  {...register("password", {
-                    required: "You must specify a password",
-                    pattern: {
-                      value:
-                        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
-                      message:
-                        "Password must contain at least one number, one special character and one uppercase character!",
-                    },
-                    minLength: {
-                      value: 8,
-                      message: "Password must be more than 8 characters!",
-                    },
-                    maxLength: {
-                      value: 17,
-                      message: "Password must be less than 17 characters!",
-                    },
-                  })}
-                  onKeyUp={() => {
-                    trigger("password");
-                  }}
-                />
-                {errors.password && (
-                  <small className="text-danger mb-4 mt-n2">
-                    {errors.password.message}
-                  </small>
-                )}
-              </div>
-
-              <div className="mt-4">
-                <label className="mb-2" htmlFor="confirmPassword">
-                  Confirm your password
-                </label>
-                <MDBInput
-                  wrapperClass="mb-1"
-                  id="confirmPassword"
-                  type="password"
-                  size="lg"
-                  {...register("confirmPassword", {
-                    validate: (value) =>
-                      value === watch("password", "") ||
-                      "The passwords do not match!",
-                  })}
-                  autoComplete="off"
-                  onPaste={(e) => {
-                    e.preventDefault();
-                    return false;
-                  }}
-                  className={`form-control ${
-                    errors.confirmPassword && "invalid"
-                  } input-shadow`}
-                  required={true}
-                  onKeyUp={() => {
-                    trigger("confirmPassword");
-                  }}
-                />
-                {errors.confirmPassword && (
-                  <small className="text-danger mb-2 mt-n2">
-                    {errors.confirmPassword.message}{" "}
-                  </small>
-                )}
-              </div>
               <div className="mt-4">
                 <label className="mb-2" htmlFor="name">
                   Name
@@ -219,9 +114,38 @@ const Register = () => {
                   </small>
                 )}
               </div>
-              <div className="mt-4 mb-4">
+              <div className="mt-4">
+                <label className="mb-2" htmlFor="email">
+                  Email
+                </label>
+                <MDBInput
+                  className="input-shadow"
+                  wrapperClass="mb-1"
+                  id="email"
+                  type="email"
+                  size="lg"
+                  required={true}
+                  {...register("email", {
+                    required: "Email is required!",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("email");
+                  }}
+                />
+                {errors.email && (
+                  <small className="text-danger mb-2 mt-n2">
+                    {errors.email.message}
+                  </small>
+                )}
+              </div>
+
+              <div className="mt-4">
                 <label className="mb-2" htmlFor="phoneNumber">
-                  Phone number
+                  Phone
                 </label>
                 <MDBInput
                   wrapperClass="mb-1"
@@ -256,6 +180,83 @@ const Register = () => {
                   </small>
                 )}
               </div>
+
+              <div className="mt-4">
+                <label className="mb-2" htmlFor="password">
+                  Password
+                </label>
+                <MDBInput
+                  wrapperClass="mb-1"
+                  id="password"
+                  type="password"
+                  size="lg"
+                  autoComplete="off"
+                  className={`form-control ${
+                    errors.password && "invalid"
+                  } input-shadow`}
+                  required={true}
+                  {...register("password", {
+                    required: "You must specify a password!",
+                    pattern: {
+                      value:
+                        /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/,
+                      message:
+                        "Password must contain at least one number, one special character and one uppercase character!",
+                    },
+                    minLength: {
+                      value: 8,
+                      message: "Password must be more than 8 characters!",
+                    },
+                    maxLength: {
+                      value: 17,
+                      message: "Password must be less than 17 characters!",
+                    },
+                  })}
+                  onKeyUp={() => {
+                    trigger("password");
+                  }}
+                />
+                {errors.password && (
+                  <small className="text-danger mb-4 mt-n2">
+                    {errors.password.message}
+                  </small>
+                )}
+              </div>
+
+              <div className="mt-4 mb-4">
+                <label className="mb-2" htmlFor="confirmPassword">
+                  Confirm your password
+                </label>
+                <MDBInput
+                  wrapperClass="mb-1"
+                  id="confirmPassword"
+                  type="password"
+                  size="lg"
+                  {...register("confirmPassword", {
+                    validate: (value) =>
+                      value === watch("password", "") ||
+                      "The passwords do not match!",
+                  })}
+                  autoComplete="off"
+                  onPaste={(e) => {
+                    e.preventDefault();
+                    return false;
+                  }}
+                  className={`form-control ${
+                    errors.confirmPassword && "invalid"
+                  } input-shadow`}
+                  required={true}
+                  onKeyUp={() => {
+                    trigger("confirmPassword");
+                  }}
+                />
+                {errors.confirmPassword && (
+                  <small className="text-danger mb-2 mt-n2">
+                    {errors.confirmPassword.message}{" "}
+                  </small>
+                )}
+              </div>
+
               <button
                 className={`primary-btn mb-3`}
                 disabled={!isValid}

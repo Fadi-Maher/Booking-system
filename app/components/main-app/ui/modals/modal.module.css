@@ -1,0 +1,41 @@
+.updatePassBtn {
+    width: 7rem;
+    font-size: 0.7rem;
+    background-color: #dfa974;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    height: 2.5rem
+}
+
+.updatePassBtn:hover {
+    background-color: #e09f5d;
+}
+
+.deleteBtn {
+    width: 7rem;
+    background-color: rgb(201, 80, 80);
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-radius: 5px;
+    color: white;
+    height: 2.5rem
+}
+
+.deleteBtn:hover {
+    background-color: rgb(202, 60, 60);
+}
+
+.cancelBtn {
+    width: 3.5rem;
+    background-color: #3e424d;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-radius: 5px;
+    color: white;
+    height: 2.5rem;
+}
+
+.cancelBtn:hover {
+    background-color: #252a38;
+}
