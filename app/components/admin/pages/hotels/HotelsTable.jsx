@@ -5,19 +5,23 @@ import { MdEditSquare } from "react-icons/md";
 import { IoTrashBin } from "react-icons/io5";
 import PaginationStyle1 from "../../ui/paginators/PaginationStyle1";
 import {
-  getFirestore,
   collection,
   getDocs,
   doc,
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
-
 import { db } from "@/app/firebase";
 import ModalForm from "../../ui/paginators/modals/ModalForm";
+import styles from "./HotelsTable.module.css";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const HotelsTable = () => {
+  //Constants
+  const router = useRouter();
+
+  // States
   const [hotels, setHotels] = useState([]);
   const [loading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -75,29 +79,20 @@ const HotelsTable = () => {
 
   return (
     <Fragment>
-      <div className="d-flex justify-content-between">
-        <ModalForm show={showModal} close={() => setShowModal(false)} />{" "}
-        {/* Pass props */}
-        <div className="">
-          <Form.Control
-            type="text"
-            className="w-100"
-            placeholder="Search for hotels..."
-          />
-        </div>
-        <div className="">
-          <Button
-            variant="success"
-            onClick={() => {
-              setShowModal(true);
-            }}
-            className=""
-          >
-            Add New Hotels
-          </Button>
-        </div>
+      <div className="d-flex justify-content-between mb-4">
+        <Form.Control
+          type="text"
+          className="w-75"
+          placeholder="Search for hotels..."
+        />
+        <Button
+          variant="success"
+          onClick={() => router.push("/admin/hotels/create")}
+        >
+          Add New Hotels
+        </Button>
       </div>
-      <Table responsive hover>
+      <Table responsive hover className={styles["hotels-table"]}>
         <thead>
           <tr>
             <th>Title</th>
@@ -112,16 +107,17 @@ const HotelsTable = () => {
             <tr key={hotel.id}>
               <td>{hotel.name}</td>
               <td>
-                <img
+                <Image
+                  width={100}
+                  height={100}
                   src={hotel.image}
                   alt={hotel.title}
-                  style={{ width: "100px" }}
                 />
               </td>
               <td>{hotel.price}</td>
               <td>
                 <Button
-                  onClick={() => handleEdit(hotel.id, { name: "" })}
+                  onClick={() => router.push(`/admin/hotels/${hotel.id}/edit`)}
                   size="sm"
                   variant="primary"
                   className="me-2"
@@ -143,6 +139,7 @@ const HotelsTable = () => {
       <div className="d-flex justify-content-center mt-3">
         <PaginationStyle1 />
       </div>
+      <ModalForm show={showModal} close={() => setShowModal(false)} />
     </Fragment>
   );
 };
