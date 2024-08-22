@@ -1,15 +1,37 @@
 "use client";
 
 import { AuthContext } from "@/app/AuthContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ProfileNameModal from "@/app/components/main-app/ui/modals/ProfileNameModal";
 import ProfilePhoneModal from "@/app/components/main-app/ui/modals/ProfilePhoneModal";
 import ProfileEmailModal from "@/app/components/main-app/ui/modals/ProfileEmailModal";
 import ProfilePasswordModal from "@/app/components/main-app/ui/modals/ProfilePasswordModal";
 import ProfileDeleteModal from "@/app/components/main-app/ui/modals/ProfileDeleteModal";
+import AuthGuard from "@/app/components/main-app/ui/auth-guard/AuthGuard";
+import { Grid } from "react-loader-spinner";
 
 const Profile = () => {
-  const { userDetails, currentUser } = useContext(AuthContext);
+  const { currentUser, userDetails, isLoading } = useContext(AuthContext);
+  // const [isLoading, setIsLoading] = useState(true);
+
+  if (!currentUser && !isLoading) return <AuthGuard />;
+
+  if (isLoading) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+        <Grid
+          visible={true}
+          height="180"
+          width="180"
+          color="#dfa974"
+          ariaLabel="grid-loading"
+          radius="12.5"
+          wrapperStyle={{}}
+          wrapperClass="grid-wrapper"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-3 mb-5 mx-auto" style={{ maxWidth: "35rem" }}>

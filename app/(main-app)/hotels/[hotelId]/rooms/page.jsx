@@ -48,6 +48,33 @@ const RoomsPage = () => {
 
   const handleBookingSubmit = async () => {
     setAvailabilityError("");
+
+    const newStartDate = new Date(bookingDetails.startDate);
+    const newEndDate = new Date(bookingDetails.endDate);
+    const currentDate = new Date();
+
+    //  dates are not empty
+    if (!bookingDetails.startDate || !bookingDetails.endDate) {
+      setAvailabilityError("Invalid date: Start date and end date are required.");
+      console.log("error:", availabilityError);  
+      return;
+    }
+
+    // dates are not in the past
+    if (newStartDate < currentDate || newEndDate < currentDate) {
+      setAvailabilityError("Invalid date: Start date and end date must be in the future.");
+      console.log("error:", availabilityError);  
+      return;
+    }
+
+    //  end date is after the start date
+    if (newEndDate < newStartDate) {
+      setAvailabilityError("Invalid date: End date must be after the start date.");
+      console.log("error:", availabilityError);  
+      return;
+    }
+
+  
     try {
       const response = await fetch(`/api/getHotels/${hotelId}/rooms/${selectedRoom}/bookings`, {
         method: "POST",
@@ -57,26 +84,22 @@ const RoomsPage = () => {
         body: JSON.stringify(bookingDetails),
       });
 
-      if (response.status === 409) {
+      if (!response.ok) {
         const data = await response.json();
         setAvailabilityError(data.message);
         return;
       }
 
-      if (!response.ok) {
-        throw new Error("Failed to book the room");
-      }
-
       alert("Room booked successfully!");
       setSelectedRoom(null);
     } catch (error) {
-      alert("Error booking room: " + error.message);
+      setAvailabilityError("Error booking room: " + error.message);
     }
   };
 
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
+      <div className="d-flex justify-content-center align-items-center vh-100 vw-100">
         <Grid
           visible={true}
           height="180"

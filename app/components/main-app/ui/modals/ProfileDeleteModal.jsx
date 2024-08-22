@@ -14,15 +14,23 @@ function ProfileDeleteModal({ modalTitle, currentUser }) {
   const handleShow = () => setShow(true);
 
   const handleDeleteAccount = async () => {
+    if (!currentUser) {
+      toast.error("No user found.");
+      return;
+    }
     try {
-      await deleteDoc(doc(db, "users", currentUser.uid));
       await currentUser.delete();
+      await deleteDoc(doc(db, "users", currentUser.uid));
 
       handleClose();
       toast.success("Account deleted successfully!");
-      router.push("/");
+      router.push("/register");
     } catch (error) {
-      toast.error(`Error: ${error.message}`);
+      if (error.code === "auth/requires-recent-login") {
+        toast.error("Re-log in to be able to delete your account!");
+        return;
+      }
+      toast.error(error.message);
     }
   };
 
@@ -33,7 +41,7 @@ function ProfileDeleteModal({ modalTitle, currentUser }) {
       </button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>{modalTitle}:</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are You Sure?</Modal.Body>

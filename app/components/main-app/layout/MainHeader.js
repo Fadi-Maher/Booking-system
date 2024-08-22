@@ -11,7 +11,7 @@ const MainHeader = () => {
   const { userDetails } = useContext(AuthContext);
 
   return (
-    <div className="position-relative">
+    <div className="position-relative border-bottom">
       <nav className="navbar navbar-expand-lg bg-body-tertiary p-3 ">
         <div className="container-fluid ">
           <Link className="navbar-brand " href="/">
@@ -102,7 +102,14 @@ const MainHeader = () => {
           style={{ backgroundColor: "#222736" }}
         >
           {userDetails ? (
-            <Logout />
+            <>
+              <li>
+                <Link className="custom-dropDown-link" href="/profile">
+                  Profile
+                </Link>
+              </li>
+              <Logout />
+            </>
           ) : (
             <li>
               <Link className="custom-dropDown-link " href="/login">

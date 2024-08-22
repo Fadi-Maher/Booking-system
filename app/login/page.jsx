@@ -49,7 +49,7 @@ const Login = () => {
       toast.success("Logged in successfully!");
       setTimeout(() => {
         router.push("/");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.error(error);
       toast.error("Login failed. Please check your credentials.");

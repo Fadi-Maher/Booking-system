@@ -59,7 +59,7 @@ const Register = () => {
       toast.success("User Registered Successfully!");
       setTimeout(() => {
         router.push("/login");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         toast.error("This email is already registered. Please log in instead.");

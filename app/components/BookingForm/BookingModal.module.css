@@ -1,0 +1,56 @@
+/* app/components/BookingModal.module.css */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  width: 50%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  /* background-image: linear-gradient( white , #dfc5ac); */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.formGroup {
+  margin-bottom: 30px;
+  color: #e98d30;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+.formGroup label {
+  margin-right: 15px;                 
+}
+
+.formGroup input {
+  padding: 2px 4px; 
+  background-color: white;
+  width: 1.5; 
+  color: black;  
+  border:1px solid #e9a159;            
+}
+
+
+.formGroup input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); 
+  cursor: pointer;
+}
+
+
+
