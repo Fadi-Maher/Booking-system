@@ -11,7 +11,7 @@ const MainHeader = () => {
   const { userDetails } = useContext(AuthContext);
 
   return (
-    <div className="position-relative">
+    <div className="position-relative border-bottom">
       <nav className="navbar navbar-expand-lg bg-body-tertiary p-3 ">
         <div className="container-fluid ">
           <Link className="navbar-brand " href="/">

@@ -10,10 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const updateEmail = (email) => {
-    return currentUser.updateEemail(email);
-  };
-
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
@@ -34,8 +30,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [userDetails]);
 
-  const value = { userDetails, currentUser, updateEmail };
+  const value = { userDetails, currentUser };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -9,7 +9,7 @@ import ProfilePasswordModal from "@/app/components/main-app/ui/modals/ProfilePas
 import ProfileDeleteModal from "@/app/components/main-app/ui/modals/ProfileDeleteModal";
 
 const Profile = () => {
-  const { userDetails, currentUser } = useContext(AuthContext);
+  const { currentUser, userDetails } = useContext(AuthContext);
 
   return (
     <div className="mt-3 mb-5 mx-auto" style={{ maxWidth: "35rem" }}>

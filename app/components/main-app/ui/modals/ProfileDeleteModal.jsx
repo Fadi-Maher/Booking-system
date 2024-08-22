@@ -14,13 +14,17 @@ function ProfileDeleteModal({ modalTitle, currentUser }) {
   const handleShow = () => setShow(true);
 
   const handleDeleteAccount = async () => {
+    if (!currentUser) {
+      toast.error("No user found.");
+      return;
+    }
     try {
-      await deleteDoc(doc(db, "users", currentUser.uid));
       await currentUser.delete();
+      await deleteDoc(doc(db, "users", currentUser.uid));
 
       handleClose();
       toast.success("Account deleted successfully!");
-      router.push("/");
+      router.push("/register");
     } catch (error) {
       toast.error(`Error: ${error.message}`);
     }

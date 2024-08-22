@@ -13,7 +13,7 @@ const Logout = () => {
       toast.success("Logged out successfully!");
       setTimeout(() => {
         router.push("/login");
-      }, 2000);
+      }, 1000);
     } catch (error) {
       toast.error("Logout failed.");
       console.log(error);
