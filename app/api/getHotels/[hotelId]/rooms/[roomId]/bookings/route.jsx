@@ -73,12 +73,12 @@ export async function POST(request, { params }) {
       return NextResponse.json({ message: "Invalid date: Start date and end date are required." });
     }
 
-    //  dates are not in the past
+    // dates are not in the past
     if (newStartDate < currentDate || newEndDate < currentDate) {
       return NextResponse.json({ message: "Invalid date: Start date and end date must be in the future." });
     }
 
-    //  end date is after the start date
+    //end date is after the start date
     if (newEndDate < newStartDate) {
       return NextResponse.json({ message: "Invalid date: End date must be after the start date." });
     }
@@ -86,22 +86,22 @@ export async function POST(request, { params }) {
     const bookingsCollection = collection(db, `hotels/${hotelId}/rooms/${roomId}/bookings`);
     const existingBookingsSnapshot = await getDocs(bookingsCollection);
 
-    // Check if the room is available
+    //if the room is available
     const isRoomAvailable = !existingBookingsSnapshot.docs.some(doc => {
       const booking = doc.data();
       const existingStartDate = new Date(booking.startDate);
       const existingEndDate = new Date(booking.endDate);
 
-      // Log for debugging
-      console.log({
-        newStartDate,
-        newEndDate,
-        existingStartDate,
-        existingEndDate,
-        condition1: newStartDate <= existingEndDate,
-        condition2: newEndDate >= existingStartDate,
-        overlap: (newStartDate <= existingEndDate) && (newEndDate >= existingStartDate)
-      });
+     
+      // console.log({
+      //   newStartDate,
+      //   newEndDate,
+      //   existingStartDate,
+      //   existingEndDate,
+      //   condition1: newStartDate <= existingEndDate,
+      //   condition2: newEndDate >= existingStartDate,
+      //   overlap: (newStartDate <= existingEndDate) && (newEndDate >= existingStartDate)
+      // });
 
       return (
         newStartDate <= existingEndDate && newEndDate >= existingStartDate
@@ -109,15 +109,15 @@ export async function POST(request, { params }) {
     });
 
     if (!isRoomAvailable) {
-      return NextResponse.json({ message: "Room is not available for the selected dates" }, { status: 409 });
+      return NextResponse.json({ message: "Room is not available for the selected dates" });
     }
 
-    // If validations pass and the room is available, proceed to create the booking
+
     await addDoc(bookingsCollection, bookingData);
 
     return NextResponse.json({ message: "Booking successful" });
   } catch (error) {
-    return NextResponse.json({ message: "Failed to book the room", error: error.message }, { status: 500 });
+    return NextResponse.json({ message: "Failed to book the room", error: error.message });
   }
 }
 
