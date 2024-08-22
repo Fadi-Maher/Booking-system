@@ -92,15 +92,21 @@ const HotelForm = () => {
           name="description"
           render={({ field }) => (
             <Form.Control
+              rules={{ required: "This field is required" }}
               as={"textarea"}
               rows={5}
               size="md"
               type="text"
               placeholder="Enter hotel description"
+              isInvalid={errors.description}
               {...field}
             />
           )}
         />
+
+        <Form.Control.Feedback type="invalid">
+          {errors?.description?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       {/* Location */}
@@ -108,16 +114,21 @@ const HotelForm = () => {
         <Form.Label>Location</Form.Label>
         <Controller
           control={control}
+          rules={{ required: "This field is required" }}
           name="location"
           render={({ field }) => (
             <Form.Control
               size="md"
               type="text"
               placeholder="Enter hotel location"
+              isInvalid={errors.location}
               {...field}
             />
           )}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors?.location?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       {/* Image */}
@@ -125,16 +136,21 @@ const HotelForm = () => {
         <Form.Label>Image</Form.Label>
         <Controller
           control={control}
+          rules={{ required: "This field is required" }}
           name="image"
           render={({ field }) => (
             <Form.Control
               size="md"
               type="text"
               placeholder="Image Url"
+              isInvalid={errors.image}
               {...field}
             />
           )}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors?.image?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       {/* Price*/}
@@ -142,16 +158,21 @@ const HotelForm = () => {
         <Form.Label>Price</Form.Label>
         <Controller
           control={control}
+          rules={{ required: "This field is required" }}
           name="price"
           render={({ field }) => (
             <Form.Control
               size="md"
               type="text"
               placeholder="Enter hotel price"
+              isInvalid={errors.price}
               {...field}
             />
           )}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors?.price?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       {/* details */}
@@ -159,16 +180,21 @@ const HotelForm = () => {
         <Form.Label>Hotel details</Form.Label>
         <Controller
           control={control}
+          rules={{ required: "This field is required" }}
           name="details"
           render={({ field }) => (
             <Form.Control
               size="md"
               type="text"
               placeholder="Enter hotel details"
+              isInvalid={errors.details}
               {...field}
             />
           )}
         />
+        <Form.Control.Feedback type="invalid">
+          {errors?.details?.message}
+        </Form.Control.Feedback>
       </Form.Group>
 
       <Button type="submit">Submit</Button>
