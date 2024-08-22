@@ -91,7 +91,7 @@ function ReviewModal({ hotelId, userDetails, handleReviewAdded }) {
       </div>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <div>
             <span>Your Rating:</span>
             <StarRating rating={rating} setRating={setRating} />

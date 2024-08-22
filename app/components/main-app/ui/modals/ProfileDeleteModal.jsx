@@ -37,7 +37,7 @@ function ProfileDeleteModal({ modalTitle, currentUser }) {
       </button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>{modalTitle}:</Modal.Title>
         </Modal.Header>
         <Modal.Body>Are You Sure?</Modal.Body>

@@ -102,7 +102,14 @@ const MainHeader = () => {
           style={{ backgroundColor: "#222736" }}
         >
           {userDetails ? (
-            <Logout />
+            <>
+              <li>
+                <Link className="custom-dropDown-link" href="/profile">
+                  Profile
+                </Link>
+              </li>
+              <Logout />
+            </>
           ) : (
             <li>
               <Link className="custom-dropDown-link " href="/login">

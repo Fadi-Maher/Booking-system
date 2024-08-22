@@ -20,7 +20,7 @@ const Logout = () => {
     }
   }
   return (
-    <li>
+    <li className="mt-2">
       <span onClick={() => signOutUser()} type="submit" className="">
         Log Out
       </span>

@@ -9,6 +9,7 @@ export const AuthContext = React.createContext();
 export const AuthProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
@@ -30,8 +31,9 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     fetchUserData();
+    setIsLoading(false);
   }, [userDetails]);
 
-  const value = { userDetails, currentUser };
+  const value = { userDetails, currentUser, isLoading };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
