@@ -26,7 +26,11 @@ function ProfileDeleteModal({ modalTitle, currentUser }) {
       toast.success("Account deleted successfully!");
       router.push("/register");
     } catch (error) {
-      toast.error(`Error: ${error.message}`);
+      if (error.code === "auth/requires-recent-login") {
+        toast.error("Re-log in to be able to delete your account!");
+        return;
+      }
+      toast.error(error.message);
     }
   };
 
