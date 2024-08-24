@@ -138,13 +138,13 @@ const HotelsPage = () => {
                       <button
                         onClick={() => router.push(`/hotels/${hotel.id}`)}
                         className="primary-btn "
-                        style={{ width: "50%" }}
+                        style={{ width: "50%" ,border:"none"}}
                       >
                         More Details
                       </button>
                       <button
                         className="primary-btn"
-                        style={{ width: "40%" }}
+                        style={{ width: "40%",border:"none" }}
                         onClick={() =>
                           router.push(`/hotels/${hotel.id}/reviews`)
                         }

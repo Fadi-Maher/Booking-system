@@ -1,5 +1,5 @@
+//app/(main-app)/components/BookingForm/BookingModal
 "use client";
-
 import React from "react";
 import styles from "./BookingModal.module.css";
 
@@ -19,7 +19,6 @@ const BookingModal = ({ bookingDetails, setBookingDetails, onSubmit, onCancel })
                 setBookingDetails({ ...bookingDetails, startDate: e.target.value })
               }
             />
-          
           </div>
           <div className={styles.formGroup}>
      
@@ -34,10 +33,10 @@ const BookingModal = ({ bookingDetails, setBookingDetails, onSubmit, onCancel })
       
           </div>
 
-          <button onClick={onSubmit} className="primary-btn ">
+          <button onClick={onSubmit} className="primary-btn " style={{border:"none"}}>
             Confirm Booking
           </button>
-          <button onClick={onCancel} className="secondary-btn">
+          <button onClick={onCancel} className="secondary-btn" style={{border:"none"}}>
             Cancel
           </button>
         </div>

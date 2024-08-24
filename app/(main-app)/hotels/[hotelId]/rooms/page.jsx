@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Grid } from "react-loader-spinner";
 import styles from "./page.module.css";
 import BookingModal from "@/app/components/BookingForm/BookingModal";
+import Popup from "@/app/components/BookingForm/Popup"; // Import the Popup component
 import Link from "next/link";
 
 const RoomsPage = () => {
@@ -20,6 +21,9 @@ const RoomsPage = () => {
     endDate: "",
   });
   const [availabilityError, setAvailabilityError] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState("");
+  const [popupType, setPopupType] = useState(""); // "success" or "error"
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -53,28 +57,33 @@ const RoomsPage = () => {
     const newEndDate = new Date(bookingDetails.endDate);
     const currentDate = new Date();
 
-    //  dates are not empty
+    // Validate dates are not empty
     if (!bookingDetails.startDate || !bookingDetails.endDate) {
       setAvailabilityError("Invalid date: Start date and end date are required.");
-      console.log("error:", availabilityError);  
+      setPopupType("error");
+      setPopupMessage(availabilityError);
+      setShowPopup(true);
       return;
     }
 
-    // dates are not in the past
+    // Validate dates are not in the past
     if (newStartDate < currentDate || newEndDate < currentDate) {
       setAvailabilityError("Invalid date: Start date and end date must be in the future.");
-      console.log("error:", availabilityError);  
+      setPopupType("error");
+      setPopupMessage(availabilityError);
+      setShowPopup(true);
       return;
     }
 
-    //  end date is after the start date
+    // Validate end date is after the start date
     if (newEndDate < newStartDate) {
       setAvailabilityError("Invalid date: End date must be after the start date.");
-      console.log("error:", availabilityError);  
+      setPopupType("error");
+      setPopupMessage(availabilityError);
+      setShowPopup(true);
       return;
     }
 
-  
     try {
       const response = await fetch(`/api/getHotels/${hotelId}/rooms/${selectedRoom}/bookings`, {
         method: "POST",
@@ -87,13 +96,21 @@ const RoomsPage = () => {
       if (!response.ok) {
         const data = await response.json();
         setAvailabilityError(data.message);
+        setPopupType("error");
+        setPopupMessage(data.message);
+        setShowPopup(true);
         return;
       }
 
-      alert("Room booked successfully!");
+      setPopupType("success");
+      setPopupMessage("Room booked successfully!");
+      setShowPopup(true);
       setSelectedRoom(null);
     } catch (error) {
       setAvailabilityError("Error booking room: " + error.message);
+      setPopupType("error");
+      setPopupMessage("Error booking room: " + error.message);
+      setShowPopup(true);
     }
   };
 
@@ -177,11 +194,15 @@ const RoomsPage = () => {
         />
       )}
 
-      {availabilityError && (
-        <div className="alert alert-danger mt-3">
-          {availabilityError}
-        </div>
+      {/* Render the Popup component */}
+      {showPopup && (
+        <Popup
+          message={popupMessage}
+          type={popupType}
+          onClose={() => setShowPopup(false)}
+        />
       )}
+
     </div>
   );
 };
