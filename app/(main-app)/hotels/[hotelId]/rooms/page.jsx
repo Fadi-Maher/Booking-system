@@ -9,6 +9,7 @@ import Link from "next/link";
 
 const RoomsPage = () => {
   const { hotelId } = useParams();
+  const { roomId } = useParams();
 
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +18,6 @@ const RoomsPage = () => {
   const [bookingDetails, setBookingDetails] = useState({
     startDate: "",
     endDate: "",
-    guests: 1,
   });
   const [availabilityError, setAvailabilityError] = useState("");
 

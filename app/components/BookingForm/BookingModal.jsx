@@ -33,17 +33,6 @@ const BookingModal = ({ bookingDetails, setBookingDetails, onSubmit, onCancel })
             />
       
           </div>
-          {/* <div className={styles.formGroup}>
-            <label>Name:</label>
-            <input
-              type="number"
-              min="1"
-              value={bookingDetails.name}
-              onChange={(e) =>
-                setBookingDetails({ ...bookingDetails, name: e.target.value })
-              }
-            />
-          </div> */}
 
           <button onClick={onSubmit} className="primary-btn ">
             Confirm Booking
