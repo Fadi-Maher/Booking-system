@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { AuthContext } from "@/app/AuthContext";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { Grid } from "react-loader-spinner";
 import styles from "./page.module.css";
 import BookingModal from "@/app/components/BookingForm/BookingModal";
-import Popup from "@/app/components/BookingForm/Popup"; // Import the Popup component
+import Popup from "@/app/components/BookingForm/Popup";
 import Link from "next/link";
 
 const RoomsPage = () => {
   const { hotelId } = useParams();
-  const { roomId } = useParams();
+  const { currentUser } = useContext(AuthContext);
 
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +25,7 @@ const RoomsPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const [popupType, setPopupType] = useState(""); // "success" or "error"
+
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -57,7 +59,7 @@ const RoomsPage = () => {
     const newEndDate = new Date(bookingDetails.endDate);
     const currentDate = new Date();
 
-    // Validate dates are not empty
+    //  dates are not empty
     if (!bookingDetails.startDate || !bookingDetails.endDate) {
       setAvailabilityError("Invalid date: Start date and end date are required.");
       setPopupType("error");
@@ -66,7 +68,7 @@ const RoomsPage = () => {
       return;
     }
 
-    // Validate dates are not in the past
+    // dates are not in the past
     if (newStartDate < currentDate || newEndDate < currentDate) {
       setAvailabilityError("Invalid date: Start date and end date must be in the future.");
       setPopupType("error");
@@ -75,7 +77,7 @@ const RoomsPage = () => {
       return;
     }
 
-    // Validate end date is after the start date
+    // end date is after the start date
     if (newEndDate < newStartDate) {
       setAvailabilityError("Invalid date: End date must be after the start date.");
       setPopupType("error");
@@ -84,13 +86,19 @@ const RoomsPage = () => {
       return;
     }
 
+    // include userId in bookingDetails
+    const bookingData = {
+      ...bookingDetails,
+      userId: currentUser.uid,
+    };
+
     try {
       const response = await fetch(`/api/getHotels/${hotelId}/rooms/${selectedRoom}/bookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(bookingDetails),
+        body: JSON.stringify(bookingData),
       });
 
       if (!response.ok) {
@@ -194,15 +202,14 @@ const RoomsPage = () => {
         />
       )}
 
-      {/* Render the Popup component */}
-      {showPopup && (
+          {/* Render the Popup component */}
+          {showPopup && (
         <Popup
           message={popupMessage}
           type={popupType}
           onClose={() => setShowPopup(false)}
         />
       )}
-
     </div>
   );
 };
