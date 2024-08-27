@@ -1,5 +1,4 @@
 "use client";
-
 import { AuthContext } from "@/app/AuthContext";
 import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "next/navigation";
@@ -8,6 +7,7 @@ import styles from "./page.module.css";
 import BookingModal from "@/app/components/BookingForm/BookingModal";
 import Popup from "@/app/components/BookingForm/Popup";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';  // Import the useRouter hook
 
 const RoomsPage = () => {
   const { hotelId } = useParams();
@@ -21,6 +21,7 @@ const RoomsPage = () => {
     startDate: "",
     endDate: "",
   });
+  const router = useRouter(); 
   const [availabilityError, setAvailabilityError] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
@@ -114,6 +115,8 @@ const RoomsPage = () => {
       setPopupMessage("Room booked successfully!");
       setShowPopup(true);
       setSelectedRoom(null);
+      const bookingResponse = await response.json(); // Assuming the response returns booking details
+      router.push(`/checkout`);
     } catch (error) {
       setAvailabilityError("Error booking room: " + error.message);
       setPopupType("error");

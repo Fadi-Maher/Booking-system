@@ -1,97 +1,79 @@
+'use client'
+import { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import styles from "../page.module.css";
-const CheckOut = () => {
-return(
-    <div className="container mt-4">
-    
-     <form action="">
-        <div className="row ">
-            <div className="col-6">
-                <h3>BILLING ADDRESS</h3>
-                <div className="input-group mt-2">
-  <span className="input-group-text ">First and last name</span>
-  <input type="text" aria-label="First name" className="form-control"/>
-  <input type="text" aria-label="Last name" className="form-control"/>
-</div>
-<div className="mb-3 mt-1">
-  <label htmlFor="Email address" className="form-label">Email address:</label>
-  <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
-</div>
-<div className="mb-3">
-  <label htmlFor="City" className="form-label">City:</label>
-  <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="Cairo"/>
-</div>
-<div className="mb-1 mt-2">
-  <label htmlFor="Address" className="form-label">Address</label>
-  <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="55 Al Henderson Drive"/>
-</div>
-<div className="row ">
-<div className="col-6 mt-5">
-    <label htmlFor="state" className=" col-form-label">State:</label>
-    <div className="col-sm-10">
-      <input type="text"  className="form-control"  placeholder="Egypt"/>
-    </div>
-  </div>
-  <div className="col-6 mt-5">
-    <label htmlFor="Zip code" className=" col-form-label">Zip Code:</label>
-    <div className="col-sm-10">
-      <input type="text"  className="form-control"  placeholder="123 456"/>
-    </div>
-  </div>
-</div>
 
-            </div>
-            <div className="col-6">
-            <h3 >PAYMENT METHODS</h3>
-   <div className="mb-3 row">
-    <label htmlFor="Cards Accepted" className="col-sm-2 col-form-label">Cards Accepted:</label>
-    <div className="col-sm-10">
-      <img src="img/imgcards.png" alt="" />
-    </div>
-  </div>
-<div className="mb-3 row">
-    <label htmlFor="Name On Card" className="col-sm-2 col-form-label">Name On Card :</label>
-    <div className="col-sm-10">
-      <input type="text"  className="form-control"  placeholder="Mr.jacob aiden"/>
-    </div>
-  </div>
-  <div className="mb-3 row">
-    <label htmlFor="Credit Card Number" className="col-sm-2 col-form-label">Credit Card Number : </label>
-    <div className="col-sm-10">
-      <input type="number"  className="form-control"  placeholder="111 2222 3333 4444"/>
-    </div>
-  </div>
-    <div className="mb-3 row">
-    <label htmlFor="Exp. Month" className="col-sm-2 col-form-label">Exp. Month :</label>
-    <div className="col-sm-10">
-      <input type="text"  className="form-control"  placeholder="Augest"/>
-    </div>
-  </div>
-  <div className="row g-0">
-  <div className="col-6">
-    <label htmlFor="Exp. Year" className="col-sm-2 col-form-label">Exp.Year:</label>
-    <div className="col-sm-10">
-      <input type="number"  className="form-control"  placeholder="2025"/>
-    </div>
-  </div>
-  <div className="col-6">
-    <label htmlFor="CVV" className="col-sm-2 col-form-label">CVV:</label>
-    <div className="col-sm-10">
-      <input type="number"  className="form-control"  placeholder="123"/>
-    </div>
-  </div>
-  </div>
- 
-            </div>
-        </div>
-     </form>
-     <button
-                className={`btn mb-4 w-100 mt-4 text-light btn-lg ${styles.btnBg}`}
-                type="submit"
-              >
-                Check Out
-              </button>
-    </div>
-);
- 
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+const CheckOutForm = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    // Call backend to create a payment intent
+    const response = await fetch("/api/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ amount: 100 }), // replace 100 with your amount logic
+    });
+
+    const { clientSecret } = await response.json();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: "Your Customer's Name", // You can get this from your form
+        },
+      },
+    });
+
+    setLoading(false);
+
+    if (result.error) {
+      setError(result.error.message);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        // 
+        
+      }
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <CardElement />
+      {error && <div>{error}</div>}
+      <button
+        className={`btn mb-4 w-100 mt-4 text-light btn-lg ${styles.btnBg}`}
+        type="submit"
+        disabled={!stripe || loading}
+      >
+        {loading ? "Processing..." : "Check Out"}
+      </button>
+    </form>
+  );
 };
+
+const CheckOut = () => (
+  <div className="container mt-4">
+    <h2>Checkout</h2>
+    <Elements stripe={stripePromise}>
+      <CheckOutForm />
+    </Elements>
+  </div>
+);
+
 export default CheckOut;
