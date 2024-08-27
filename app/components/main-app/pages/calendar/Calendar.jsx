@@ -1,16 +1,54 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select";
+import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db } from "@/app/firebase";
+import { useRouter } from "next/navigation";
+import moment from "moment/moment";
 
 const ReservationForm = () => {
+  const router = useRouter();
+
+  // States...
   const [arrivalDate, setArrivalDate] = useState(null);
   const [departureDate, setDepartureDate] = useState(null);
   const [numberOfNights, setNumberOfNights] = useState(0);
   const [numberOfPersons, setNumberOfPersons] = useState(1);
   const [numberOfAdults, setNumberOfAdults] = useState(1);
   const [numberOfChildren, setNumberOfChildren] = useState(0);
+  const [hotelsOptions, setHotelsOptions] = useState([]);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+
+  useEffect(() => {
+    const fetchHotels = async () => {
+      try {
+        const hotelsRef = collection(db, "hotels");
+        const q = query(hotelsRef, orderBy("name"));
+        const querySnapshot = await getDocs(q);
+        const allHotels = querySnapshot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+
+        // setHotelsOptions(allHotels);
+        setHotelsOptions(
+          allHotels.map(hotel => {
+            return {
+              label: `${hotel.name} - ${hotel.location}`,
+              value: hotel.id,
+            };
+          })
+        );
+      } catch (error) {
+        console.error("Error fetching hotels: ", error);
+      }
+    };
+
+    fetchHotels();
+  }, []);
 
   const handleArrivalDateChange = date => {
     setArrivalDate(date);
@@ -56,13 +94,11 @@ const ReservationForm = () => {
     setNumberOfPersons(value + numberOfAdults);
   };
 
-  const handleSubmit = () => {
-    console.log("Arrival Date:", arrivalDate);
-    console.log("Departure Date:", departureDate);
-    console.log("Number of Nights:", numberOfNights);
-    console.log("Number of Persons:", numberOfPersons);
-    console.log("Number of Adults:", numberOfAdults);
-    console.log("Number of Children:", numberOfChildren);
+  const handleSubmit = e => {
+    e.preventDefault();
+    router.push(
+      `/hotels/${selectedHotel}/rooms?numberOfNights=${numberOfNights}&numberOfPersons=${numberOfPersons}&arrivalDate=${moment(arrivalDate).format("DD-MM-YYYY")}&departureDate=${moment(departureDate).format("DD-MM-YYYY")}`
+    );
   };
 
   const today = new Date();
@@ -72,8 +108,16 @@ const ReservationForm = () => {
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={6}>
           <h4 className="text-center mb-4">Reserve Your Next Stay</h4>
-          <Form>
-            <Form.Group controlId="arrivalDate">
+          <Form onSubmit={handleSubmit}>
+            <Select
+              onChange={selectedHotelObj => {
+                setSelectedHotel(selectedHotelObj.value);
+              }}
+              isSearchable={true}
+              options={hotelsOptions}
+              placeholder="Please select your next destination..."
+            />
+            <Form.Group controlId="arrivalDate " className="mt-3">
               <Form.Label>Arrival Date</Form.Label>
               <DatePicker
                 selected={arrivalDate}
@@ -139,11 +183,15 @@ const ReservationForm = () => {
             </Form.Group>
             <div className="d-flex justify-content-center mt-4">
               <Button
-                type="button"
+                type="submit"
                 className="btn btn-primary p-2 mt-3 w-25"
-                onClick={handleSubmit}
                 style={{ backgroundColor: "#e09f5d", borderColor: "skyblue" }}
-                disabled={!arrivalDate || !departureDate || numberOfNights < 1}
+                disabled={
+                  !arrivalDate ||
+                  !departureDate ||
+                  numberOfNights < 1 ||
+                  !selectedHotel
+                }
               >
                 Reserve Now
               </Button>

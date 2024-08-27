@@ -1,7 +1,7 @@
 "use client";
 import { AuthContext } from "@/app/AuthContext";
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { Grid } from "react-loader-spinner";
 import styles from "./page.module.css";
 import BookingModal from "@/app/components/BookingForm/BookingModal";
@@ -26,7 +26,6 @@ const RoomsPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
   const [popupType, setPopupType] = useState(""); // "success" or "error"
-
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -62,7 +61,9 @@ const RoomsPage = () => {
 
     //  dates are not empty
     if (!bookingDetails.startDate || !bookingDetails.endDate) {
-      setAvailabilityError("Invalid date: Start date and end date are required.");
+      setAvailabilityError(
+        "Invalid date: Start date and end date are required."
+      );
       setPopupType("error");
       setPopupMessage(availabilityError);
       setShowPopup(true);
@@ -71,7 +72,9 @@ const RoomsPage = () => {
 
     // dates are not in the past
     if (newStartDate < currentDate || newEndDate < currentDate) {
-      setAvailabilityError("Invalid date: Start date and end date must be in the future.");
+      setAvailabilityError(
+        "Invalid date: Start date and end date must be in the future."
+      );
       setPopupType("error");
       setPopupMessage(availabilityError);
       setShowPopup(true);
@@ -80,7 +83,9 @@ const RoomsPage = () => {
 
     // end date is after the start date
     if (newEndDate < newStartDate) {
-      setAvailabilityError("Invalid date: End date must be after the start date.");
+      setAvailabilityError(
+        "Invalid date: End date must be after the start date."
+      );
       setPopupType("error");
       setPopupMessage(availabilityError);
       setShowPopup(true);
@@ -94,13 +99,16 @@ const RoomsPage = () => {
     };
 
     try {
-      const response = await fetch(`/api/getHotels/${hotelId}/rooms/${selectedRoom}/bookings`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookingData),
-      });
+      const response = await fetch(
+        `/api/getHotels/${hotelId}/rooms/${selectedRoom}/bookings`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(bookingData),
+        }
+      );
 
       if (!response.ok) {
         const data = await response.json();
@@ -153,7 +161,7 @@ const RoomsPage = () => {
         <div className={styles.roomsSection}>
           <div className="container">
             <div className="row">
-              {rooms.map((room) => (
+              {rooms.map(room => (
                 <div className="col-lg-4 col-md-6" key={room.id}>
                   <div className={styles.roomitem}>
                     <img src={room.image} alt={room.Title} />
@@ -182,9 +190,11 @@ const RoomsPage = () => {
                           </tr>
                         </tbody>
                       </table>
-                      <Link href='#'
+                      <Link
+                        href="#"
                         onClick={() => setSelectedRoom(room.id)}
-                        className={styles.primarybtn}>
+                        className={styles.primarybtn}
+                      >
                         Booking Now
                       </Link>
                     </div>
@@ -205,8 +215,8 @@ const RoomsPage = () => {
         />
       )}
 
-          {/* Render the Popup component */}
-          {showPopup && (
+      {/* Render the Popup component */}
+      {showPopup && (
         <Popup
           message={popupMessage}
           type={popupType}
