@@ -41,7 +41,7 @@ const HotelDetails = () => {
         visible={true}
         height="180"
         width="180"
-        color="#0d6efd"
+        color="#dfa974"
         ariaLabel="grid-loading"
         radius="12.5"
         wrapperStyle={{}}

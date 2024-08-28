@@ -7,7 +7,7 @@ const Footer = () => {
       className=" text-light py-5 footer "
       style={{ backgroundColor: "#222736" }}
     >
-      <div className="container">
+      <div className="container ">
         <div className={styles.footertext}>
           <div className="row">
             <div className="col-lg-4 mb-4">
@@ -20,12 +20,13 @@ const Footer = () => {
                 </p>
               </div>
             </div>
-            <div className="col-lg-3 offset-lg-1 mb-4">
+            <div className="col-lg-3 offset-lg-1 ">
               <div className={styles.ftnewslatter}>
                 <h4>New latest</h4>
                 <p>Get the latest updates and offers.</p>
+                <div>© 2024 Reserve-Mate</div>
               </div>
-              <div className="text-center p-3">© 2024 Reserve-Mate</div>
+
             </div>
           </div>
         </div>
