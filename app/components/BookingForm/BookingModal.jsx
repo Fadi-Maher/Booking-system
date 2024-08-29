@@ -3,6 +3,15 @@ import React, { useState, useEffect } from "react";
 import styles from "./BookingModal.module.css";
 import { useSearchParams } from "next/navigation";
 
+const formatDate = dateString => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
 const BookingModal = ({
   bookingDetails,
   setBookingDetails,
@@ -24,6 +33,13 @@ const BookingModal = ({
   );
   const [numberOfChildren, setNumberOfChildren] = useState(
     parseInt(searchParams.get("numberOfChildren")) || 0
+  );
+  const [minDate, setMinDate] = useState(() => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  });
+  const [minDepartureDate, setMinDepartureDate] = useState(
+    arrivalDate || minDate
   );
 
   const calculateNumberOfNights = (arrival, departure) => {
@@ -56,20 +72,25 @@ const BookingModal = ({
 
   const handleArrivalDateChange = e => {
     const newArrivalDate = e.target.value;
-    setArrivalDate(newArrivalDate);
-    setBookingDetails(prevDetails => ({
-      ...prevDetails,
-      arrivalDate: newArrivalDate,
-    }));
+    if (newArrivalDate >= minDate) {
+      setArrivalDate(newArrivalDate);
+      setMinDepartureDate(newArrivalDate); // Update the minimum departure date
+      setBookingDetails(prevDetails => ({
+        ...prevDetails,
+        arrivalDate: newArrivalDate,
+      }));
+    }
   };
 
   const handleDepartureDateChange = e => {
     const newDepartureDate = e.target.value;
-    setDepartureDate(newDepartureDate);
-    setBookingDetails(prevDetails => ({
-      ...prevDetails,
-      departureDate: newDepartureDate,
-    }));
+    if (newDepartureDate >= minDepartureDate) {
+      setDepartureDate(newDepartureDate);
+      setBookingDetails(prevDetails => ({
+        ...prevDetails,
+        departureDate: newDepartureDate,
+      }));
+    }
   };
 
   const handleNumberOfNightsChange = e => {
@@ -108,13 +129,13 @@ const BookingModal = ({
           {/* Conditionally render labels based on presence of values */}
           {arrivalDate && (
             <div className={styles.formGroup}>
-              <label>Arrival Date: {arrivalDate}</label>
+              <label>Arrival Date: {formatDate(arrivalDate)}</label>
             </div>
           )}
 
           {departureDate && (
             <div className={styles.formGroup}>
-              <label>Departure Date: {departureDate}</label>
+              <label>Departure Date: {formatDate(departureDate)}</label>
             </div>
           )}
 
@@ -136,6 +157,7 @@ const BookingModal = ({
               type="date"
               value={arrivalDate}
               onChange={handleArrivalDateChange}
+              min={minDate}
             />
           </div>
 
@@ -145,6 +167,7 @@ const BookingModal = ({
               type="date"
               value={departureDate}
               onChange={handleDepartureDateChange}
+              min={minDepartureDate} // Set the minimum departure date
             />
           </div>
 
