@@ -7,7 +7,7 @@ import styles from "./page.module.css";
 import BookingModal from "@/app/components/BookingForm/BookingModal";
 import Popup from "@/app/components/BookingForm/Popup";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';  // Import the useRouter hook
+import { useRouter } from "next/navigation"; // Import the useRouter hook
 
 const RoomsPage = () => {
   const { hotelId } = useParams();
@@ -18,10 +18,10 @@ const RoomsPage = () => {
   const [error, setError] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({
-    startDate: "",
-    endDate: "",
+    arrivalDate: "",
+    departureDate: "",
   });
-  const router = useRouter(); 
+  const router = useRouter();
   const [availabilityError, setAvailabilityError] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
@@ -55,12 +55,12 @@ const RoomsPage = () => {
   const handleBookingSubmit = async () => {
     setAvailabilityError("");
 
-    const newStartDate = new Date(bookingDetails.startDate);
-    const newEndDate = new Date(bookingDetails.endDate);
+    const newArrivalDate = new Date(bookingDetails.arrivalDate);
+    const newDepartureDate = new Date(bookingDetails.departureDate);
     const currentDate = new Date();
 
     //  dates are not empty
-    if (!bookingDetails.startDate || !bookingDetails.endDate) {
+    if (!bookingDetails.arrivalDate || !bookingDetails.departureDate) {
       setAvailabilityError(
         "Invalid date: Start date and end date are required."
       );
@@ -71,7 +71,7 @@ const RoomsPage = () => {
     }
 
     // dates are not in the past
-    if (newStartDate < currentDate || newEndDate < currentDate) {
+    if (newArrivalDate < currentDate || newDepartureDate < currentDate) {
       setAvailabilityError(
         "Invalid date: Start date and end date must be in the future."
       );
@@ -82,7 +82,7 @@ const RoomsPage = () => {
     }
 
     // end date is after the start date
-    if (newEndDate < newStartDate) {
+    if (newDepartureDate < newArrivalDate) {
       setAvailabilityError(
         "Invalid date: End date must be after the start date."
       );
