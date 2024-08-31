@@ -55,7 +55,7 @@ const HotelDetails = () => {
           <h3>{hotel?.name}</h3>
           <div className="m-2">{hotel?.location}</div>
           <div className="d-flex flex-row flex-wrap  ">
-            {hotel.images == null ? (
+            {hotel.image == null ? (
               <div className=" rounded mx-auto w-50">
                 <img src={hotel.image} className="img-thumbnail " />
               </div>

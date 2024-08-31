@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import { Controller, useForm } from "react-hook-form";
+import { useRouter } from 'next/navigation';
+ 
 
 const initialState = {
   name: "",
@@ -25,6 +27,8 @@ const initialState = {
 };
 
 const HotelForm = () => {
+  const router = useRouter(); // Initialize the useRouter hook
+
   const {
     control,
     handleSubmit,
@@ -35,29 +39,33 @@ const HotelForm = () => {
 
   console.log(errors);
 
-  const formSubmitHandler = data => {
-    console.log(data);
+  const formSubmitHandler = async (data) => {
+    const { name, image, price, description, details, location } = data;
 
-    // if (!name || !image || !price || !description || !location) {
-    //   alert("Please fill in all fields.");
-    //   return;
-    // }
-    // try {
-    //   addDoc(collection(db, "hotels"), {
-    //     name,
-    //     description,
-    //     location,
-    //     price: parseFloat(price),
-    //     image,
-    //   });
-    //   setName("");
-    //   setPrice("");
-    //   setImage("");
-    //   setDescription("");
-    //   setLocation("");
-    // } catch (error) {
-    //   console.error("Error adding hotel: ", error);
-    // }
+    if (!name || !image || !price || !description || !location || !details) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "hotels"), {
+        name,
+        image,
+        price: parseFloat(price),
+        description,
+        details,
+        location,
+        createdAt: new Date(),
+      });
+
+      alert("Hotel added successfully!");
+
+      router.push('/admin/hotels'); // Navigate to the hotels list page
+
+    } catch (error) {
+      console.error("Error adding hotel: ", error);
+      alert("Error adding hotel. Please try again.");
+    }
   };
 
   return (
@@ -175,9 +183,9 @@ const HotelForm = () => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      {/* details */}
+      {/* Details */}
       <Form.Group className="mb-3">
-        <Form.Label>Hotel details</Form.Label>
+        <Form.Label>Hotel Details</Form.Label>
         <Controller
           control={control}
           rules={{ required: "This field is required" }}

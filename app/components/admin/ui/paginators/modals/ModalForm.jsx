@@ -41,7 +41,7 @@ const ModalForm = props => {
   };
 
   return (
-    <>
+    <div>
       <Modal show={props.show} onHide={props.close} centered>
         <Modal.Header closeButton>
           <Modal.Title>Add New Hotel</Modal.Title>
@@ -124,7 +124,7 @@ const ModalForm = props => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
+     </div>
   );
 };
 
