@@ -136,8 +136,8 @@ const ReservationForm = () => {
                 className="form-control"
                 placeholderText="Select Departure Date"
                 dateFormat="dd/MM/yyyy"
-                minDate={arrivalDate || today} // Set minDate to arrivalDate if selected, otherwise to today
-                disabled={!arrivalDate} // Disable the departure date picker if no arrival date is selected
+                minDate={arrivalDate || today}
+                disabled={!arrivalDate}
               />
             </Form.Group>
             <Form.Group controlId="numberOfNights" className="mt-3">
