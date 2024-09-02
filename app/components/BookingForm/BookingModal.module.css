@@ -59,3 +59,14 @@
   filter: invert(1);
   cursor: pointer;
 }
+
+.labelsSection {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  font-weight: bold;
+}
