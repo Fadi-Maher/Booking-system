@@ -1,7 +1,10 @@
-'use client'
-import { useState } from "react";
+//app/checkout/page.jsx
+
+'use client';
+import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useRouter } from "next/navigation";
 import styles from "../page.module.css";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -11,21 +14,33 @@ const CheckOutForm = () => {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const router = useRouter();
+  const [bookingData, setBookingData] = useState(null);
+
+  useEffect(() => {
+    // Retrieve booking data from local storage
+    const storedBookingData = localStorage.getItem('bookingData');
+    if (storedBookingData) {
+      setBookingData(JSON.parse(storedBookingData));
+    } else {
+      router.push('/'); // Redirect to home if no booking data
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Call backend to create a payment intent
+    // Create a payment intent on the server
     const response = await fetch("/api/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: 100 }), // replace 100 with your amount logic
+      body: JSON.stringify({ amount: bookingData.roomPrice * 100 }), // amount in cents
     });
 
-    const { clientSecret } = await response.json();
+    const { clientSecret, sessionId } = await response.json();
 
     if (!stripe || !elements) {
       return;
@@ -34,9 +49,9 @@ const CheckOutForm = () => {
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
-        billing_details: {
-          name: "Your Customer's Name", // You can get this from your form
-        },
+        // billing_details: {
+        //   name: currentUser.displayName, // Retrieve name from user context or booking data
+        // },
       },
     });
 
@@ -46,9 +61,26 @@ const CheckOutForm = () => {
       setError(result.error.message);
     } else {
       if (result.paymentIntent.status === "succeeded") {
-        // 
-        
+        // Store booking data to Firestore
+        await storeBookingDataToFirestore(sessionId);
+        // Clear local storage after successful booking
+        localStorage.removeItem('bookingData');
+        router.push('/'); // Redirect to a confirmation page
       }
+    }
+  };
+
+  const storeBookingDataToFirestore = async (sessionId) => {
+    const response = await fetch('/api/store-booking', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...bookingData, sessionId }),
+    });
+
+    if (!response.ok) {
+      console.error('Failed to store booking data');
     }
   };
 
