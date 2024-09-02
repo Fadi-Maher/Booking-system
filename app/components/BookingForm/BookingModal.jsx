@@ -3,15 +3,6 @@ import React, { useState, useEffect } from "react";
 import styles from "./BookingModal.module.css";
 import { useSearchParams } from "next/navigation";
 
-const formatDate = dateString => {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-};
-
 const BookingModal = ({
   bookingDetails,
   setBookingDetails,
@@ -25,72 +16,59 @@ const BookingModal = ({
   const [departureDate, setDepartureDate] = useState(
     searchParams.get("departureDate") || ""
   );
+  const [numberOfPersons, setNumberOfPersons] = useState(
+    parseInt(searchParams.get("numberOfPersons")) || 1
+  );
   const [numberOfNights, setNumberOfNights] = useState(
     parseInt(searchParams.get("numberOfNights")) || 1
   );
-  const [numberOfAdults, setNumberOfAdults] = useState(
-    parseInt(searchParams.get("numberOfAdults")) || 1
-  );
-  const [numberOfChildren, setNumberOfChildren] = useState(
-    parseInt(searchParams.get("numberOfChildren")) || 0
-  );
-  const [minDate, setMinDate] = useState(() => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  });
-  const [minDepartureDate, setMinDepartureDate] = useState(
-    arrivalDate || minDate
-  );
 
-  const calculateNumberOfNights = (arrival, departure) => {
-    if (arrival && departure) {
-      const arrivalDate = new Date(arrival);
-      const departureDate = new Date(departure);
-      const timeDifference = departureDate - arrivalDate;
-      const nightDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
-      return nightDifference > 0 ? nightDifference : 0;
-    }
-    return 1;
+  // Function to calculate the difference in days
+  const calculateNights = (arrival, departure) => {
+    const arrivalDateObj = new Date(arrival);
+    const departureDateObj = new Date(departure);
+    const timeDiff = departureDateObj - arrivalDateObj;
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+    return daysDiff > 0 ? daysDiff : 1;
   };
 
+  // Update number of nights whenever dates change
   useEffect(() => {
-    setArrivalDate(searchParams.get("arrivalDate") || "");
-    setDepartureDate(searchParams.get("departureDate") || "");
-    setNumberOfNights(
-      calculateNumberOfNights(
-        searchParams.get("arrivalDate"),
-        searchParams.get("departureDate")
-      )
-    );
-    setNumberOfAdults(parseInt(searchParams.get("numberOfAdults")) || 1);
-    setNumberOfChildren(parseInt(searchParams.get("numberOfChildren")) || 0);
-  }, [searchParams]);
-
-  useEffect(() => {
-    setNumberOfNights(calculateNumberOfNights(arrivalDate, departureDate));
+    if (arrivalDate && departureDate) {
+      const calculatedNights = calculateNights(arrivalDate, departureDate);
+      setNumberOfNights(calculatedNights);
+      setBookingDetails(prevDetails => ({
+        ...prevDetails,
+        numberOfNights: calculatedNights,
+      }));
+    }
   }, [arrivalDate, departureDate]);
 
   const handleArrivalDateChange = e => {
     const newArrivalDate = e.target.value;
-    if (newArrivalDate >= minDate) {
-      setArrivalDate(newArrivalDate);
-      setMinDepartureDate(newArrivalDate); // Update the minimum departure date
-      setBookingDetails(prevDetails => ({
-        ...prevDetails,
-        arrivalDate: newArrivalDate,
-      }));
-    }
+    setArrivalDate(newArrivalDate);
+    setBookingDetails(prevDetails => ({
+      ...prevDetails,
+      arrivalDate: newArrivalDate,
+    }));
   };
 
   const handleDepartureDateChange = e => {
     const newDepartureDate = e.target.value;
-    if (newDepartureDate >= minDepartureDate) {
-      setDepartureDate(newDepartureDate);
-      setBookingDetails(prevDetails => ({
-        ...prevDetails,
-        departureDate: newDepartureDate,
-      }));
-    }
+    setDepartureDate(newDepartureDate);
+    setBookingDetails(prevDetails => ({
+      ...prevDetails,
+      departureDate: newDepartureDate,
+    }));
+  };
+
+  const handleNumberOfPersonsChange = e => {
+    const newNumberOfPersons = parseInt(e.target.value);
+    setNumberOfPersons(newNumberOfPersons);
+    setBookingDetails(prevDetails => ({
+      ...prevDetails,
+      numberOfPersons: newNumberOfPersons,
+    }));
   };
 
   const handleNumberOfNightsChange = e => {
@@ -102,54 +80,35 @@ const BookingModal = ({
     }));
   };
 
-  const handleNumberOfAdultsChange = e => {
-    const newNumberOfAdults = parseInt(e.target.value);
-    setNumberOfAdults(newNumberOfAdults);
-    setBookingDetails(prevDetails => ({
-      ...prevDetails,
-      numberOfAdults: newNumberOfAdults,
-    }));
-  };
-
-  const handleNumberOfChildrenChange = e => {
-    const newNumberOfChildren = parseInt(e.target.value);
-    setNumberOfChildren(newNumberOfChildren);
-    setBookingDetails(prevDetails => ({
-      ...prevDetails,
-      numberOfChildren: newNumberOfChildren,
-    }));
-  };
-
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <div>
-          <h2 className="mb-4 text-center">Reserve Now</h2>
+          <h2 className="mb-4 text-center">Book Room</h2>
 
-          {/* Conditionally render labels based on presence of values */}
           {arrivalDate && (
             <div className={styles.formGroup}>
-              <label>Arrival Date: {formatDate(arrivalDate)}</label>
+              <label>Arrival Date: {arrivalDate}</label>
             </div>
           )}
 
           {departureDate && (
             <div className={styles.formGroup}>
-              <label>Departure Date: {formatDate(departureDate)}</label>
+              <label>Departure Date: {departureDate}</label>
             </div>
           )}
 
-          <div className={styles.formGroup}>
-            <label>Number Of Nights: {numberOfNights}</label>
-          </div>
-
-          {numberOfAdults || numberOfChildren ? (
+          {numberOfNights && (
             <div className={styles.formGroup}>
-              <label>
-                Number Of Persons: {numberOfAdults + numberOfChildren}
-              </label>
+              <label>Number Of Nights: {numberOfNights}</label>
             </div>
-          ) : null}
+          )}
+
+          {numberOfPersons && (
+            <div className={styles.formGroup}>
+              <label>Number Of Persons: {numberOfPersons}</label>
+            </div>
+          )}
 
           <div className={styles.formGroup}>
             <label>Arrival Date: </label>
@@ -157,7 +116,6 @@ const BookingModal = ({
               type="date"
               value={arrivalDate}
               onChange={handleArrivalDateChange}
-              min={minDate}
             />
           </div>
 
@@ -167,7 +125,6 @@ const BookingModal = ({
               type="date"
               value={departureDate}
               onChange={handleDepartureDateChange}
-              min={minDepartureDate} // Set the minimum departure date
             />
           </div>
 
@@ -182,22 +139,12 @@ const BookingModal = ({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Number Of Adults: </label>
+            <label>Number Of Persons: </label>
             <input
               type="number"
               min="1"
-              value={numberOfAdults}
-              onChange={handleNumberOfAdultsChange}
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label>Number Of Children: </label>
-            <input
-              type="number"
-              min="0"
-              value={numberOfChildren}
-              onChange={handleNumberOfChildrenChange}
+              value={numberOfPersons}
+              onChange={handleNumberOfPersonsChange}
             />
           </div>
 
@@ -206,7 +153,7 @@ const BookingModal = ({
             className="primary-btn"
             style={{ border: "none" }}
           >
-            Confirm Reservation
+            Confirm Booking
           </button>
           <button
             onClick={onCancel}

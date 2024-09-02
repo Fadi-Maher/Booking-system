@@ -1,12 +1,11 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
-import { Controller, useForm } from "react-hook-form";
-import { useRouter } from 'next/navigation';
- 
+import { Controller, useForm, useFieldArray } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const initialState = {
   name: "",
@@ -15,56 +14,90 @@ const initialState = {
   description: "",
   details: "",
   location: "",
-  Highlights: [],
-  images: [],
-  reviews: [],
+  Highlights: [""],
+  images: [""],
+  reviews: [""],
   Amenities: {
     "Cleaning Services": "",
     "Food & Drink": "",
-    "Popular Amenities": [],
-    Transportation: [],
+    "Popular Amenities": [""],
+    Transportation: [""],
   },
 };
 
 const HotelForm = () => {
-  const router = useRouter(); // Initialize the useRouter hook
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const hotelId = searchParams.get("id");
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: initialState,
   });
 
-  console.log(errors);
+  const { fields: highlightFields, append: appendHighlight } = useFieldArray({
+    control,
+    name: "Highlights",
+  });
 
-  const formSubmitHandler = async (data) => {
-    const { name, image, price, description, details, location } = data;
+  const { fields: imageFields, append: appendImage } = useFieldArray({
+    control,
+    name: "images",
+  });
 
-    if (!name || !image || !price || !description || !location || !details) {
-      alert("Please fill in all fields.");
-      return;
+  const { fields: reviewFields, append: appendReview } = useFieldArray({
+    control,
+    name: "reviews",
+  });
+
+  const { fields: popularAmenitiesFields, append: appendPopularAmenity } =
+    useFieldArray({
+      control,
+      name: "Amenities.Popular Amenities",
+    });
+
+  const { fields: transportationFields, append: appendTransportation } =
+    useFieldArray({
+      control,
+      name: "Amenities.Transportation",
+    });
+
+  useEffect(() => {
+    if (hotelId) {
+      const fetchHotelData = async () => {
+        const docRef = doc(db, "hotels", hotelId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          reset(docSnap.data());
+        } else {
+          console.error("No such document!");
+        }
+      };
+      fetchHotelData();
     }
+  }, [hotelId, reset]);
 
+  const formSubmitHandler = async data => {
     try {
-      await addDoc(collection(db, "hotels"), {
-        name,
-        image,
-        price: parseFloat(price),
-        description,
-        details,
-        location,
-        createdAt: new Date(),
-      });
-
-      alert("Hotel added successfully!");
-
-      router.push('/admin/hotels'); // Navigate to the hotels list page
-
+      if (hotelId) {
+        const docRef = doc(db, "hotels", hotelId);
+        await updateDoc(docRef, {
+          ...data,
+          price: parseFloat(data.price),
+          updatedAt: new Date(),
+        });
+        alert("Hotel updated successfully!");
+      } else {
+        console.error("No hotel ID provided.");
+      }
+      router.push("/admin/hotels");
     } catch (error) {
-      console.error("Error adding hotel: ", error);
-      alert("Error adding hotel. Please try again.");
+      console.error("Error updating hotel: ", error);
+      alert("Error updating hotel. Please try again.");
     }
   };
 
@@ -97,21 +130,19 @@ const HotelForm = () => {
         <Form.Label>Hotel Description</Form.Label>
         <Controller
           control={control}
+          rules={{ required: "This field is required" }}
           name="description"
           render={({ field }) => (
             <Form.Control
-              rules={{ required: "This field is required" }}
-              as={"textarea"}
+              as="textarea"
               rows={5}
               size="md"
-              type="text"
               placeholder="Enter hotel description"
-              isInvalid={errors.description}
+              isInvalid={!!errors.description}
               {...field}
             />
           )}
         />
-
         <Form.Control.Feedback type="invalid">
           {errors?.description?.message}
         </Form.Control.Feedback>
@@ -129,7 +160,7 @@ const HotelForm = () => {
               size="md"
               type="text"
               placeholder="Enter hotel location"
-              isInvalid={errors.location}
+              isInvalid={!!errors.location}
               {...field}
             />
           )}
@@ -151,7 +182,7 @@ const HotelForm = () => {
               size="md"
               type="text"
               placeholder="Image Url"
-              isInvalid={errors.image}
+              isInvalid={!!errors.image}
               {...field}
             />
           )}
@@ -161,7 +192,7 @@ const HotelForm = () => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      {/* Price*/}
+      {/* Price */}
       <Form.Group className="mb-3">
         <Form.Label>Price</Form.Label>
         <Controller
@@ -173,7 +204,7 @@ const HotelForm = () => {
               size="md"
               type="text"
               placeholder="Enter hotel price"
-              isInvalid={errors.price}
+              isInvalid={!!errors.price}
               {...field}
             />
           )}
@@ -195,7 +226,7 @@ const HotelForm = () => {
               size="md"
               type="text"
               placeholder="Enter hotel details"
-              isInvalid={errors.details}
+              isInvalid={!!errors.details}
               {...field}
             />
           )}
@@ -205,7 +236,194 @@ const HotelForm = () => {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Button type="submit">Submit</Button>
+      {/* Highlights */}
+      <Form.Group className="mb-3">
+        <Form.Label>Highlights</Form.Label>
+        {highlightFields.map((field, index) => (
+          <Controller
+            key={field.id}
+            control={control}
+            rules={{ required: "This field is required" }}
+            name={`Highlights.${index}`}
+            render={({ field }) => (
+              <Form.Control
+                size="md"
+                type="text"
+                placeholder="Enter a highlight"
+                className="mb-2"
+                isInvalid={!!errors.Highlights?.[index]}
+                {...field}
+              />
+            )}
+          />
+        ))}
+        <Button variant="secondary" onClick={() => appendHighlight("")}>
+          Add Highlight
+        </Button>
+        {errors.Highlights && (
+          <p className="text-danger">Highlights are required.</p>
+        )}
+      </Form.Group>
+
+      {/* Images */}
+      <Form.Group className="mb-3">
+        <Form.Label>Images</Form.Label>
+        {imageFields.map((field, index) => (
+          <Controller
+            key={field.id}
+            control={control}
+            rules={{ required: "This field is required" }}
+            name={`images.${index}`}
+            render={({ field }) => (
+              <Form.Control
+                size="md"
+                type="text"
+                placeholder="Enter an image URL"
+                className="mb-2"
+                isInvalid={!!errors.images?.[index]}
+                {...field}
+              />
+            )}
+          />
+        ))}
+        <Button variant="secondary" onClick={() => appendImage("")}>
+          Add Image
+        </Button>
+        {errors.images && <p className="text-danger">Images are required.</p>}
+      </Form.Group>
+
+      {/* Reviews */}
+      <Form.Group className="mb-3">
+        <Form.Label>Reviews</Form.Label>
+        {reviewFields.map((field, index) => (
+          <Controller
+            key={field.id}
+            control={control}
+            rules={{ required: "This field is required" }}
+            name={`reviews.${index}`}
+            render={({ field }) => (
+              <Form.Control
+                size="md"
+                type="text"
+                placeholder="Enter a review"
+                className="mb-2"
+                isInvalid={!!errors.reviews?.[index]}
+                {...field}
+              />
+            )}
+          />
+        ))}
+        <Button variant="secondary" onClick={() => appendReview("")}>
+          Add Review
+        </Button>
+        {errors.reviews && <p className="text-danger">Reviews are required.</p>}
+      </Form.Group>
+
+      {/* Amenities - Cleaning Services */}
+      <Form.Group className="mb-3">
+        <Form.Label>Cleaning Services</Form.Label>
+        <Controller
+          control={control}
+          rules={{ required: "This field is required" }}
+          name="Amenities.Cleaning Services"
+          render={({ field }) => (
+            <Form.Control
+              size="md"
+              type="text"
+              placeholder="Enter Cleaning Services"
+              isInvalid={!!errors.Amenities?.["Cleaning Services"]}
+              {...field}
+            />
+          )}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors?.Amenities?.["Cleaning Services"]?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      {/* Amenities - Food & Drink */}
+      <Form.Group className="mb-3">
+        <Form.Label>Food & Drink</Form.Label>
+        <Controller
+          control={control}
+          rules={{ required: "This field is required" }}
+          name="Amenities.Food & Drink"
+          render={({ field }) => (
+            <Form.Control
+              size="md"
+              type="text"
+              placeholder="Enter Food & Drink"
+              isInvalid={!!errors.Amenities?.["Food & Drink"]}
+              {...field}
+            />
+          )}
+        />
+        <Form.Control.Feedback type="invalid">
+          {errors?.Amenities?.["Food & Drink"]?.message}
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      {/* Amenities - Popular Amenities */}
+      <Form.Group className="mb-3">
+        <Form.Label>Popular Amenities</Form.Label>
+        {popularAmenitiesFields.map((field, index) => (
+          <Controller
+            key={field.id}
+            control={control}
+            rules={{ required: "This field is required" }}
+            name={`Amenities.Popular Amenities.${index}`}
+            render={({ field }) => (
+              <Form.Control
+                size="md"
+                type="text"
+                placeholder="Enter Popular Amenity"
+                className="mb-2"
+                isInvalid={!!errors.Amenities?.["Popular Amenities"]?.[index]}
+                {...field}
+              />
+            )}
+          />
+        ))}
+        <Button variant="secondary" onClick={() => appendPopularAmenity("")}>
+          Add Popular Amenity
+        </Button>
+        {errors.Amenities?.["Popular Amenities"] && (
+          <p className="text-danger">Popular Amenities are required.</p>
+        )}
+      </Form.Group>
+
+      {/* Amenities - Transportation */}
+      <Form.Group className="mb-3">
+        <Form.Label>Transportation</Form.Label>
+        {transportationFields.map((field, index) => (
+          <Controller
+            key={field.id}
+            control={control}
+            rules={{ required: "This field is required" }}
+            name={`Amenities.Transportation.${index}`}
+            render={({ field }) => (
+              <Form.Control
+                size="md"
+                type="text"
+                placeholder="Enter Transportation option"
+                className="mb-2"
+                isInvalid={!!errors.Amenities?.["Transportation"]?.[index]}
+                {...field}
+              />
+            )}
+          />
+        ))}
+        <Button variant="secondary" onClick={() => appendTransportation("")}>
+          Add Transportation
+        </Button>
+        {errors.Amenities?.["Transportation"] && (
+          <p className="text-danger">Transportation options are required.</p>
+        )}
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
     </Form>
   );
 };
