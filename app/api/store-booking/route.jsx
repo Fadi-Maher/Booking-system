@@ -1,58 +1,34 @@
-import { NextResponse } from "next/server";
-import { getDocs, collection, addDoc } from "firebase/firestore";
-import { db } from "@/app/firebase";
+// app/api/store-booking/route.js
 
-export async function POST(request, { params }) {
+import { NextResponse } from 'next/server';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '@/app/firebase';
+
+export async function POST(request) {
   try {
-    const { hotelId, roomId } = params;
     const bookingData = await request.json();
-    const { startDate, endDate } = bookingData;
+    const { hotelId, roomId, userId, sessionId, roomPrice } = bookingData;
 
-    const bookingsCollection = collection(
-      db,
-      `hotels/${hotelId}/rooms/${roomId}/bookings`
-    );
+    const bookingRef = collection(db, `hotels/${hotelId}/rooms/${roomId}/bookings`);
+    const paymentRef = collection(db, 'payments');
 
-    const existingBookingsSnapshot = await getDocs(bookingsCollection);
-
-    const newStartDate = new Date(startDate);
-    const newEndDate = new Date(endDate);
-
-    const isRoomAvailable = !existingBookingsSnapshot.docs.some(doc => {
-      const booking = doc.data();
-      const existingStartDate = new Date(booking.startDate);
-      const existingEndDate = new Date(booking.endDate);
-
-      // Log for debugging
-      console.log({
-        newStartDate,
-        newEndDate,
-        existingStartDate,
-        existingEndDate,
-        condition1: newStartDate <= existingEndDate,
-        condition2: newEndDate >= existingStartDate,
-        overlap:
-          newStartDate <= existingEndDate && newEndDate >= existingStartDate,
-      });
-
-      return newStartDate <= existingEndDate && newEndDate >= existingStartDate;
+    await addDoc(bookingRef, {
+      ...bookingData,
+      status: 'confirmed',
+      createdAt: new Date().toISOString(),
     });
 
-    if (!isRoomAvailable) {
-      return NextResponse.json(
-        { message: "Room is not available for the selected dates" },
-        { status: 409 }
-      );
-    }
+    await addDoc(paymentRef, {
+      roomId,
+      hotelId,
+      userId,
+      sessionId,
+      roomPrice,
+      createdAt: new Date().toISOString(),
+    });
 
-    await addDoc(bookingsCollection, bookingData);
-
-    return NextResponse.json({ message: "Booking successful" });
+    return NextResponse.json({ message: 'Booking stored successfully' });
   } catch (error) {
-    return NextResponse.json({
-      message: "Room is not available for the selected dates",
-      error: error.message,
-    });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
