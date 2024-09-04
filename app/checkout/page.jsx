@@ -1,5 +1,3 @@
-//app/checkout/page.jsx
-
 'use client';
 import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";

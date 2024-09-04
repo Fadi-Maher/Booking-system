@@ -1,12 +1,13 @@
+// app/api/store-booking/route.js
+
 import { NextResponse } from "next/server";
-import { getDocs, collection, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 
-export async function POST(request, { params }) {
+export async function POST(request) {
   try {
-    const { hotelId, roomId } = params;
     const bookingData = await request.json();
-    const { arrivalDate, departureDate } = bookingData;
+    const { startDate, endDate } = bookingData;
 
     const bookingsCollection = collection(
       db,
@@ -15,31 +16,27 @@ export async function POST(request, { params }) {
 
     const existingBookingsSnapshot = await getDocs(bookingsCollection);
 
-    const newArrivalDate = new Date(arrivalDate);
-    const newDepartureDate = new Date(departureDate);
+    const newStartDate = new Date(startDate);
+    const newEndDate = new Date(endDate);
 
     const isRoomAvailable = !existingBookingsSnapshot.docs.some(doc => {
       const booking = doc.data();
-      const existingArrivalDate = new Date(booking.arrivalDate);
-      const existingDepartureDate = new Date(booking.departureDate);
+      const existingStartDate = new Date(booking.startDate);
+      const existingEndDate = new Date(booking.endDate);
 
       // Log for debugging
       console.log({
-        newArrivalDate,
-        newDepartureDate,
-        existingArrivalDate,
-        existingDepartureDate,
-        condition1: newArrivalDate <= existingDepartureDate,
-        condition2: newDepartureDate >= existingArrivalDate,
+        newStartDate,
+        newEndDate,
+        existingStartDate,
+        existingEndDate,
+        condition1: newStartDate <= existingEndDate,
+        condition2: newEndDate >= existingStartDate,
         overlap:
-          newArrivalDate <= existingDepartureDate &&
-          newDepartureDate >= existingArrivalDate,
+          newStartDate <= existingEndDate && newEndDate >= existingStartDate,
       });
 
-      return (
-        newArrivalDate <= existingDepartureDate &&
-        newDepartureDate >= existingArrivalDate
-      );
+      return newStartDate <= existingEndDate && newEndDate >= existingStartDate;
     });
 
     if (!isRoomAvailable) {
@@ -53,9 +50,6 @@ export async function POST(request, { params }) {
 
     return NextResponse.json({ message: "Booking successful" });
   } catch (error) {
-    return NextResponse.json({
-      message: "Room is not available for the selected dates",
-      error: error.message,
-    });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
