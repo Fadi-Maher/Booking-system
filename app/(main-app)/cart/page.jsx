@@ -103,11 +103,11 @@ const ReserveCart=()=> {
   return (
    <>
    <h2 className="text-center">My Bookings</h2>
-   <div className="row">
+   <div className="row flex-wrap">
    {
   bookings?.map((element,index) => (
     <div key={index} className="card mb-3 shadow border-0 bg-white rounded vh-80" style={{maxWidth:"540px",marginLeft:"2rem"}}>
-    <div className="row no-gutters justify-content-center ">
+    <div className="row no-gutters justify-content-center flex-wrap">
       <div className="col-md-4 align-self-center " >
         <img  style={{height:"10rem"}}
         src={element.image} className="card-img ml-2 " alt="..."/>
