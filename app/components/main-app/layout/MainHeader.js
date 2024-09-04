@@ -6,7 +6,7 @@ import Link from "next/link";
 import Search from "./Search";
 import styles from "./MainHeader.module.css";
 import { AuthContext } from "@/app/AuthContext";
-
+import { FaShoppingCart } from 'react-icons/fa';
 const MainHeader = () => {
   const { userDetails } = useContext(AuthContext);
 
@@ -65,6 +65,18 @@ const MainHeader = () => {
                   href="/contact-us"
                 >
                   Contact Us
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className={styles.link}
+                  aria-current="page"
+                  href="/cart"
+                >
+                  <span className={styles.icon}>
+                  <FaShoppingCart />
+                  </span>
+             
                 </Link>
               </li>
             </ul>

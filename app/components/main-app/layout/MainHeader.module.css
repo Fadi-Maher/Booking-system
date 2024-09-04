@@ -78,6 +78,14 @@
   top: 1rem;
   right: 6rem
 }
+.icon {
+  font-size: 25px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #dfa974;
+}
 
 @media (min-width: 992px) {
   .dropDownContainer {

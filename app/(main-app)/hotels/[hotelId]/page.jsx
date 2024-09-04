@@ -57,7 +57,7 @@ const HotelDetails = () => {
           <div className="d-flex flex-row flex-wrap  ">
             {hotel.image == null ? (
               <div className=" rounded mx-auto w-50">
-                <img src={hotel.image} className="img-thumbnail " />
+                <img src={hotel.image} alt="hotel image" className="img-thumbnail " />
               </div>
             ) : (
               images.map((img, index) => (
