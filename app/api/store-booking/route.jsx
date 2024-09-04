@@ -6,7 +6,7 @@ export async function POST(request, { params }) {
   try {
     const { hotelId, roomId } = params;
     const bookingData = await request.json();
-    const { startDate, endDate } = bookingData;
+    const { arrivalDate, departureDate } = bookingData;
 
     const bookingsCollection = collection(
       db,
@@ -15,27 +15,31 @@ export async function POST(request, { params }) {
 
     const existingBookingsSnapshot = await getDocs(bookingsCollection);
 
-    const newStartDate = new Date(startDate);
-    const newEndDate = new Date(endDate);
+    const newArrivalDate = new Date(arrivalDate);
+    const newDepartureDate = new Date(departureDate);
 
     const isRoomAvailable = !existingBookingsSnapshot.docs.some(doc => {
       const booking = doc.data();
-      const existingStartDate = new Date(booking.startDate);
-      const existingEndDate = new Date(booking.endDate);
+      const existingArrivalDate = new Date(booking.arrivalDate);
+      const existingDepartureDate = new Date(booking.departureDate);
 
       // Log for debugging
       console.log({
-        newStartDate,
-        newEndDate,
-        existingStartDate,
-        existingEndDate,
-        condition1: newStartDate <= existingEndDate,
-        condition2: newEndDate >= existingStartDate,
+        newArrivalDate,
+        newDepartureDate,
+        existingArrivalDate,
+        existingDepartureDate,
+        condition1: newArrivalDate <= existingDepartureDate,
+        condition2: newDepartureDate >= existingArrivalDate,
         overlap:
-          newStartDate <= existingEndDate && newEndDate >= existingStartDate,
+          newArrivalDate <= existingDepartureDate &&
+          newDepartureDate >= existingArrivalDate,
       });
 
-      return newStartDate <= existingEndDate && newEndDate >= existingStartDate;
+      return (
+        newArrivalDate <= existingDepartureDate &&
+        newDepartureDate >= existingArrivalDate
+      );
     });
 
     if (!isRoomAvailable) {
@@ -55,4 +59,3 @@ export async function POST(request, { params }) {
     });
   }
 }
-
