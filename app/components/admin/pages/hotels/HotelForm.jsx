@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
 import { Controller, useForm, useFieldArray } from "react-hook-form";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import { Spinner } from "react-bootstrap";
 
 const initialState = {
   name: "",
@@ -27,8 +28,10 @@ const initialState = {
 
 const HotelForm = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const hotelId = searchParams.get("id");
+  const { hotelId } = useParams();
+
+  // states
+  const [submittingForm, setSubmittingForm] = useState(false);
 
   const {
     control,
@@ -83,6 +86,7 @@ const HotelForm = () => {
 
   const formSubmitHandler = async data => {
     try {
+      setSubmittingForm(true);
       if (hotelId) {
         const docRef = doc(db, "hotels", hotelId);
         await updateDoc(docRef, {
@@ -98,6 +102,8 @@ const HotelForm = () => {
     } catch (error) {
       console.error("Error updating hotel: ", error);
       alert("Error updating hotel. Please try again.");
+    } finally {
+      setSubmittingForm(false);
     }
   };
 
@@ -421,9 +427,20 @@ const HotelForm = () => {
         )}
       </Form.Group>
 
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
+      <div className="d-flex justify-content-end">
+        <Button
+          variant="success"
+          className="w-25"
+          type="submit"
+          disabled={submittingForm}
+        >
+          {submittingForm ? (
+            <Spinner animation="border" size="sm" variant="dark" />
+          ) : (
+            "Submit"
+          )}
+        </Button>
+      </div>
     </Form>
   );
 };
