@@ -19,6 +19,14 @@
   text-decoration: 'none';
 }
 
+.brandNameOnly {
+  color: #dfa974;
+  margin-top: 1.5rem;
+  text-align: center;
+  text-decoration: 'none';
+  font-weight: 600;
+}
+
 .tnRight {
 
   display: flex;
@@ -78,6 +86,7 @@
   top: 1rem;
   right: 6rem
 }
+
 .icon {
   font-size: 25px;
   margin-bottom: 10px;
