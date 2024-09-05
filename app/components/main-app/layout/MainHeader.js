@@ -6,7 +6,7 @@ import Link from "next/link";
 import Search from "./Search";
 import styles from "./MainHeader.module.css";
 import { AuthContext } from "@/app/AuthContext";
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart } from "react-icons/fa";
 const MainHeader = () => {
   const { userDetails } = useContext(AuthContext);
 
@@ -67,18 +67,13 @@ const MainHeader = () => {
                   Contact Us
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link
-                  className={styles.link}
-                  aria-current="page"
-                  href="/cart"
-                >
+              {/* <li className="nav-item">
+                <Link className={styles.link} aria-current="page" href="/cart">
                   <span className={styles.icon}>
-                  <FaShoppingCart />
+                    <FaShoppingCart />
                   </span>
-             
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
@@ -115,9 +110,21 @@ const MainHeader = () => {
         >
           {userDetails ? (
             <>
+              {userDetails.userEmail === "admin@yahoo.com" && (
+                <li className="mb-1">
+                  <Link className="custom-dropDown-link" href="/admin">
+                    Admin Dashboard
+                  </Link>
+                </li>
+              )}
               <li>
                 <Link className="custom-dropDown-link" href="/profile">
                   Profile
+                </Link>
+              </li>
+              <li className="mt-1">
+                <Link className="custom-dropDown-link" href="/cart">
+                  Bookings
                 </Link>
               </li>
               <Logout />
@@ -137,7 +144,7 @@ const MainHeader = () => {
           </li>
         </ul>
       </div>
-      <Search />
+      {userDetails && <Search />}
     </div>
   );
 };
