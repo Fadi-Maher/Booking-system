@@ -44,7 +44,7 @@ const HotelsPage = () => {
     fetchHotels();
   }, [router]);
 
-  if (!currentUser && !loading) return <AuthGuard />;
+  if (!currentUser) return <AuthGuard />;
 
   const toggleReadMore = (id) => {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -138,13 +138,13 @@ const HotelsPage = () => {
                       <button
                         onClick={() => router.push(`/hotels/${hotel.id}`)}
                         className="primary-btn "
-                        style={{ width: "50%" ,border:"none"}}
+                        style={{ width: "50%", border: "none" }}
                       >
                         More Details
                       </button>
                       <button
                         className="primary-btn"
-                        style={{ width: "40%",border:"none" }}
+                        style={{ width: "40%", border: "none" }}
                         onClick={() =>
                           router.push(`/hotels/${hotel.id}/reviews`)
                         }
