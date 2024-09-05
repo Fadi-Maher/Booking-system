@@ -18,7 +18,7 @@ const HotelDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const images = Array.isArray(hotel?.images) ? hotel.images : [];
-  // const highlights=Array.isArray(hotel?.Highlights) ? hotel.Highlights : [];
+
   const fetchHotelData = () => {
     setIsLoading(true);
     const docRef = doc(db, "hotels", hotelId);
@@ -35,6 +35,7 @@ const HotelDetails = () => {
   useEffect(() => {
     fetchHotelData();
   }, []);
+
   return isLoading ? (
     <div className="d-flex justify-content-center align-items-center vh-100 vw-100 ">
       <Grid
@@ -57,7 +58,11 @@ const HotelDetails = () => {
           <div className="d-flex flex-row flex-wrap  ">
             {hotel.image == null ? (
               <div className=" rounded mx-auto w-50">
-                <img src={hotel.image} alt="hotel image" className="img-thumbnail " />
+                <img
+                  src={hotel.image}
+                  alt="hotel image"
+                  className="img-thumbnail "
+                />
               </div>
             ) : (
               images.map((img, index) => (
@@ -112,27 +117,33 @@ const HotelDetails = () => {
             </div>
 
             <h6>Transportation</h6>
-            {hotel?.Amenities?.["Transportation"].map((amen, index) => (
-              <div className="card-body" key={index}>
-                🔸{amen}
-              </div>
-            )) ?? []}
+            {Array.isArray(hotel?.Amenities?.["Transportation"]) ? (
+              hotel.Amenities["Transportation"].map((amen, index) => (
+                <div className="card-body" key={index}>
+                  🔸{amen}
+                </div>
+              ))
+            ) : (
+              <div>No Transportation amenities available</div>
+            )}
           </div>
         </div>
         <div className="card container border-0">
           <div className="card-body">
             <h4 className="mt-4 mb-2">Popular Amenities</h4>
             <div className="d-flex flex-row flex-wrap justify-content-evenly">
-              {hotel?.Amenities?.["Popular Amenities"].map(
-                (highlight, index) => (
+              {Array.isArray(hotel?.Amenities?.["Popular Amenities"]) ? (
+                hotel.Amenities["Popular Amenities"].map((highlight, index) => (
                   <div
                     className="card shadow p-3 mb-5 bg-white  border-0"
                     key={index}
                   >
                     <div className="card-body">{highlight}</div>
                   </div>
-                )
-              ) ?? []}
+                ))
+              ) : (
+                <div>No Popular Amenities available</div>
+              )}
             </div>
             <div className="mt-4 ">{hotel?.description}</div>
           </div>

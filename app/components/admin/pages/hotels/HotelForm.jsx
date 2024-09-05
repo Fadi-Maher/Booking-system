@@ -298,33 +298,6 @@ const HotelForm = () => {
         {errors.images && <p className="text-danger">Images are required.</p>}
       </Form.Group>
 
-      {/* Reviews */}
-      <Form.Group className="mb-3">
-        <Form.Label>Reviews</Form.Label>
-        {reviewFields.map((field, index) => (
-          <Controller
-            key={field.id}
-            control={control}
-            rules={{ required: "This field is required" }}
-            name={`reviews.${index}`}
-            render={({ field }) => (
-              <Form.Control
-                size="md"
-                type="text"
-                placeholder="Enter a review"
-                className="mb-2"
-                isInvalid={!!errors.reviews?.[index]}
-                {...field}
-              />
-            )}
-          />
-        ))}
-        <Button variant="secondary" onClick={() => appendReview("")}>
-          Add Review
-        </Button>
-        {errors.reviews && <p className="text-danger">Reviews are required.</p>}
-      </Form.Group>
-
       {/* Amenities - Cleaning Services */}
       <Form.Group className="mb-3">
         <Form.Label>Cleaning Services</Form.Label>
