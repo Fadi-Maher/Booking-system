@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useRouter } from "next/navigation";
 import styles from "../page.module.css";
+import { Spinner } from "react-bootstrap"; // Add Bootstrap spinner
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -16,12 +17,11 @@ const CheckOutForm = () => {
   const [bookingData, setBookingData] = useState(null);
 
   useEffect(() => {
-    // Retrieve booking data from local storage
     const storedBookingData = localStorage.getItem('bookingData');
     if (storedBookingData) {
       setBookingData(JSON.parse(storedBookingData));
     } else {
-      router.push('/'); // Redirect to home if no booking data
+      router.push('/'); 
     }
   }, []);
 
@@ -29,13 +29,12 @@ const CheckOutForm = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Create a payment intent on the server
     const response = await fetch("/api/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ amount: bookingData.roomPrice * 100 }), // amount in cents
+      body: JSON.stringify({ amount: bookingData.roomPrice * 100 }), 
     });
 
     const { clientSecret, sessionId } = await response.json();
@@ -47,9 +46,6 @@ const CheckOutForm = () => {
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
-        // billing_details: {
-        //   name: currentUser.displayName, // Retrieve name from user context or booking data
-        // },
       },
     });
 
@@ -59,11 +55,9 @@ const CheckOutForm = () => {
       setError(result.error.message);
     } else {
       if (result.paymentIntent.status === "succeeded") {
-        // Store booking data to Firestore
         await storeBookingDataToFirestore(sessionId);
-        // Clear local storage after successful booking
         localStorage.removeItem('bookingData');
-        router.push('/'); // Redirect to a confirmation page
+        router.push('/'); 
       }
     }
   };
@@ -83,26 +77,46 @@ const CheckOutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      {error && <div>{error}</div>}
-      <button
-        className={`btn mb-4 w-100 mt-4 text-light btn-lg ${styles.btnBg}`}
-        type="submit"
-        disabled={!stripe || loading}
-      >
-        {loading ? "Processing..." : "Check Out"}
-      </button>
-    </form>
+    <div className="card shadow-lg p-4" style={{ borderRadius: "15px", border: "none" }}>
+      <h4 className="mb-3 text-center" style={{ color: "#343a40" }}>Payment Information</h4>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group mb-4">
+          <label className="form-label" style={{ color: "#6c757d" }}>Card Details</label>
+          <div className="card-element p-2 border rounded bg-light" style={{ borderRadius: "10px" }}>
+            <CardElement />
+          </div>
+        </div>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <button
+          className={`btn mb-4 w-100 mt-4 text-light btn-lg ${styles.btnBg}`}
+          type="submit"
+          disabled={!stripe || loading}
+          style={{
+            background: "linear-gradient(90deg, #e9a159, #d28b4c, #b87643)",
+            border: "none",
+            borderRadius: "10px",
+          }}
+        >
+          {loading ? <Spinner animation="border" size="sm" /> : "Check Out"}
+        </button>
+      </form>
+    </div>
   );
 };
 
 const CheckOut = () => (
-  <div className="container mt-4">
-    <h2>Checkout</h2>
-    <Elements stripe={stripePromise}>
-      <CheckOutForm />
-    </Elements>
+  <div className="container mt-5">
+    <div className="row justify-content-center">
+      <div className="col-md-6">
+        <div className="text-center mb-4">
+          <h2 className="mb-3" style={{ fontWeight: "bold", color: "#343a40" }}>Checkout</h2>
+          <p className="text-muted">Please enter your payment details below to complete your booking.</p>
+        </div>
+        <Elements stripe={stripePromise}>
+          <CheckOutForm />
+        </Elements>
+      </div>
+    </div>
   </div>
 );
 

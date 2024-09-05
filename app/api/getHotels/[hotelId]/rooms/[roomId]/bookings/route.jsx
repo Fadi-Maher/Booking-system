@@ -1,3 +1,4 @@
+//api/getHotels/[hotelId]/rooms/[roomId]/bookings
 import { NextResponse } from "next/server";
 import { getDocs, collection, addDoc } from "firebase/firestore";
 import { db } from "@/app/firebase";
