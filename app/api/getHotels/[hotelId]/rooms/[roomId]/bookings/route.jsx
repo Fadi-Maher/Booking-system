@@ -6,7 +6,7 @@ export async function POST(request, { params }) {
   try {
     const { hotelId, roomId } = params;
     const bookingData = await request.json();
-    const { startDate, endDate } = bookingData;
+    const { arrivalDate, departureDate } = bookingData;
 
     const bookingsCollection = collection(
       db,
@@ -15,27 +15,31 @@ export async function POST(request, { params }) {
 
     const existingBookingsSnapshot = await getDocs(bookingsCollection);
 
-    const newStartDate = new Date(startDate);
-    const newEndDate = new Date(endDate);
+    const newArrivalDate = new Date(arrivalDate);
+    const newDepartureDate = new Date(departureDate);
 
     const isRoomAvailable = !existingBookingsSnapshot.docs.some(doc => {
       const booking = doc.data();
-      const existingStartDate = new Date(booking.startDate);
-      const existingEndDate = new Date(booking.endDate);
+      const existingArrivalDate = new Date(booking.arrivalDate);
+      const existingDepartureDate = new Date(booking.departureDate);
 
       // Log for debugging
       console.log({
-        newStartDate,
-        newEndDate,
-        existingStartDate,
-        existingEndDate,
-        condition1: newStartDate <= existingEndDate,
-        condition2: newEndDate >= existingStartDate,
+        newArrivalDate,
+        newDepartureDate,
+        existingArrivalDate,
+        existingDepartureDate,
+        condition1: newArrivalDate <= existingDepartureDate,
+        condition2: newDepartureDate >= existingArrivalDate,
         overlap:
-          newStartDate <= existingEndDate && newEndDate >= existingStartDate,
+          newArrivalDate <= existingDepartureDate &&
+          newDepartureDate >= existingArrivalDate,
       });
 
-      return newStartDate <= existingEndDate && newEndDate >= existingStartDate;
+      return (
+        newArrivalDate <= existingDepartureDate &&
+        newDepartureDate >= existingArrivalDate
+      );
     });
 
     if (!isRoomAvailable) {
@@ -64,25 +68,25 @@ export async function POST(request, { params }) {
 //   try {
 //     const { hotelId, roomId } = params;
 //     const bookingData = await request.json();
-//     const { startDate, endDate } = bookingData;
+//     const { startDate, DepartureDate } = bookingData;
 
-//     // Convert startDate and endDate to Date objects
+//     // Convert startDate and DepartureDate to Date objects
 //     const newStartDate = new Date(startDate);
-//     const newEndDate = new Date(endDate);
+//     const newDepartureDate = new Date(DepartureDate);
 //     const currentDate = new Date();
 
 //     //  dates not empty
-//     if (!startDate || !endDate) {
+//     if (!startDate || !DepartureDate) {
 //       return NextResponse.json({ message: "Invalid date: Start date and end date are required." });
 //     }
 
 //     // dates are not in the past
-//     if (newStartDate < currentDate || newEndDate < currentDate) {
+//     if (newStartDate < currentDate || newDepartureDate < currentDate) {
 //       return NextResponse.json({ message: "Invalid date: Start date and end date must be in the future." });
 //     }
 
 //     //end date is after the start date
-//     if (newEndDate < newStartDate) {
+//     if (newDepartureDate < newStartDate) {
 //       return NextResponse.json({ message: "Invalid date: End date must be after the start date." });
 //     }
 
@@ -93,20 +97,20 @@ export async function POST(request, { params }) {
 //     const isRoomAvailable = !existingBookingsSnapshot.docs.some(doc => {
 //       const booking = doc.data();
 //       const existingStartDate = new Date(booking.startDate);
-//       const existingEndDate = new Date(booking.endDate);
+//       const existingDepartureDate = new Date(booking.DepartureDate);
 
 //       // console.log({
 //       //   newStartDate,
-//       //   newEndDate,
+//       //   newDepartureDate,
 //       //   existingStartDate,
-//       //   existingEndDate,
-//       //   condition1: newStartDate <= existingEndDate,
-//       //   condition2: newEndDate >= existingStartDate,
-//       //   overlap: (newStartDate <= existingEndDate) && (newEndDate >= existingStartDate)
+//       //   existingDepartureDate,
+//       //   condition1: newStartDate <= existingDepartureDate,
+//       //   condition2: newDepartureDate >= existingStartDate,
+//       //   overlap: (newStartDate <= existingDepartureDate) && (newDepartureDate >= existingStartDate)
 //       // });
 
 //       return (
-//         newStartDate <= existingEndDate && newEndDate >= existingStartDate
+//         newStartDate <= existingDepartureDate && newDepartureDate >= existingStartDate
 //       );
 //     });
 

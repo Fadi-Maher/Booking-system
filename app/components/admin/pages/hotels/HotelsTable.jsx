@@ -111,7 +111,8 @@ const HotelsTable = () => {
                   width={100}
                   height={100}
                   src={hotel.image}
-                  alt={hotel.title}
+                  alt={hotel.title || "Hotel name"}
+                  priority
                 />
               </td>
               <td>{hotel.price}</td>
