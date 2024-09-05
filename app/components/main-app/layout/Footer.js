@@ -24,11 +24,10 @@ const Footer = () => {
               <div className={styles.ftnewslatter}>
                 <h4>New latest</h4>
                 <p>Get the latest updates and offers.</p>
-                <div>© 2024 Reserve-Mate</div>
               </div>
-
             </div>
           </div>
+          <div>© 2024 Reserve-Mate</div>
         </div>
       </div>
     </footer>
