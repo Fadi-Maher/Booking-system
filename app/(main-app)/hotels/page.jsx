@@ -17,11 +17,11 @@ const HotelsPage = () => {
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    const isAuthenticated = !!localStorage.getItem("authToken");
-    if (!isAuthenticated) {
-      router.push("/login");
-      return;
-    }
+    // const isAuthenticated = !!localStorage.getItem("authToken");
+    // if (!isAuthenticated) {
+    //   router.push("/login");
+    //   return;
+    // }
 
     const fetchHotels = async () => {
       try {

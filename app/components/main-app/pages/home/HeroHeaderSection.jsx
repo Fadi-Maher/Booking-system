@@ -5,13 +5,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const HeroHeaderSection = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined" && window.bootstrap) {
-      window.bootstrap.Carousel.getInstance(
-        document.querySelector("#carouselExampleSlidesOnly")
-      );
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined" && window.bootstrap) {
+  //     window.bootstrap.Carousel.getInstance(
+  //       document.querySelector("#carouselExampleSlidesOnly")
+  //     );
+  //   }
+  // }, []);
 
   return (
     <div
