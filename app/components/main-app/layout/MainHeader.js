@@ -7,6 +7,7 @@ import Search from "./Search";
 import styles from "./MainHeader.module.css";
 import { AuthContext } from "@/app/AuthContext";
 import { FaShoppingCart } from "react-icons/fa";
+
 const MainHeader = () => {
   const { userDetails } = useContext(AuthContext);
 

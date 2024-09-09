@@ -86,6 +86,14 @@ const Search = () => {
   }, [searchKeyword]);
 
   useEffect(() => {
+    if (searchKeyword.length > 0) {
+      setDropdownOpen(true);
+    } else {
+      setDropdownOpen(false);
+    }
+  }, [searchKeyword]);
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setDropdownOpen(false);
@@ -97,14 +105,6 @@ const Search = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-  useEffect(() => {
-    if (searchKeyword.length > 0) {
-      setDropdownOpen(true);
-    } else {
-      setDropdownOpen(false);
-    }
-  }, [searchKeyword]);
 
   return (
     <div className={styles["input-container"]} ref={searchRef}>
