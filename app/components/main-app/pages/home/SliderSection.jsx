@@ -1,14 +1,9 @@
 "use client";
 import React, { useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useRouter } from "next/navigation";
 
 const SliderSection = () => {
-  const router = useRouter();
-
   useEffect(() => {
     // Ensure the carousel is initialized
     if (typeof window !== "undefined" && window.bootstrap) {
@@ -18,6 +13,7 @@ const SliderSection = () => {
       new window.bootstrap.Carousel(carouselElement);
     }
   }, []);
+  const router = useRouter();
 
   const showHotelsClickHandler = () => router.push("/hotels");
 
@@ -29,12 +25,13 @@ const SliderSection = () => {
         data-bs-ride="carousel"
       >
         <div className="carousel-inner">
+          {/* Slide 1 */}
           <div className="carousel-item active position-relative">
             <div style={{ height: "800px", overflow: "hidden" }}>
               <Image
                 className="d-block w-100"
                 src="/assets/images/Santorini-Greece.jpg"
-                alt="First slide"
+                alt="Santorini, Greece"
                 layout="fill"
                 objectFit="cover"
               />
@@ -42,17 +39,19 @@ const SliderSection = () => {
             <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
               <h3 className="text-dark">Greece</h3>
               <h4 className="text-dark bg-transparent">
-                "Experience the ancient wonders from the Acropolis to the
-                beautiful islands of Santorini and Mykonos."
+                &quot;Experience the ancient wonders from the Acropolis to the
+                beautiful islands of Santorini and Mykonos.&quot;
               </h4>
             </div>
           </div>
+
+          {/* Slide 2 */}
           <div className="carousel-item position-relative">
             <div style={{ height: "800px", overflow: "hidden" }}>
               <Image
                 className="d-block w-100"
                 src="/assets/images/pexels-pixabay-531602.jpg"
-                alt="Second slide"
+                alt="Italy"
                 layout="fill"
                 objectFit="cover"
               />
@@ -60,17 +59,19 @@ const SliderSection = () => {
             <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
               <h3 className="text-white">Italy</h3>
               <h4 className="text-white bg-gradient-warning">
-                "Discover the romance of Venice, the grandeur of Rome, and the
-                beauty of Tuscany."
+                &quot;Discover the romance of Venice, the grandeur of Rome, and
+                the beauty of Tuscany.&quot;
               </h4>
             </div>
           </div>
+
+          {/* Slide 3 */}
           <div className="carousel-item position-relative">
             <div style={{ height: "800px", overflow: "hidden" }}>
               <Image
                 className="d-block w-100"
                 src="/assets/images/31 Top Landmarks in Egypt - Luxor Temple.jpeg"
-                alt="Third slide"
+                alt="Egypt"
                 layout="fill"
                 objectFit="cover"
               />
@@ -78,12 +79,14 @@ const SliderSection = () => {
             <div className="carousel-caption position-absolute top-50 start-50 translate-middle text-center">
               <h3>Egypt</h3>
               <h4>
-                "Unveil the mysteries of Egypt with its majestic pyramids,
-                ancient temples, and the Nile River."
+                &quot;Unveil the mysteries of Egypt with its majestic pyramids,
+                ancient temples, and the Nile River.&quot;
               </h4>
             </div>
           </div>
         </div>
+
+        {/* Carousel Indicators */}
         <div className="carousel-indicators">
           <button
             type="button"
@@ -106,6 +109,8 @@ const SliderSection = () => {
             aria-label="Slide 3"
           ></button>
         </div>
+
+        {/* Carousel Controls */}
         <button
           className="carousel-control-prev"
           type="button"
@@ -131,6 +136,8 @@ const SliderSection = () => {
           <span className="visually-hidden">Next</span>
         </button>
       </div>
+
+      {/* Description Section */}
       <div className="d-flex align-items-center flex-column">
         <p className="w-75 mt-5 text-center" style={{ color: "#555" }}>
           We provide you with a variety of luxurious hotels in different places

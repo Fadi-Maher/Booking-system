@@ -3,55 +3,62 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/app/AuthContext";
 import { Grid } from "react-loader-spinner";
 import AuthGuard from "@/app/components/main-app/ui/auth-guard/AuthGuard";
+
 const ReserveCart = () => {
   const { currentUser } = useContext(AuthContext);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [hotelName, setHotelName] = useState("");
 
-  if (!currentUser) return <AuthGuard />;
-  async function fetchData() {
-    try {
-      const response = await fetch("/api/getBookings");
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      console.log("Fetched bookings:", data);
-
-      const userBookings = data.filter(
-        (booking) => booking.userId === currentUser.uid
-      );
-      const enrichedBookings = await Promise.all(
-        userBookings.map(async (booking) => {
-          const response2 = await fetch(
-            `/api/getRoom/${booking.hotelId}/rooms/${booking.roomId}`
-          );
-          const resp = await fetch(`api/getHotels/${booking.hotelId}`);
-          if (!response2.ok || !resp.ok) {
+  useEffect(() => {
+    if (currentUser) {
+      async function fetchData() {
+        try {
+          const response = await fetch("/api/getBookings");
+          if (!response.ok) {
             throw new Error("Network response was not ok");
           }
-          const roomData = await response2.json();
-          const hotelData = await resp.json();
+          const data = await response.json();
+          console.log("Fetched bookings:", data);
 
-          return {
-            ...booking,
-            ...roomData,
-            hotelName: hotelData.name,
-            docId: booking.id,
-          };
-        })
-      );
+          const userBookings = data.filter(
+            (booking) => booking.userId === currentUser.uid
+          );
+          const enrichedBookings = await Promise.all(
+            userBookings.map(async (booking) => {
+              const roomResponse = await fetch(
+                `/api/getRoom/${booking.hotelId}/rooms/${booking.roomId}`
+              );
+              const hotelResponse = await fetch(
+                `/api/getHotels/${booking.hotelId}`
+              );
+              if (!roomResponse.ok || !hotelResponse.ok) {
+                throw new Error("Network response was not ok");
+              }
+              const roomData = await roomResponse.json();
+              const hotelData = await hotelResponse.json();
 
-      setBookings(enrichedBookings); // Update the state
-      console.log("Enriched bookings:", enrichedBookings); // Log the updated bookings
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
+              return {
+                ...booking,
+                ...roomData,
+                hotelName: hotelData.name,
+                docId: booking.id,
+              };
+            })
+          );
+
+          setBookings(enrichedBookings); // Update the state
+          console.log("Enriched bookings:", enrichedBookings); // Log the updated bookings
+        } catch (error) {
+          setError(error.message);
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      fetchData();
     }
-  }
+  }, [currentUser]);
 
   async function cancelOrder(orderId) {
     console.log("Order ID to delete:", orderId);
@@ -59,7 +66,7 @@ const ReserveCart = () => {
     try {
       setLoading(true);
 
-      let res = await fetch("api/deleteOrder", {
+      const res = await fetch("/api/deleteOrder", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -77,6 +84,7 @@ const ReserveCart = () => {
       console.log("Order deleted successfully:", data.message);
 
       // Directly update the bookings state by filtering out the deleted order
+      // Re-fetch the data after deletion
       await fetchData();
     } catch (err) {
       console.error("Error deleting order:", err.message);
@@ -86,11 +94,10 @@ const ReserveCart = () => {
     }
   }
 
-  useEffect(() => {
-    if (currentUser) {
-      fetchData();
-    }
-  }, [currentUser]);
+  if (!currentUser) {
+    return <AuthGuard />;
+  }
+
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center vh-100 vw-100">
@@ -107,56 +114,56 @@ const ReserveCart = () => {
       </div>
     );
   }
+
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="alert alert-danger">Error: {error}</div>;
   }
 
   return (
     <>
       <h2 className="text-center">My Bookings</h2>
       <div className="row flex-wrap">
-        {bookings?.map((element, index) => (
+        {bookings.map((element, index) => (
           <div
             key={index}
             className="card mb-3 shadow border-0 bg-white rounded vh-80"
             style={{ maxWidth: "540px", marginLeft: "2rem" }}
           >
             <div className="row no-gutters justify-content-center flex-wrap">
-              <div className="col-md-4 align-self-center ">
+              <div className="col-md-4 align-self-center">
                 <img
                   style={{ height: "10rem" }}
-                  src={element.image}
-                  className="card-img ml-2 "
-                  alt="..."
+                  src={element.image || "/default-image.jpg"}
+                  className="card-img ml-2"
+                  alt="Booking"
                 />
               </div>
-              <div className="col-md-8 ">
+              <div className="col-md-8">
                 <div className="card-body">
                   <h5 className="card-title">{element.hotelName} hotel</h5>
-                  <p className="card-text">{element.Title} </p>
+                  <p className="card-text">{element.Title}</p>
                   <p className="card-text">
-                    Created at :{" "}
+                    Created at:{" "}
                     <small className="text-muted">{element.createdAt}</small>
                   </p>
                   <p className="card-text">
-                    price :{" "}
+                    Price:{" "}
                     <small className="text-muted">
                       {element.Price} $ per night
                     </small>
                   </p>
                   <p className="card-text">
-                    {" "}
-                    size : <small className="text-muted">{element.Size}</small>
+                    Size: <small className="text-muted">{element.Size}</small>
                   </p>
                   <p className="card-text">
-                    Capacity :{" "}
+                    Capacity:{" "}
                     <small className="text-muted">{element.Capacity}</small>
                   </p>
                   <p className="card-text">
-                    Bed : <small className="text-muted">{element.Bed}</small>
+                    Bed: <small className="text-muted">{element.Bed}</small>
                   </p>
                   <p className="card-text">
-                    Services :{" "}
+                    Services:{" "}
                     <small className="text-muted">{element.Services}</small>
                   </p>
                   <button
