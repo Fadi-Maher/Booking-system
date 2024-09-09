@@ -11,7 +11,7 @@ export const metadata = {
   description:
     "Our platform is designed to streamline hotel bookings, making it easier and more efficient for everyone involved",
   icons: {
-    icon: "./hotel.png",
+    icon: "/hotel.png",
   },
 };
 
