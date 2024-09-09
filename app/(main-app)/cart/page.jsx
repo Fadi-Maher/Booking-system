@@ -10,22 +10,22 @@ const ReserveCart = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+  const fetchData = async () => {
     if (currentUser) {
-      async function fetchData() {
-        try {
-          const response = await fetch("/api/getBookings");
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          const data = await response.json();
-          console.log("Fetched bookings:", data);
+      try {
+        const response = await fetch("/api/getBookings");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("Fetched bookings:", data);
 
-          const userBookings = data.filter(
-            (booking) => booking.userId === currentUser.uid
-          );
-          const enrichedBookings = await Promise.all(
-            userBookings.map(async (booking) => {
+        const userBookings = data.filter(
+          (booking) => booking.userId === currentUser.uid
+        );
+        const enrichedBookings = await Promise.all(
+          userBookings.map(async (booking) => {
+            try {
               const roomResponse = await fetch(
                 `/api/getRoom/${booking.hotelId}/rooms/${booking.roomId}`
               );
@@ -44,23 +44,28 @@ const ReserveCart = () => {
                 hotelName: hotelData.name,
                 docId: booking.id,
               };
-            })
-          );
+            } catch (error) {
+              console.error("Error fetching room or hotel data:", error);
+              return null;
+            }
+          })
+        );
 
-          setBookings(enrichedBookings); // Update the state
-          console.log("Enriched bookings:", enrichedBookings); // Log the updated bookings
-        } catch (error) {
-          setError(error.message);
-        } finally {
-          setLoading(false);
-        }
+        setBookings(enrichedBookings.filter(Boolean));
+        console.log("Enriched bookings:", enrichedBookings);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
-
-      fetchData();
     }
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [currentUser]);
 
-  async function cancelOrder(orderId) {
+  const cancelOrder = async (orderId) => {
     console.log("Order ID to delete:", orderId);
 
     try {
@@ -83,8 +88,6 @@ const ReserveCart = () => {
       const data = await res.json();
       console.log("Order deleted successfully:", data.message);
 
-      // Directly update the bookings state by filtering out the deleted order
-      // Re-fetch the data after deletion
       await fetchData();
     } catch (err) {
       console.error("Error deleting order:", err.message);
@@ -92,7 +95,7 @@ const ReserveCart = () => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   if (!currentUser) {
     return <AuthGuard />;

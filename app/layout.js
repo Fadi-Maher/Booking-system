@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AuthProvider } from "./AuthContext";
-import Script from "next/script"; // Import Script from next/script
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
           crossOrigin="anonymous"
-          strategy="beforeInteractive" // Load the script before interactive components are loaded
+          strategy="beforeInteractive"
         />
       </head>
       <body className={inter.className}>

@@ -1,11 +1,10 @@
-"use client"; // Ensure this component is treated as a Client Component
+"use client";
 
 import styles from "../about-us/AboutUs.module.css";
 
 const ContactUsPage = () => {
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevents the default form submission behavior
-    // Add form submission logic here
+    event.preventDefault();
     alert("Form submitted!");
   };
 
