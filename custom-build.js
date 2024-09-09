@@ -1,11 +1,17 @@
 const { execSync } = require("child_process");
 
+const ignoreErrors = process.env.IGNORE_BUILD_ERRORS === "true";
+
 try {
-  // Run the Next.js build command
   execSync("next build", { stdio: "inherit" });
 } catch (error) {
-  // Log errors to the console
-  console.warn("Build completed with errors. Proceeding with deployment.");
-  console.error(error.message);
-  // Do not exit with a failure status code to allow deployment to continue
+  if (ignoreErrors) {
+    console.warn(
+      "Build completed with errors, but proceeding with deployment."
+    );
+  } else {
+    console.error("Build failed with errors.");
+    console.error(error.message);
+    process.exit(1); // Exit with a non-zero status code if not ignoring errors
+  }
 }
