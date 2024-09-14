@@ -1,7 +1,11 @@
-.footer , .footertext {
-	padding: 10px ;
+.footer,
+.footertext {
+	padding: 10px;
 }
-.footer , .footertext , .ftAabout {
+
+.footer,
+.footertext,
+.ftAabout {
 	margin-bottom: 30px;
 }
 
@@ -10,10 +14,15 @@
 	margin-bottom: 20px;
 }
 
-.footer , .footertext , .ftcontact {
+.footer,
+.footertext,
+.ftcontact {
 	margin-bottom: 30px;
 }
-.ftAabout h4 ,.ftnewslatter h4 ,.ftcontact h4 {
+
+.ftAabout h4,
+.ftnewslatter h4,
+.ftcontact h4 {
 	font-size: 14px;
 	color: #f7af6c;
 	text-transform: uppercase;
@@ -23,8 +32,9 @@
 	margin-bottom: 20px;
 }
 
-.footer , .footertext , .ftnewslatter p {
+.footer,
+.footertext,
+.ftnewslatter p {
 	color: #f3f3ff;
 	margin-bottom: 20px;
 }
-

@@ -3,10 +3,7 @@ import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
-    <footer
-      className=" text-light py-5 footer "
-      style={{ backgroundColor: "#222736" }}
-    >
+    <footer className="text-light py-2" style={{ backgroundColor: "#222736" }}>
       <div className="container ">
         <div className={styles.footertext}>
           <div className="row">

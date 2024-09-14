@@ -86,7 +86,7 @@ const HotelsPage = () => {
     <div>
       <h1 className="text-center pt-5">Hotels</h1>
       <ul style={{ listStyleType: "none", padding: 50 }}>
-        <div className="d-flex flex-wrap gap-3 justify-content-around">
+        <div className="d-flex flex-wrap gap-3 justify-content-center">
           {hotels.map((hotel) => {
             const truncatedText = truncateText(hotel.description, 20);
 

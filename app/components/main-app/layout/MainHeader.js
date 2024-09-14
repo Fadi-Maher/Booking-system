@@ -125,7 +125,7 @@ const MainHeader = () => {
               </li>
               <li className="mt-1">
                 <Link className="custom-dropDown-link" href="/cart">
-                  Bookings
+                  Reservations
                 </Link>
               </li>
               <Logout />

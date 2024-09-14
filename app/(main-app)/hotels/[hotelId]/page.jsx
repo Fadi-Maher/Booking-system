@@ -23,10 +23,10 @@ const HotelDetails = () => {
     setIsLoading(true);
     const docRef = doc(db, "hotels", hotelId);
     getDoc(docRef)
-      .then(docSnap => {
+      .then((docSnap) => {
         setHotel(docSnap.data());
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       })
       .finally(() => setIsLoading(false));
@@ -50,8 +50,8 @@ const HotelDetails = () => {
       />
     </div>
   ) : (
-    <div style={{ paddingTop: "70px" }}>
-      <div className="card">
+    <div style={{ paddingTop: "70px" }} className="mb-5">
+      <div className="card container">
         <div className="card-body">
           <h3>{hotel?.name}</h3>
           <div className="m-2">{hotel?.location}</div>
@@ -67,6 +67,7 @@ const HotelDetails = () => {
             ) : (
               images.map((img, index) => (
                 <img
+                  style={{ objectFit: "cover" }}
                   key={index}
                   src={img}
                   className="img-thumbnail w-25 "
@@ -76,12 +77,12 @@ const HotelDetails = () => {
             )}
           </div>
           <div>
-            <div className="d-flex flex-row flex-wrap justify-content-between  mb-4  mt-4 ">
+            <div className="d-flex flex-row flex-wrap justify-content-center mb-4 mt-4 gap-3 align-items-center">
               <div>
                 <span className="m-2 ">
                   {hotel?.reviews == null ? 0 : hotel.reviews.length}
                 </span>
-                <span className="text-muted ">reviews</span>
+                <span className="text-muted ">Reviews</span>
               </div>
 
               <button

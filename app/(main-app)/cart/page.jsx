@@ -123,10 +123,73 @@ const ReserveCart = () => {
   }
 
   return (
-    <>
-      <h2 className="text-center">My Bookings</h2>
+    <div>
+      <h2 className="text-center mt-5">My Reservations</h2>
       <div className="row flex-wrap">
-        {bookings.map((element, index) => (
+        {bookings.length > 0 ? (
+          bookings.map((element, index) => (
+            <div
+              key={index}
+              className="card mb-3 shadow border-0 bg-white rounded vh-80"
+              style={{ maxWidth: "540px", marginLeft: "2rem" }}
+            >
+              <div className="row no-gutters justify-content-center flex-wrap">
+                <div className="col-md-4 align-self-center">
+                  <img
+                    style={{ objectFit: "cover" }}
+                    src={element.image || "/default-image.jpg"}
+                    className="card-img ml-2"
+                    alt="Booking"
+                  />
+                </div>
+                <div className="col-md-8">
+                  <div className="card-body">
+                    <h5 className="card-title">{element.hotelName} hotel</h5>
+                    <p className="card-text">{element.Title}</p>
+                    <p className="card-text">
+                      Created at:{" "}
+                      <small className="text-muted">{element.createdAt}</small>
+                    </p>
+                    <p className="card-text">
+                      Price:{" "}
+                      <small className="text-muted">
+                        {element.Price} $ per night
+                      </small>
+                    </p>
+                    <p className="card-text">
+                      Size: <small className="text-muted">{element.Size}</small>
+                    </p>
+                    <p className="card-text">
+                      Capacity:{" "}
+                      <small className="text-muted">{element.Capacity}</small>
+                    </p>
+                    <p className="card-text">
+                      Bed: <small className="text-muted">{element.Bed}</small>
+                    </p>
+                    <p className="card-text">
+                      Services:{" "}
+                      <small className="text-muted">{element.Services}</small>
+                    </p>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => cancelOrder(element.docId)}
+                    >
+                      Cancel Reservation
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="vh-100">
+            <p className="text-center text-muted mt-5">
+              You haven&apos;t made any reservations.
+            </p>
+          </div>
+        )}
+        {/* {bookings.map((element, index) => (
           <div
             key={index}
             className="card mb-3 shadow border-0 bg-white rounded vh-80"
@@ -180,9 +243,9 @@ const ReserveCart = () => {
               </div>
             </div>
           </div>
-        ))}
+        ))} */}
       </div>
-    </>
+    </div>
   );
 };
 

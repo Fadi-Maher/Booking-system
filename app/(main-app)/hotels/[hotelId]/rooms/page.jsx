@@ -24,7 +24,7 @@ const RoomsPage = () => {
   const [availabilityError, setAvailabilityError] = useState("Invalid");
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
-  const [popupType, setPopupType] = useState(""); 
+  const [popupType, setPopupType] = useState("");
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -60,7 +60,9 @@ const RoomsPage = () => {
 
     // dates are not empty
     if (!bookingDetails.arrivalDate || !bookingDetails.departureDate) {
-      setAvailabilityError("Invalid date: room is not Availabile for this date.");
+      setAvailabilityError(
+        "Invalid date: room is not Availabile for this date."
+      );
       setPopupType("error");
       setPopupMessage(availabilityError);
       setShowPopup(true);
@@ -69,7 +71,9 @@ const RoomsPage = () => {
 
     // dates are not in the past
     if (newArrivalDate < currentDate || newDepartureDate < currentDate) {
-      setAvailabilityError("Invalid date: Start date and end date must be in the future.");
+      setAvailabilityError(
+        "Invalid date: Start date and end date must be in the future."
+      );
       setPopupType("error");
       setPopupMessage(availabilityError);
       setShowPopup(true);
@@ -78,28 +82,29 @@ const RoomsPage = () => {
 
     // end date is after the start date
     if (newDepartureDate < newArrivalDate) {
-      setAvailabilityError("Invalid date: End date must be after the start date.");
+      setAvailabilityError(
+        "Invalid date: End date must be after the start date."
+      );
       setPopupType("error");
       setPopupMessage(availabilityError);
       setShowPopup(true);
       return;
     }
 
-    
     // Include userId in bookingDetails
     const bookingData = {
       ...bookingDetails,
       userId: currentUser.uid,
       roomId: selectedRoom,
       hotelId,
-      roomPrice: rooms.find(room => room.id === selectedRoom).Price,
+      roomPrice: rooms.find((room) => room.id === selectedRoom).Price,
     };
 
     // Store the booking data temporarily in localStorage or state (depending on your needs)
-    localStorage.setItem('bookingData', JSON.stringify(bookingData));
+    localStorage.setItem("bookingData", JSON.stringify(bookingData));
 
     // Redirect to checkout page
-    router.push('/checkout');
+    router.push("/checkout");
   };
 
   if (loading) {
@@ -125,12 +130,12 @@ const RoomsPage = () => {
 
   return (
     <div className="p-5">
-      <h1 className="text-center pt-5">Our Rooms</h1>
+      <h1 className="text-center">Our Rooms</h1>
       <section className={styles.spad}>
         <div className={styles.roomsSection}>
           <div className="container">
             <div className="row">
-              {rooms.map(room => (
+              {rooms.map((room) => (
                 <div className="col-lg-4 col-md-6" key={room.id}>
                   <div className={styles.roomitem}>
                     <img src={room.image} alt={room.Title} />
@@ -164,7 +169,7 @@ const RoomsPage = () => {
                         onClick={() => setSelectedRoom(room.id)}
                         className={styles.primarybtn}
                       >
-                        Booking Now
+                        Book Now
                       </Link>
                     </div>
                   </div>
