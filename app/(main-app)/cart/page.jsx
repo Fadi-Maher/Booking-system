@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/app/AuthContext";
 import { Grid } from "react-loader-spinner";
 import AuthGuard from "@/app/components/main-app/ui/auth-guard/AuthGuard";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ReserveCart = () => {
   const { currentUser } = useContext(AuthContext);
@@ -89,6 +91,7 @@ const ReserveCart = () => {
       console.log("Order deleted successfully:", data.message);
 
       await fetchData();
+      toast.success("Reservation deleted successfully");
     } catch (err) {
       console.error("Error deleting order:", err.message);
       setError("Failed to delete order: " + err.message);
@@ -245,6 +248,7 @@ const ReserveCart = () => {
           </div>
         ))} */}
       </div>
+      <ToastContainer />
     </div>
   );
 };

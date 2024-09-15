@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import styles from "../page.module.css";
 import { Spinner } from "react-bootstrap"; // Add Bootstrap spinner
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -65,8 +66,10 @@ const CheckOutForm = () => {
       if (result.paymentIntent.status === "succeeded") {
         await storeBookingDataToFirestore(sessionId);
         localStorage.removeItem("bookingData");
-        toast.success("Successful reservation");
-        router.push("/");
+        toast.success("Reservation successful! Redirecting...");
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
       }
     }
   };
@@ -119,6 +122,7 @@ const CheckOutForm = () => {
           {loading ? <Spinner animation="border" size="sm" /> : "Check Out"}
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };
