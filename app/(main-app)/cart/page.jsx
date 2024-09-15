@@ -87,11 +87,10 @@ const ReserveCart = () => {
         );
       }
 
+      toast.success("Reservation deleted successfully");
       const data = await res.json();
       console.log("Order deleted successfully:", data.message);
-
       await fetchData();
-      toast.success("Reservation deleted successfully");
     } catch (err) {
       console.error("Error deleting order:", err.message);
       setError("Failed to delete order: " + err.message);

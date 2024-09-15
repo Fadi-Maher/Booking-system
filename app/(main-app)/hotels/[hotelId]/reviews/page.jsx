@@ -6,6 +6,8 @@ import { db } from "@/app/firebase";
 import { AuthContext } from "@/app/AuthContext";
 import ReviewModal from "@/app/components/main-app/ui/modals/ReviewModal";
 import { Grid } from "react-loader-spinner";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ReviewDetailsPage = ({ params }) => {
   const [hotel, setHotel] = useState({});
@@ -40,8 +42,11 @@ const ReviewDetailsPage = ({ params }) => {
         (review) => review.name !== reviewName
       );
 
-      await updateDoc(docRef, { reviews: updatedReviews });
-      fetchHotelData();
+      toast.success("Review Deleted");
+      setTimeout(async () => {
+        await updateDoc(docRef, { reviews: updatedReviews });
+        fetchHotelData();
+      }, 1000);
     } catch (err) {
       console.error("Failed to delete review:", err);
       setError("Failed to delete review.");
@@ -167,6 +172,7 @@ const ReviewDetailsPage = ({ params }) => {
           </div>
         </>
       )}
+      <ToastContainer />
     </div>
   );
 };
