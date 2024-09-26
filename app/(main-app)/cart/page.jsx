@@ -68,7 +68,7 @@ const ReserveCart = () => {
   }, [currentUser]);
 
   const cancelOrder = async (orderId) => {
-    console.log("Order ID to delete:", orderId);
+    // console.log("Order ID to delete:", orderId);
 
     try {
       setLoading(true);
